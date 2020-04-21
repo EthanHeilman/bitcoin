@@ -753,6 +753,9 @@ bool IsProxy(const CNetAddr &addr) {
     return false;
 }
 
+bool ConnectThroughProxy(const proxyType &proxy, const std::string& strDest, int port, const SOCKET& hSocket, int nTimeout)
+
+
 /**
  * Connect to a specified destination service through a SOCKS5 proxy by first
  * connecting to the SOCKS5 proxy.

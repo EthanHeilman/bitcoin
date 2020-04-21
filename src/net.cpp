@@ -433,6 +433,8 @@ CNode* CConnman::ConnectNode(CAddress addrConnect, const char *pszDest, bool fCo
         int port = default_port;
         SplitHostPort(std::string(pszDest), port, host);
         connected = ConnectThroughProxy(proxy, host, port, hSocket, nConnectTimeout, nullptr);
+
+        //TODO: Shouldn't we catch proxy errors here? ~ERH 
     }
     if (!connected) {
         CloseSocket(hSocket);
