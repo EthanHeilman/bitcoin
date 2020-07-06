@@ -10,6 +10,11 @@
 
 #include <compat/cpuid.h>
 
+#include <iostream>
+using namespace std;
+#include <phex.h>
+
+
 #if defined(__x86_64__) || defined(__amd64__) || defined(__i386__)
 #if defined(USE_ASM)
 namespace sha256_sse4
@@ -18,6 +23,27 @@ void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks);
 }
 #endif
 #endif
+
+int CSHA256instancectr = 0;
+void static pHex(const unsigned char* bytes, size_t size, string& out)
+{
+    char const hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B','C','D','E','F'};
+    for (size_t i = 0; i < size; ++i) {
+        const char ch = bytes[i];
+        out.append(&hex[(ch  & 0xF0) >> 4], 1);
+        out.append(&hex[ch & 0xF], 1);
+    }
+}
+
+
+// void static pState32(uint32_t* s, string& statestr)
+// {
+//     for (size_t i = 0; i < 8; ++i) {
+//         uint32_t t = s[i];
+//         string str64 = std::to_string(t);
+//         statestr += str64;
+//     }
+// }
 
 namespace sha256d64_sse41
 {
@@ -629,13 +655,43 @@ std::string SHA256AutoDetect()
 
 ////// SHA-256
 
-CSHA256::CSHA256() : bytes(0)
+
+CSHA256::CSHA256() : CSHA256("not_named"){}
+
+CSHA256::CSHA256(string new_name) : bytes(0)
 {
+    if (new_name == "not_named")
+        record = false;
+    if(record)
+    {
+    name = new_name;
+    instanceNum = ++CSHA256instancectr;
+    PrintThread{}<<"rnd:CSHA256:Init:h="<<name<<", id="<<instanceNum<<endl;
+    }
     sha256::Initialize(s);
+    
 }
+
 
 CSHA256& CSHA256::Write(const unsigned char* data, size_t len)
 {
+    return Write(data, len, "unknwn_source");
+}
+
+
+CSHA256& CSHA256::Write(const unsigned char* data, size_t len, string source)
+{
+    writeCalls++;
+    if(record)
+    {
+        string hexstr = "";
+        pHex(data, len, hexstr);
+        PrintThread{}<<"rnd:CSHA256:Write:h="<<name<<", id="<<instanceNum
+        <<", rCalls="<<resetCalls<<", wCalls="<<writeCalls<<", fCalls="<<finalizeCalls 
+        <<", s="<<source<<", len="<< len
+        <<", d="<<hexstr<<endl;
+    }
+
     const unsigned char* end = data + len;
     size_t bufsize = bytes % 64;
     if (bufsize && bufsize + len >= 64) {
@@ -645,18 +701,32 @@ CSHA256& CSHA256::Write(const unsigned char* data, size_t len)
         data += 64 - bufsize;
         Transform(s, buf, 1);
         bufsize = 0;
+        if(record)
+        {
+            // string statestr = "";
+            // pState32(s, statestr);
+            // cout << ", state=" << statestr;
+        }
     }
     if (end - data >= 64) {
         size_t blocks = (end - data) / 64;
         Transform(s, data, blocks);
         data += 64 * blocks;
         bytes += 64 * blocks;
+        if(record)
+        {
+            // string statestr = "";
+            // pState32(s, statestr);
+            // cout << ", state=" << statestr;
+        }
     }
     if (end > data) {
         // Fill the buffer with what remains.
         memcpy(buf + bufsize, data, end - data);
         bytes += end - data;
     }
+
+    // if(record) cout << endl;
     return *this;
 }
 
@@ -665,8 +735,8 @@ void CSHA256::Finalize(unsigned char hash[OUTPUT_SIZE])
     static const unsigned char pad[64] = {0x80};
     unsigned char sizedesc[8];
     WriteBE64(sizedesc, bytes << 3);
-    Write(pad, 1 + ((119 - (bytes % 64)) % 64));
-    Write(sizedesc, 8);
+    Write(pad, 1 + ((119 - (bytes % 64)) % 64), "Finalize.Padding.1");
+    Write(sizedesc, 8, "Finalize.Padding.2");
     WriteBE32(hash, s[0]);
     WriteBE32(hash + 4, s[1]);
     WriteBE32(hash + 8, s[2]);
@@ -675,10 +745,28 @@ void CSHA256::Finalize(unsigned char hash[OUTPUT_SIZE])
     WriteBE32(hash + 20, s[5]);
     WriteBE32(hash + 24, s[6]);
     WriteBE32(hash + 28, s[7]);
+    
+    if(record)
+    {
+        finalizeCalls++;
+        string hexstr = "";
+        pHex(hash, OUTPUT_SIZE, hexstr);
+        PrintThread{}<<"rnd:CSHA256:Finalize:h="<<name<<", id="<<instanceNum
+        <<", rCalls="<<resetCalls<<", wCalls="<<writeCalls<<", fCalls="<<finalizeCalls
+        <<", hash="<<hexstr<<endl;
+    }
 }
 
 CSHA256& CSHA256::Reset()
 {
+    if(record)
+    {
+        resetCalls++;
+        PrintThread{}<<"rnd:CSHA256:Reset:h="<<name<<", id="<<instanceNum
+        <<", rCalls="<<resetCalls<<", wCalls="<<writeCalls<<", fCalls="<<finalizeCalls 
+        <<endl;
+    }
+
     bytes = 0;
     sha256::Initialize(s);
     return *this;

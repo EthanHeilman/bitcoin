@@ -14,8 +14,8 @@
 class CHMAC_SHA512
 {
 private:
-    CSHA512 outer;
-    CSHA512 inner;
+    CSHA512 outer = CSHA512("CHMAC_SHA512.outer");
+    CSHA512 inner = CSHA512("CHMAC_SHA512.inner");;
 
 public:
     static const size_t OUTPUT_SIZE = 64;

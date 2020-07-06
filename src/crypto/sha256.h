@@ -7,7 +7,11 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+
 #include <string>
+#include <iostream>
+using namespace std;
+
 
 /** A hasher class for SHA-256. */
 class CSHA256
@@ -17,11 +21,20 @@ private:
     unsigned char buf[64];
     uint64_t bytes;
 
+    string name;
+    int writeCalls = 0;
+    int resetCalls = 0;
+    int finalizeCalls = 0;
+    int instanceNum = -1;
+    bool record = true;
+
 public:
     static const size_t OUTPUT_SIZE = 32;
 
     CSHA256();
+    CSHA256(string new_name);
     CSHA256& Write(const unsigned char* data, size_t len);
+    CSHA256& Write(const unsigned char* data, size_t len, string source);
     void Finalize(unsigned char hash[OUTPUT_SIZE]);
     CSHA256& Reset();
 };

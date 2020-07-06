@@ -108,7 +108,7 @@ void RandAddPeriodic() noexcept;
  *
  * Thread-safe.
  */
-void RandAddEvent(const uint32_t event_info) noexcept;
+void RandAddEvent(const uint32_t event_info, std::string eventname) noexcept;
 
 /**
  * Fast randomness source. This is seeded once with secure random data, but

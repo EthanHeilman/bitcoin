@@ -462,7 +462,7 @@ CNode* CConnman::ConnectNode(CAddress addrConnect, const char *pszDest, bool fCo
     pnode->AddRef();
 
     // We're making a new connection, harvest entropy from the time (and our peer count)
-    RandAddEvent((uint32_t)id);
+    RandAddEvent((uint32_t)id, "ConnectNode new connection id");
 
     return pnode;
 }
@@ -714,7 +714,7 @@ CNetMessage V1TransportDeserializer::GetMessage(const CMessageHeader::MessageSta
     msg.m_raw_message_size = hdr.nMessageSize + CMessageHeader::HEADER_SIZE;
 
     // We just received a message off the wire, harvest entropy from the time (and the message checksum)
-    RandAddEvent(ReadLE32(hash.begin()));
+    RandAddEvent(ReadLE32(hash.begin()), "GetMessage hash.begin()");
 
     msg.m_valid_checksum = (memcmp(hash.begin(), hdr.pchChecksum, CMessageHeader::CHECKSUM_SIZE) == 0);
     if (!msg.m_valid_checksum) {
@@ -1055,7 +1055,7 @@ void CConnman::AcceptConnection(const ListenSocket& hListenSocket) {
     }
 
     // We received a new connection, harvest entropy from the time (and our peer count)
-    RandAddEvent((uint32_t)id);
+    RandAddEvent((uint32_t)id, "AcceptConnection id");
 }
 
 void CConnman::DisconnectNodes()

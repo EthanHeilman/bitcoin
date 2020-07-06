@@ -42,6 +42,18 @@
 #include <sys/sysctl.h>
 #endif
 
+void static pHex(const unsigned char* bytes, size_t size, string& out)
+{
+    char const hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',   'B','C','D','E','F'};
+    for (size_t i = 0; i < size; ++i) {
+        const char ch = bytes[i];
+        out.append(&hex[(ch  & 0xF0) >> 4], 1);
+        out.append(&hex[ch & 0xF], 1);
+    }
+
+}
+
+
 [[noreturn]] static void RandFailure()
 {
     LogPrintf("Failed to read randomness, aborting\n");
@@ -191,7 +203,7 @@ static void SeedHardwareFast(CSHA512& hasher) noexcept {
 #if defined(__x86_64__) || defined(__amd64__) || defined(__i386__)
     if (g_rdrand_supported) {
         uint64_t out = GetRdRand();
-        hasher.Write((const unsigned char*)&out, sizeof(out));
+        hasher.Write((const unsigned char*)&out, sizeof(out), "SeedHardwareFast");
         return;
     }
 #endif
@@ -205,7 +217,7 @@ static void SeedHardwareSlow(CSHA512& hasher) noexcept {
     if (g_rdseed_supported) {
         for (int i = 0; i < 4; ++i) {
             uint64_t out = GetRdSeed();
-            hasher.Write((const unsigned char*)&out, sizeof(out));
+            hasher.Write((const unsigned char*)&out, sizeof(out), "SeedHardwareSlow.rdseed");
         }
         return;
     }
@@ -215,7 +227,7 @@ static void SeedHardwareSlow(CSHA512& hasher) noexcept {
         for (int i = 0; i < 4; ++i) {
             uint64_t out = 0;
             for (int j = 0; j < 1024; ++j) out ^= GetRdRand();
-            hasher.Write((const unsigned char*)&out, sizeof(out));
+            hasher.Write((const unsigned char*)&out, sizeof(out), "SeedHardwareSlow.rdrand");
         }
         return;
     }
@@ -225,8 +237,8 @@ static void SeedHardwareSlow(CSHA512& hasher) noexcept {
 /** Use repeated SHA512 to strengthen the randomness in seed32, and feed into hasher. */
 static void Strengthen(const unsigned char (&seed)[32], int microseconds, CSHA512& hasher) noexcept
 {
-    CSHA512 inner_hasher;
-    inner_hasher.Write(seed, sizeof(seed));
+    CSHA512 inner_hasher = CSHA512("Strengthen.inner_hasher");
+    inner_hasher.Write(seed, sizeof(seed), "Strengthen.1");
 
     // Hash loop
     unsigned char buffer[64];
@@ -235,16 +247,16 @@ static void Strengthen(const unsigned char (&seed)[32], int microseconds, CSHA51
         for (int i = 0; i < 1000; ++i) {
             inner_hasher.Finalize(buffer);
             inner_hasher.Reset();
-            inner_hasher.Write(buffer, sizeof(buffer));
+            inner_hasher.Write(buffer, sizeof(buffer), "Strengthen.2");
         }
         // Benchmark operation and feed it into outer hasher.
         int64_t perf = GetPerformanceCounter();
-        hasher.Write((const unsigned char*)&perf, sizeof(perf));
+        hasher.Write((const unsigned char*)&perf, sizeof(perf), "Strengthen.3(perf)");
     } while (GetTimeMicros() < stop);
 
     // Produce output from inner state and feed it to outer hasher.
     inner_hasher.Finalize(buffer);
-    hasher.Write(buffer, sizeof(buffer));
+    hasher.Write(buffer, sizeof(buffer), "Strengthen.4(inner_hasher)");
     // Try to clean up.
     inner_hasher.Reset();
     memory_cleanse(buffer, sizeof(buffer));
@@ -359,7 +371,7 @@ class RNGState {
     bool m_strongly_seeded GUARDED_BY(m_mutex) = false;
 
     Mutex m_events_mutex;
-    CSHA256 m_events_hasher GUARDED_BY(m_events_mutex);
+    CSHA256 m_events_hasher GUARDED_BY(m_events_mutex) = CSHA256("m_events_hasher");
 
 public:
     RNGState() noexcept
@@ -371,15 +383,15 @@ public:
     {
     }
 
-    void AddEvent(uint32_t event_info) noexcept
+    void AddEvent(uint32_t event_info, string eventname) noexcept
     {
         LOCK(m_events_mutex);
 
-        m_events_hasher.Write((const unsigned char *)&event_info, sizeof(event_info));
+        m_events_hasher.Write((const unsigned char *)&event_info, sizeof(event_info), eventname);
         // Get the low four bytes of the performance counter. This translates to roughly the
         // subsecond part.
         uint32_t perfcounter = (GetPerformanceCounter() & 0xffffffff);
-        m_events_hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter));
+        m_events_hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter), "lower 32 bits percounter");
     }
 
     /**
@@ -393,11 +405,11 @@ public:
 
         unsigned char events_hash[32];
         m_events_hasher.Finalize(events_hash);
-        hasher.Write(events_hash, 32);
+        hasher.Write(events_hash, 32, "SeedEvents");
 
         // Re-initialize the hasher with the finalized state to use later.
         m_events_hasher.Reset();
-        m_events_hasher.Write(events_hash, 32);
+        m_events_hasher.Write(events_hash, 32, "SeedEvent reseed");
     }
 
     /** Extract up to 32 bytes of entropy from the RNG state, mixing in new entropy from hasher.
@@ -414,19 +426,33 @@ public:
             LOCK(m_mutex);
             ret = (m_strongly_seeded |= strong_seed);
             // Write the current state of the RNG into the hasher
-            hasher.Write(m_state, 32);
+            hasher.Write(m_state, 32, "MixExtract.1(m_state)");
             // Write a new counter number into the state
-            hasher.Write((const unsigned char*)&m_counter, sizeof(m_counter));
+            hasher.Write((const unsigned char*)&m_counter, sizeof(m_counter), "MixExtract.2(m_counter)");
             ++m_counter;
             // Finalize the hasher
             hasher.Finalize(buf);
+
+            string hex = "";
+            pHex(buf, 64, hex);
+            PrintThread{} << "rnd:mixextract:buff="<< hex << endl;
+
             // Store the last 32 bytes of the hash output as new RNG state.
             memcpy(m_state, buf + 32, 32);
+
+            hex = "";
+            pHex(m_state, 32, hex);
+            PrintThread{} << "rnd:mixextract:m_state="<< hex << endl;
         }
+
+
         // If desired, copy (up to) the first 32 bytes of the hash output as output.
         if (num) {
             assert(out != nullptr);
             memcpy(out, buf, num);
+            string hex = "";
+            pHex(out, num, hex);
+            PrintThread{} << "rnd:mixextract:out=" << hex << endl;
         }
         // Best effort cleanup of internal state
         hasher.Reset();
@@ -452,7 +478,7 @@ RNGState& GetRNGState() noexcept
 static void SeedTimestamp(CSHA512& hasher) noexcept
 {
     int64_t perfcounter = GetPerformanceCounter();
-    hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter));
+    hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter), "SeedTimestamp");
 }
 
 static void SeedFast(CSHA512& hasher) noexcept
@@ -461,7 +487,7 @@ static void SeedFast(CSHA512& hasher) noexcept
 
     // Stack pointer to indirectly commit to thread/callstack
     const unsigned char* ptr = buffer;
-    hasher.Write((const unsigned char*)&ptr, sizeof(ptr));
+    hasher.Write((const unsigned char*)&ptr, sizeof(ptr), "stack_ptr");
 
     // Hardware randomness is very fast when available; use it always.
     SeedHardwareFast(hasher);
@@ -479,7 +505,7 @@ static void SeedSlow(CSHA512& hasher, RNGState& rng) noexcept
 
     // OS randomness
     GetOSRand(buffer);
-    hasher.Write(buffer, sizeof(buffer));
+    hasher.Write(buffer, sizeof(buffer), "SeedSlow.GetOSRand");
 
     // Add the events hasher into the mix
     rng.SeedEvents(hasher);
@@ -554,7 +580,21 @@ static void ProcRand(unsigned char* out, int num, RNGLevel level) noexcept
 
     assert(num <= 32);
 
-    CSHA512 hasher;
+    string strlevel;
+    switch (level) {
+    case RNGLevel::FAST:
+        strlevel = "ProcRand.FAST";
+        break;
+    case RNGLevel::SLOW:
+        strlevel = "ProcRand.SLOW";
+        break;
+    case RNGLevel::PERIODIC:
+        strlevel = "ProcRand.PERIODIC";
+        break;
+    }
+
+    CSHA512 hasher = CSHA512(strlevel);
+
     switch (level) {
     case RNGLevel::FAST:
         SeedFast(hasher);
@@ -570,7 +610,7 @@ static void ProcRand(unsigned char* out, int num, RNGLevel level) noexcept
     // Combine with and update state
     if (!rng.MixExtract(out, num, std::move(hasher), false)) {
         // On the first invocation, also seed with SeedStartup().
-        CSHA512 startup_hasher;
+        CSHA512 startup_hasher = CSHA512("startup_hasher");
         SeedStartup(startup_hasher, rng);
         rng.MixExtract(out, num, std::move(startup_hasher), true);
     }
@@ -579,7 +619,7 @@ static void ProcRand(unsigned char* out, int num, RNGLevel level) noexcept
 void GetRandBytes(unsigned char* buf, int num) noexcept { ProcRand(buf, num, RNGLevel::FAST); }
 void GetStrongRandBytes(unsigned char* buf, int num) noexcept { ProcRand(buf, num, RNGLevel::SLOW); }
 void RandAddPeriodic() noexcept { ProcRand(nullptr, 0, RNGLevel::PERIODIC); }
-void RandAddEvent(const uint32_t event_info) noexcept { GetRNGState().AddEvent(event_info); }
+void RandAddEvent(const uint32_t event_info, string eventname) noexcept { GetRNGState().AddEvent(event_info, eventname); }
 
 bool g_mock_deterministic_tests{false};
 
@@ -671,7 +711,7 @@ bool Random_SanityCheck()
     if (stop == start) return false;
 
     // We called GetPerformanceCounter. Use it as entropy.
-    CSHA512 to_add;
+    CSHA512 to_add = CSHA512("Random_SanityCheck");
     to_add.Write((const unsigned char*)&start, sizeof(start));
     to_add.Write((const unsigned char*)&stop, sizeof(stop));
     GetRNGState().MixExtract(nullptr, 0, std::move(to_add), false);

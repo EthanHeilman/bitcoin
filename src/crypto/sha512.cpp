@@ -7,6 +7,30 @@
 #include <crypto/common.h>
 
 #include <string.h>
+#include <iostream>
+using namespace std;
+#include <phex.h>
+
+
+int CSHA512instancectr = 0;
+void static pHex(const unsigned char* bytes, size_t size, string& out)
+{
+    char const hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',  'B','C','D','E','F'};
+    for (size_t i = 0; i < size; ++i) {
+        const char ch = bytes[i];
+        out.append(&hex[(ch  & 0xF0) >> 4], 1);
+        out.append(&hex[ch & 0xF], 1);
+    }
+}
+
+// void static pState64(uint64_t* s, string& statestr)
+// {
+//     for (size_t i = 0; i < 8; ++i) {
+//         uint64_t t = s[i];
+//         string str64 = std::to_string(t);
+//         statestr += str64;
+//     }
+// }
 
 // Internal implementation code.
 namespace
@@ -151,13 +175,33 @@ void Transform(uint64_t* s, const unsigned char* chunk)
 
 ////// SHA-512
 
-CSHA512::CSHA512() : bytes(0)
+CSHA512::CSHA512() : CSHA512("not_named"){}
+
+CSHA512::CSHA512(string new_name) : bytes(0)
 {
+    name = new_name;
+    instanceNum = ++CSHA512instancectr;
     sha512::Initialize(s);
+    PrintThread{}<<"rnd:CSHA512:Init:h="<<name<<", id="<<instanceNum<<endl;
 }
 
 CSHA512& CSHA512::Write(const unsigned char* data, size_t len)
 {
+    return Write(data, len, "unknwn_source");
+}
+
+CSHA512& CSHA512::Write(const unsigned char* data, size_t len, string source)
+{
+    if (name != "Strengthen.inner_hasher")
+    {
+        writeCalls++;
+        string hexstr = "";
+        pHex(data, len, hexstr);
+        PrintThread{}<<"rnd:CSHA512:Write:h="<<name<<", id="<<instanceNum
+        <<", rCalls="<<resetCalls<<", wCalls="<<writeCalls<<", fCalls="<<finalizeCalls 
+        <<", s="<<source<<", len="<<len<<", d="<<hexstr<<endl;
+    }
+
     const unsigned char* end = data + len;
     size_t bufsize = bytes % 128;
     if (bufsize && bufsize + len >= 128) {
@@ -167,18 +211,31 @@ CSHA512& CSHA512::Write(const unsigned char* data, size_t len)
         data += 128 - bufsize;
         sha512::Transform(s, buf);
         bufsize = 0;
+        if (name != "Strengthen.inner_hasher")
+        {
+            // string statesstr = "";
+            // pState64(s, statesstr);
+            // cout << ", state="<<statesstr;
+        }
     }
     while (end - data >= 128) {
         // Process full chunks directly from the source.
         sha512::Transform(s, data);
         data += 128;
         bytes += 128;
+        if (name != "Strengthen.inner_hasher") 
+        {
+            // string statesstr = "";
+            // pState64(s, statesstr);
+            // cout << ", state="<<statesstr;
+        }
     }
     if (end > data) {
         // Fill the buffer with what remains.
         memcpy(buf + bufsize, data, end - data);
         bytes += end - data;
     }
+    // if (name != "Strengthen.inner_hasher") cout << endl;
     return *this;
 }
 
@@ -187,8 +244,8 @@ void CSHA512::Finalize(unsigned char hash[OUTPUT_SIZE])
     static const unsigned char pad[128] = {0x80};
     unsigned char sizedesc[16] = {0x00};
     WriteBE64(sizedesc + 8, bytes << 3);
-    Write(pad, 1 + ((239 - (bytes % 128)) % 128));
-    Write(sizedesc, 16);
+    Write(pad, 1 + ((239 - (bytes % 128)) % 128), "Finalize.Padding.1");
+    Write(sizedesc, 16, "Finalize.Padding.2");
     WriteBE64(hash, s[0]);
     WriteBE64(hash + 8, s[1]);
     WriteBE64(hash + 16, s[2]);
@@ -197,10 +254,28 @@ void CSHA512::Finalize(unsigned char hash[OUTPUT_SIZE])
     WriteBE64(hash + 40, s[5]);
     WriteBE64(hash + 48, s[6]);
     WriteBE64(hash + 56, s[7]);
+
+    finalizeCalls++;
+    if (name != "Strengthen.inner_hasher")
+    {
+        string hexstr = "";
+        pHex(hash, OUTPUT_SIZE, hexstr);
+
+        PrintThread{}<<"rnd:CSHA512:Finalize:h="<<name<<", id="<<instanceNum
+        <<", rCalls="<<resetCalls<<", wCalls="<<writeCalls<<", fCalls="<<finalizeCalls
+        <<", hash="<<hexstr<<endl;
+    }
 }
 
 CSHA512& CSHA512::Reset()
 {
+    resetCalls++;
+    if (name != "Strengthen.inner_hasher")
+    {
+        PrintThread{}<<"rnd:CSHA512:Reset:h="<<name<<", id="<<instanceNum
+        <<", rCalls="<<resetCalls<<", wCalls="<<writeCalls<<", fCalls="<<finalizeCalls 
+        <<endl;
+    }
     bytes = 0;
     sha512::Initialize(s);
     return *this;

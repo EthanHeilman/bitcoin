@@ -8,6 +8,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include <string>
+#include <iostream>
+using namespace std;
+
 /** A hasher class for SHA-512. */
 class CSHA512
 {
@@ -16,11 +20,19 @@ private:
     unsigned char buf[128];
     uint64_t bytes;
 
+    string name;
+    int writeCalls = 0;
+    int resetCalls = 0;
+    int finalizeCalls = 0;
+    int instanceNum = -1;
+
+
 public:
     static constexpr size_t OUTPUT_SIZE = 64;
-
     CSHA512();
+    CSHA512(string new_name);
     CSHA512& Write(const unsigned char* data, size_t len);
+    CSHA512& Write(const unsigned char* data, size_t len, string source);
     void Finalize(unsigned char hash[OUTPUT_SIZE]);
     CSHA512& Reset();
     uint64_t Size() const { return bytes; }

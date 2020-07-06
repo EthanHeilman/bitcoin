@@ -87,7 +87,7 @@ void RandAddSeedPerfmon(CSHA512& hasher)
     }
     RegCloseKey(HKEY_PERFORMANCE_DATA);
     if (ret == ERROR_SUCCESS) {
-        hasher.Write(vData.data(), nSize);
+        hasher.Write(vData.data(), nSize, "RandAddSeedPerfmon");
         memory_cleanse(vData.data(), nSize);
     } else {
         // Performance data is only a best-effort attempt at improving the
@@ -111,7 +111,7 @@ CSHA512& operator<<(CSHA512& hasher, const T& data) {
     static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
     static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
     static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
-    hasher.Write((const unsigned char*)&data, sizeof(data));
+    hasher.Write((const unsigned char*)&data, sizeof(data), "<<");
     return hasher;
 }
 
@@ -121,13 +121,13 @@ void AddSockaddr(CSHA512& hasher, const struct sockaddr *addr)
     if (addr == nullptr) return;
     switch (addr->sa_family) {
     case AF_INET:
-        hasher.Write((const unsigned char*)addr, sizeof(sockaddr_in));
+        hasher.Write((const unsigned char*)addr, sizeof(sockaddr_in), "sockaddr");
         break;
     case AF_INET6:
-        hasher.Write((const unsigned char*)addr, sizeof(sockaddr_in6));
+        hasher.Write((const unsigned char*)addr, sizeof(sockaddr_in6), "sockaddr6");
         break;
     default:
-        hasher.Write((const unsigned char*)&addr->sa_family, sizeof(addr->sa_family));
+        hasher.Write((const unsigned char*)&addr->sa_family, sizeof(addr->sa_family), "sa_family");
     }
 }
 
@@ -139,11 +139,14 @@ void AddFile(CSHA512& hasher, const char *path)
     if (f != -1) {
         unsigned char fbuf[4096];
         int n;
-        hasher.Write((const unsigned char*)&f, sizeof(f));
+        string rndlogpathstart = "AddFile-" + string(path);
+
+        hasher.Write((const unsigned char*)&f, sizeof(f), rndlogpathstart);
         if (fstat(f, &sb) == 0) hasher << sb;
         do {
             n = read(f, fbuf, sizeof(fbuf));
-            if (n > 0) hasher.Write(fbuf, n);
+            string rndlogpathcont = "AddFile-" + string(path) + "-"+ to_string(total);
+            if (n > 0) hasher.Write(fbuf, n, rndlogpathcont);
             total += n;
             /* not bothering with EINTR handling. */
         } while (n == sizeof(fbuf) && total < 1048576); // Read only the first 1 Mbyte
@@ -155,7 +158,8 @@ void AddPath(CSHA512& hasher, const char *path)
 {
     struct stat sb = {};
     if (stat(path, &sb) == 0) {
-        hasher.Write((const unsigned char*)path, strlen(path) + 1);
+        string rndlogpathcont = "AddPath-" + string(path);
+        hasher.Write((const unsigned char*)path, strlen(path) + 1, rndlogpathcont);
         hasher << sb;
     }
 }
@@ -171,10 +175,10 @@ void AddSysctl(CSHA512& hasher)
     int ret = sysctl(CTL, sizeof...(S), buffer, &siz, nullptr, 0);
     if (ret == 0 || (ret == -1 && errno == ENOMEM)) {
         hasher << sizeof(CTL);
-        hasher.Write((const unsigned char*)CTL, sizeof(CTL));
+        hasher.Write((const unsigned char*)CTL, sizeof(CTL), "AddSysctl.1");
         if (siz > sizeof(buffer)) siz = sizeof(buffer);
         hasher << siz;
-        hasher.Write(buffer, siz);
+        hasher.Write(buffer, siz, "AddSysctl.2");
     }
 }
 #endif
@@ -184,6 +188,7 @@ void inline AddCPUID(CSHA512& hasher, uint32_t leaf, uint32_t subleaf, uint32_t&
 {
     GetCPUID(leaf, subleaf, ax, bx, cx, dx);
     hasher << leaf << subleaf << ax << bx << cx << dx;
+    cout << "rnd:note AddCPUID hasher << leaf << subleaf << ax << bx << cx << dx"<<endl;
 }
 
 void AddAllCPUID(CSHA512& hasher)
@@ -231,34 +236,52 @@ void RandAddDynamicEnv(CSHA512& hasher)
     FILETIME ftime;
     GetSystemTimeAsFileTime(&ftime);
     hasher << ftime;
+    cout << "rnd:note GetSystemTimeAsFileTime hasher << ftime"<<endl;
+
 #else
     struct timespec ts = {};
 #    ifdef CLOCK_MONOTONIC
     clock_gettime(CLOCK_MONOTONIC, &ts);
     hasher << ts;
+    cout << "rnd:note clock_gettime(CLOCK_MONOTONIC hasher << ts"<<endl;
+
 #    endif
 #    ifdef CLOCK_REALTIME
     clock_gettime(CLOCK_REALTIME, &ts);
     hasher << ts;
+    cout << "rnd:note clock_gettime(CLOCK_REALTIME hasher << ts"<<endl;
+
 #    endif
 #    ifdef CLOCK_BOOTTIME
     clock_gettime(CLOCK_BOOTTIME, &ts);
     hasher << ts;
+    cout << "rnd:note clock_gettime(CLOCK_BOOTTIME hasher << ts"<<endl;
 #    endif
     // gettimeofday is available on all UNIX systems, but only has microsecond precision.
     struct timeval tv = {};
     gettimeofday(&tv, nullptr);
     hasher << tv;
+    cout << "rnd:note gettimeofday hasher << tv"<<endl;
+
 #endif
     // Probably redundant, but also use all the clocks C++11 provides:
     hasher << std::chrono::system_clock::now().time_since_epoch().count();
+    cout << "rnd:note gstd::chrono::system_clock::now().time_since_epoch().count()"<<endl;
+
     hasher << std::chrono::steady_clock::now().time_since_epoch().count();
+    cout << "rnd:note gstd::chrono::system_clock::now().time_since_epoch().count()"<<endl;
+
     hasher << std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    cout << "rnd:note gstd::chrono::system_clock::now().time_since_epoch().count()"<<endl;
+
 
 #ifndef WIN32
     // Current resource usage.
     struct rusage usage = {};
-    if (getrusage(RUSAGE_SELF, &usage) == 0) hasher << usage;
+    if (getrusage(RUSAGE_SELF, &usage) == 0){
+        hasher << usage;
+        cout << "rnd:note getrusage(RUSAGE_SELF hasher << usage"<<endl;
+    }
 #endif
 
 #ifdef __linux__
@@ -300,11 +323,14 @@ void RandAddDynamicEnv(CSHA512& hasher)
     // Stack and heap location
     void* addr = malloc(4097);
     hasher << &addr << addr;
+    cout << "rnd:note stack and heap void* addr = malloc(4097); asher << &addr << addr;"<<endl;
     free(addr);
 }
 
 void RandAddStaticEnv(CSHA512& hasher)
 {
+    cout << "rnd:note start RandAddStaticEnv"<<endl;
+
     // Some compile-time static properties
     hasher << (CHAR_MIN < 0) << sizeof(void*) << sizeof(long) << sizeof(int);
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && defined(__GNUC_PATCHLEVEL__)
@@ -319,7 +345,7 @@ void RandAddStaticEnv(CSHA512& hasher)
 #endif
 #ifdef __VERSION__
     const char* COMPILER_VERSION = __VERSION__;
-    hasher.Write((const unsigned char*)COMPILER_VERSION, strlen(COMPILER_VERSION) + 1);
+    hasher.Write((const unsigned char*)COMPILER_VERSION, strlen(COMPILER_VERSION) + 1, "COMPILER_VERSION");
 #endif
 
     // Bitcoin client version
@@ -335,15 +361,15 @@ void RandAddStaticEnv(CSHA512& hasher)
 #  endif
 #  ifdef AT_RANDOM
     const unsigned char* random_aux = (const unsigned char*)getauxval(AT_RANDOM);
-    if (random_aux) hasher.Write(random_aux, 16);
+    if (random_aux) hasher.Write(random_aux, 16, "getauxval(AT_RANDOM)");
 #  endif
 #  ifdef AT_PLATFORM
     const char* platform_str = (const char*)getauxval(AT_PLATFORM);
-    if (platform_str) hasher.Write((const unsigned char*)platform_str, strlen(platform_str) + 1);
+    if (platform_str) hasher.Write((const unsigned char*)platform_str, strlen(platform_str) + 1, "getauxval(AT_PLATFORM)");
 #  endif
 #  ifdef AT_EXECFN
     const char* exec_str = (const char*)getauxval(AT_EXECFN);
-    if (exec_str) hasher.Write((const unsigned char*)exec_str, strlen(exec_str) + 1);
+    if (exec_str) hasher.Write((const unsigned char*)exec_str, strlen(exec_str) + 1, "getauxval(AT_EXECFN)");
 #  endif
 #endif // __linux__
 
@@ -353,11 +379,12 @@ void RandAddStaticEnv(CSHA512& hasher)
 
     // Memory locations
     hasher << &hasher << &RandAddStaticEnv << &malloc << &errno << &environ;
+    cout << "rnd:note Memory locations &hasher << &RandAddStaticEnv << &malloc << &errno << &environ"<<endl;
 
     // Hostname
     char hname[256];
     if (gethostname(hname, 256) == 0) {
-        hasher.Write((const unsigned char*)hname, strnlen(hname, 256));
+        hasher.Write((const unsigned char*)hname, strnlen(hname, 256), "gethostname");
     }
 
 #if HAVE_DECL_GETIFADDRS
@@ -366,9 +393,9 @@ void RandAddStaticEnv(CSHA512& hasher)
     getifaddrs(&ifad);
     struct ifaddrs *ifit = ifad;
     while (ifit != NULL) {
-        hasher.Write((const unsigned char*)&ifit, sizeof(ifit));
-        hasher.Write((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1);
-        hasher.Write((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags));
+        hasher.Write((const unsigned char*)&ifit, sizeof(ifit), "getifaddrs");
+        hasher.Write((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1, "getifaddrs.ifa_name");
+        hasher.Write((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags), "getifaddrs.ifa_flags");
         AddSockaddr(hasher, ifit->ifa_addr);
         AddSockaddr(hasher, ifit->ifa_netmask);
         AddSockaddr(hasher, ifit->ifa_dstaddr);
@@ -381,11 +408,11 @@ void RandAddStaticEnv(CSHA512& hasher)
     // UNIX kernel information
     struct utsname name;
     if (uname(&name) != -1) {
-        hasher.Write((const unsigned char*)&name.sysname, strlen(name.sysname) + 1);
-        hasher.Write((const unsigned char*)&name.nodename, strlen(name.nodename) + 1);
-        hasher.Write((const unsigned char*)&name.release, strlen(name.release) + 1);
-        hasher.Write((const unsigned char*)&name.version, strlen(name.version) + 1);
-        hasher.Write((const unsigned char*)&name.machine, strlen(name.machine) + 1);
+        hasher.Write((const unsigned char*)&name.sysname, strlen(name.sysname) + 1, "name.sysname");
+        hasher.Write((const unsigned char*)&name.nodename, strlen(name.nodename) + 1, "name.nodename");
+        hasher.Write((const unsigned char*)&name.release, strlen(name.release) + 1, "name.release");
+        hasher.Write((const unsigned char*)&name.version, strlen(name.version) + 1, "name.version");
+        hasher.Write((const unsigned char*)&name.machine, strlen(name.machine) + 1, "name.machine");
     }
 
     /* Path and filesystem provided data */
@@ -485,15 +512,21 @@ void RandAddStaticEnv(CSHA512& hasher)
     // Env variables
     if (environ) {
         for (size_t i = 0; environ[i]; ++i) {
-            hasher.Write((const unsigned char*)environ[i], strlen(environ[i]));
+            string envar = string(environ[i]);
+            hasher.Write((const unsigned char*)environ[i], strlen(environ[i]), "Env variables");
         }
     }
 
     // Process, thread, user, session, group, ... ids.
 #ifdef WIN32
     hasher << GetCurrentProcessId() << GetCurrentThreadId();
+    cout << "rnd:note GetCurrentProcessId() << GetCurrentThreadId()"<<endl;
+
+
 #else
     hasher << getpid() << getppid() << getsid(0) << getpgid(0) << getuid() << geteuid() << getgid() << getegid();
+    cout << "getpid() << getppid() << getsid(0) << getpgid(0) << getuid() << geteuid() << getgid() << getegid()"<<endl;
 #endif
     hasher << std::this_thread::get_id();
+    cout << "std::this_thread::get_id()"<<endl;
 }
