@@ -6,22 +6,11 @@ $(package)_file_name=qtbase-$($(package)_suffix)
 $(package)_sha256_hash=0c42c799aa7c89e479a07c451bf5a301e291266ba789e81afc18f95049524edc
 $(package)_linux_dependencies=freetype fontconfig libxcb libxkbcommon libxcb_util libxcb_util_render libxcb_util_keysyms libxcb_util_image libxcb_util_wm
 $(package)_qt_libs=corelib network widgets gui plugins testlib
-$(package)_linguist_tools = lrelease lupdate lconvert
-$(package)_patches = qt.pro
-$(package)_patches += qttools_src.pro
-$(package)_patches += mac-qmake.conf
-$(package)_patches += fix_qt_pkgconfig.patch
-$(package)_patches += no-xlib.patch
-$(package)_patches += dont_hardcode_x86_64.patch
-$(package)_patches += fix_montery_include.patch
-$(package)_patches += fix_android_jni_static.patch
-$(package)_patches += dont_hardcode_pwd.patch
-$(package)_patches += qtbase-moc-ignore-gcc-macro.patch
-$(package)_patches += use_android_ndk23.patch
-$(package)_patches += rcc_hardcode_timestamp.patch
-$(package)_patches += duplicate_lcqpafonts.patch
-$(package)_patches += fast_fixed_dtoa_no_optimize.patch
-$(package)_patches += guix_cross_lib_path.patch
+$(package)_patches=fix_qt_pkgconfig.patch mac-qmake.conf fix_configure_mac.patch fix_no_printer.patch
+$(package)_patches+= fix_rcc_determinism.patch fix_riscv64_arch.patch xkb-default.patch no-xlib.patch
+$(package)_patches+= fix_android_qmake_conf.patch fix_android_jni_static.patch dont_hardcode_pwd.patch
+$(package)_patches+= freetype_back_compat.patch drop_lrelease_dependency.patch fix_powerpc_libpng.patch
+$(package)_patches+= fix_qpainter_non_determinism.patch
 
 $(package)_qttranslations_file_name=qttranslations-$($(package)_suffix)
 $(package)_qttranslations_sha256_hash=c92af4171397a0ed272330b4fa0669790fcac8d050b07c8b8cc565ebeba6735e
@@ -236,20 +225,12 @@ endef
 #
 # 5. In clang.conf, swap out clang & clang++, for our compiler + flags. See #17466.
 define $(package)_preprocess_cmds
-  cp $($(package)_patch_dir)/qt.pro qt.pro && \
-  cp $($(package)_patch_dir)/qttools_src.pro qttools/src/src.pro && \
-  patch -p1 -i $($(package)_patch_dir)/dont_hardcode_pwd.patch && \
-  patch -p1 -i $($(package)_patch_dir)/fix_qt_pkgconfig.patch && \
-  patch -p1 -i $($(package)_patch_dir)/fix_android_jni_static.patch && \
-  patch -p1 -i $($(package)_patch_dir)/no-xlib.patch && \
-  patch -p1 -i $($(package)_patch_dir)/dont_hardcode_x86_64.patch && \
-  patch -p1 -i $($(package)_patch_dir)/qtbase-moc-ignore-gcc-macro.patch && \
-  patch -p1 -i $($(package)_patch_dir)/fix_montery_include.patch && \
-  patch -p1 -i $($(package)_patch_dir)/use_android_ndk23.patch && \
-  patch -p1 -i $($(package)_patch_dir)/rcc_hardcode_timestamp.patch && \
-  patch -p1 -i $($(package)_patch_dir)/duplicate_lcqpafonts.patch && \
-  patch -p1 -i $($(package)_patch_dir)/fast_fixed_dtoa_no_optimize.patch && \
-  patch -p1 -i $($(package)_patch_dir)/guix_cross_lib_path.patch && \
+  patch -p1 -i $($(package)_patch_dir)/freetype_back_compat.patch && \
+  patch -p1 -i $($(package)_patch_dir)/fix_powerpc_libpng.patch && \
+  patch -p1 -i $($(package)_patch_dir)/fix_qpainter_non_determinism.patch &&\
+  sed -i.old "s|updateqm.commands = \$$$$\$$$$LRELEASE|updateqm.commands = $($(package)_extract_dir)/qttools/bin/lrelease|" qttranslations/translations/translations.pro && \
+  patch -p1 -i $($(package)_patch_dir)/drop_lrelease_dependency.patch && \
+  patch -p1 -i $($(package)_patch_dir)/dont_hardcode_pwd.patch &&\
   mkdir -p qtbase/mkspecs/macx-clang-linux &&\
   cp -f qtbase/mkspecs/macx-clang/qplatformdefs.h qtbase/mkspecs/macx-clang-linux/ &&\
   cp -f $($(package)_patch_dir)/mac-qmake.conf qtbase/mkspecs/macx-clang-linux/qmake.conf && \
