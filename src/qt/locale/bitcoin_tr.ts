@@ -3,7 +3,7 @@
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation type="unfinished">Adresi veya etiketi düzenlemek için sağ tıklayın</translation>
+        <translation>Adres veya etiketi düzenlemek için sağ tıklayınız.</translation>
     </message>
     <message>
         <source>Create a new address</source>
@@ -105,6 +105,10 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>Exporting Failed</source>
         <translation type="unfinished">Dışa Aktarım Başarısız Oldu</translation>
+    </message>
+    <message>
+        <source>There was an error trying to save the address list to %1. Please try again.</source>
+        <translation>Adres listesinin %1 konumuna kaydedilmesi sırasında bir hata meydana geldi. Lütfen tekrar deneyin.</translation>
     </message>
 </context>
 <context>
@@ -1566,10 +1570,6 @@ Cüzdan kilidini aç.</translation>
     <message>
         <source>Create</source>
         <translation type="unfinished">Oluştur</translation>
-    </message>
-    <message>
-        <source>Compiled without sqlite support (required for descriptor wallets)</source>
-        <translation type="unfinished">Sqlite desteği olmadan derlenmiş. (tanımlayıcı cüzdanlar için gereklidir)</translation>
     </message>
     </context>
 <context>
@@ -3801,30 +3801,56 @@ Cüzdan kilidini aç.</translation>
         <source>Backup Wallet</source>
         <translation type="unfinished">Cüzdanı Yedekle</translation>
     </message>
+    </context>
+<context>
+    <name>bitcoin-core</name>
     <message>
-        <source>Wallet Data</source>
-        <extracomment>Name of the wallet data file format.</extracomment>
-        <translation type="unfinished">Cüzdan Verisi</translation>
+        <source>Verifying wallet(s)...</source>
+        <translation>Cüzdan(lar) kontrol ediliyor...</translation>
     </message>
     <message>
-        <source>Backup Failed</source>
-        <translation type="unfinished">Yedekleme Başarısız</translation>
+        <source>%s is set very high!</source>
+        <translation>%s çok yüksek ayarlanmış!</translation>
     </message>
     <message>
-        <source>There was an error trying to save the wallet data to %1.</source>
-        <translation type="unfinished">Cüzdan verisini %1'e kaydederken hata oluştu.</translation>
+        <source>Starting network threads...</source>
+        <translation>Ağ dizisi başlatılıyor...</translation>
     </message>
     <message>
-        <source>Backup Successful</source>
-        <translation type="unfinished">Yedekleme Başarılı</translation>
+        <source>The wallet will avoid paying less than the minimum relay fee.</source>
+        <translation>Cüzdan en az aktarma ücretinden daha az ödeme yapmaktan sakınacaktır.</translation>
     </message>
     <message>
-        <source>The wallet data was successfully saved to %1.</source>
-        <translation type="unfinished">Cüzdan verisi %1'e kaydedildi.</translation>
+        <source>This is the minimum transaction fee you pay on every transaction.</source>
+        <translation>Bu her işlemde ödeceğiniz en düşük işlem ücretidir.</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">İptal</translation>
+        <source>This is the transaction fee you will pay if you send a transaction.</source>
+        <translation>Eğer bir gönderme işlemi yaparsanız ödeyeceğiniz işlem ücreti budur.</translation>
+    </message>
+    <message>
+        <source>Transaction amounts must not be negative</source>
+        <translation>İşlem tutarı negatif olmamalıdır.</translation>
+    </message>
+    <message>
+        <source>Transaction must have at least one recipient</source>
+        <translation>İşlem en az bir adet alıcıya sahip olmalı.</translation>
+    </message>
+    <message>
+        <source>Insufficient funds</source>
+        <translation>Yetersiz bakiye</translation>
+    </message>
+    <message>
+        <source>Loading wallet...</source>
+        <translation>Cüzdan yükleniyor...</translation>
+    </message>
+    <message>
+        <source>Rescanning...</source>
+        <translation>Yeniden taranıyor...</translation>
+    </message>
+    <message>
+        <source>Done loading</source>
+        <translation>Yükleme tamamlandı.</translation>
     </message>
 </context>
 </TS>

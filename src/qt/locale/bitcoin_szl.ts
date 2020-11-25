@@ -1717,7 +1717,114 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Pociep</translation>
+        <translation>Pociep</translation>
+    </message>
+</context>
+<context>
+    <name>bitcoin-core</name>
+    <message>
+        <source>The %s developers</source>
+        <translation>Twōrcy %s</translation>
+    </message>
+    <message>
+        <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
+        <translation>Pozōr: Nec niy wydŏwŏ sie w połni zgodliwy! Niykerzi grubiŏrze wydajōm sie doświadczać niyprzileżytości.</translation>
+    </message>
+    <message>
+        <source>Copyright (C) %i-%i</source>
+        <translation>Copyright (C) %i-%i</translation>
+    </message>
+    <message>
+        <source>Error loading %s</source>
+        <translation>Feler wgrŏwaniŏ %s</translation>
+    </message>
+    <message>
+        <source>Error loading %s: Private keys can only be disabled during creation</source>
+        <translation>Feler wgrŏwaniŏ %s: Klucze prywatne mogōm być zastawiōne ino w czasie tworzyniŏ</translation>
+    </message>
+    <message>
+        <source>Error loading %s: Wallet corrupted</source>
+        <translation>Feler wgrŏwaniŏ %s: Portmanyj poprzniōny</translation>
+    </message>
+    <message>
+        <source>Error loading %s: Wallet requires newer version of %s</source>
+        <translation>Feler wgrŏwaniŏ %s: Portmanyj fołdruje nowszyj wersyje %s</translation>
+    </message>
+    <message>
+        <source>Error loading block database</source>
+        <translation>Feler wgrŏwaniŏ bazy blokōw</translation>
+    </message>
+    <message>
+        <source>Loading P2P addresses...</source>
+        <translation>Wgrŏwanie adres P2P...</translation>
+    </message>
+    <message>
+        <source>Loading banlist...</source>
+        <translation>Wgrŏwanie wykŏzu zaszperowanych...</translation>
+    </message>
+    <message>
+        <source>Unsupported logging category %s=%s.</source>
+        <translation>Niypodpiyranŏ kategoryjŏ registrowaniŏ %s=%s.</translation>
+    </message>
+    <message>
+        <source>Verifying blocks...</source>
+        <translation>Weryfikacyjŏ blokōw...</translation>
+    </message>
+    <message>
+        <source>Error: Disk space is low for %s</source>
+        <translation>Feler: Za mało wolnego placu na dysku dlŏ %s</translation>
+    </message>
+    <message>
+        <source>Signing transaction failed</source>
+        <translation>Szkryftniyńcie transakcyji niy podarziło sie</translation>
+    </message>
+    <message>
+        <source>This is experimental software.</source>
+        <translation>To je eksperymyntalny softwer.</translation>
+    </message>
+    <message>
+        <source>Transaction too large</source>
+        <translation>Transakcyjŏ za srogŏ</translation>
+    </message>
+    <message>
+        <source>Verifying wallet(s)...</source>
+        <translation>Weryfikacyjŏ portmanyja(ōw)...</translation>
+    </message>
+    <message>
+        <source>Warning: unknown new rules activated (versionbit %i)</source>
+        <translation>Pozōr: aktywowano było niyznōme nowe prawidła (versionbit %i)</translation>
+    </message>
+    <message>
+        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
+        <translation>Imyntnŏ dugość kety wersyje (%i) przekrŏczŏ maksymalnõ dopuszczalnõ dugość (%i). Zmyńsz wielość abo miara parametra uacomment.</translation>
+    </message>
+    <message>
+        <source>Starting network threads...</source>
+        <translation>Sztartowanie wōntkōw necowych...</translation>
+    </message>
+    <message>
+        <source>Unknown network specified in -onlynet: '%s'</source>
+        <translation>Niyznōmy nec ôkryślōny w -onlynet: '%s'</translation>
+    </message>
+    <message>
+        <source>Warning: Private keys detected in wallet {%s} with disabled private keys</source>
+        <translation>Pozōr: Wykryto było klucze prywatne w portmanyju {%s} kery mŏ zastawiōne klucze prywatne</translation>
+    </message>
+    <message>
+        <source>Loading block index...</source>
+        <translation>Wgrŏwanie indeksu blokōw...</translation>
+    </message>
+    <message>
+        <source>Loading wallet...</source>
+        <translation>Wgrŏwanie portmanyja...</translation>
+    </message>
+    <message>
+        <source>Rescanning...</source>
+        <translation>Pōnowne skanowanie</translation>
+    </message>
+    <message>
+        <source>Done loading</source>
+        <translation>Wgrŏwanie zakōńczōne</translation>
     </message>
 </context>
 </TS>

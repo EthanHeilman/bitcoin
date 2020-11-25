@@ -947,9 +947,114 @@ Sinatzea 'legacy' motako helbideekin soilik da posible</translation>
         <translation type="unfinished">Kargatu diruzorroak</translation>
     </message>
     <message>
-        <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
-        <translation type="unfinished">Diruzorroak kargatzen...</translation>
+        <source>Wallet Name</source>
+        <translation>Diruzorroaren izena</translation>
+    </message>
+    <message>
+        <source>Encrypt Wallet</source>
+        <translation>Diruzorroa enkriptatu</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Sortu</translation>
+    </message>
+    </context>
+<context>
+    <name>EditAddressDialog</name>
+    <message>
+        <source>Edit Address</source>
+        <translation>Helbidea editatu</translation>
+    </message>
+    <message>
+        <source>&amp;Label</source>
+        <translation>&amp;Etiketa</translation>
+    </message>
+    <message>
+        <source>&amp;Address</source>
+        <translation>&amp;Helbidea</translation>
+    </message>
+    <message>
+        <source>New sending address</source>
+        <translation>Bidaltzeko helbide berria</translation>
+    </message>
+    <message>
+        <source>Edit receiving address</source>
+        <translation>Jasotzeko helbidea editatu</translation>
+    </message>
+    <message>
+        <source>Edit sending address</source>
+        <translation>Bidaltzeko helbidea editatu</translation>
+    </message>
+    <message>
+        <source>Could not unlock wallet.</source>
+        <translation>Ezin da diruzorroa desblokeatu.</translation>
+    </message>
+    <message>
+        <source>New key generation failed.</source>
+        <translation>Giltza berriaren sorrerak huts egin du.</translation>
+    </message>
+</context>
+<context>
+    <name>FreespaceChecker</name>
+    <message>
+        <source>name</source>
+        <translation>izena</translation>
+    </message>
+    </context>
+<context>
+    <name>HelpMessageDialog</name>
+    <message>
+        <source>version</source>
+        <translation>bertsioa</translation>
+    </message>
+    </context>
+<context>
+    <name>Intro</name>
+    <message>
+        <source>Welcome</source>
+        <translation>Ongietorri</translation>
+    </message>
+    <message>
+        <source>Welcome to %1.</source>
+        <translation>Ongietorri %1-ra</translation>
+    </message>
+    <message>
+        <source>Bitcoin</source>
+        <translation>Bitcoin</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Akatsa</translation>
+    </message>
+    </context>
+<context>
+    <name>ModalOverlay</name>
+    <message>
+        <source>Form</source>
+        <translation>Inprimakia</translation>
+    </message>
+    <message>
+        <source>Unknown...</source>
+        <translation>Ezezaguna...</translation>
+    </message>
+    <message>
+        <source>Last block time</source>
+        <translation>Azken blokearen unea</translation>
+    </message>
+    <message>
+        <source>calculating...</source>
+        <translation>kalkulatzen...</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>Izkutatu</translation>
+    </message>
+    </context>
+<context>
+    <name>OpenURIDialog</name>
+    <message>
+        <source>URI:</source>
+        <translation>URI: </translation>
     </message>
 </context>
 <context>

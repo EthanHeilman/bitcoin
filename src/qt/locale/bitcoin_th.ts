@@ -1466,10 +1466,6 @@ Signing is only possible with addresses of the type 'legacy'</translation>
         <source>Descriptor Wallet</source>
         <translation type="unfinished">ตัวอธิบาย วอลเล็ต</translation>
     </message>
-    <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first</translation>
-    </message>
     </context>
 <context>
     <name>EditAddressDialog</name>

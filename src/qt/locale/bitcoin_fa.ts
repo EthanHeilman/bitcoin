@@ -1455,9 +1455,230 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">کیف پول ها را بارگیری کنید</translation>
     </message>
     <message>
-        <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
-        <translation type="unfinished">در حال بارگیری کیف پول…</translation>
+        <source>Wallet Name</source>
+        <translation>نام کیف پول</translation>
+    </message>
+    <message>
+        <source>Encrypt the wallet. The wallet will be encrypted with a passphrase of your choice.</source>
+        <translation>کیف پول را رمز نگاری نمائید. کیف پول با کلمات رمز انتخاب خودتان رمز نگاری خواهد شد</translation>
+    </message>
+    <message>
+        <source>Encrypt Wallet</source>
+        <translation>رمز نگاری کیف پول</translation>
+    </message>
+    <message>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
+        <translation>غیر فعال کردن کلیدهای خصوصی برای این کیف پول. کیف پول هایی با کلید های خصوصی غیر فعال هیچ کلید خصوصی نداشته و نمیتوانند HD داشته باشند و یا کلید های خصوصی دارد شدنی داشته باشند. این کیف پول ها صرفاً برای رصد مناسب هستند.</translation>
+    </message>
+    <message>
+        <source>Disable Private Keys</source>
+        <translation>غیر فعال کردن کلیدهای خصوصی</translation>
+    </message>
+    <message>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
+        <translation>یک کیف پول خالی درست کنید. کیف پول های خالی در ابتدا کلید یا اسکریپت خصوصی ندارند. کلیدها و آدرسهای خصوصی می توانند وارد شوند یا بذر HD را می توان بعداً تنظیم نمود.</translation>
+    </message>
+    <message>
+        <source>Make Blank Wallet</source>
+        <translation>ساخت کیف پول خالی</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>ایجاد</translation>
+    </message>
+    </context>
+<context>
+    <name>EditAddressDialog</name>
+    <message>
+        <source>Edit Address</source>
+        <translation>ویرایش حساب</translation>
+    </message>
+    <message>
+        <source>&amp;Label</source>
+        <translation>برچسب</translation>
+    </message>
+    <message>
+        <source>The label associated with this address list entry</source>
+        <translation>برچسب مرتبط با لیست آدرس ورودی</translation>
+    </message>
+    <message>
+        <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
+        <translation>برچسب مرتبط با لیست آدرس ورودی می باشد. این می تواند فقط  برای آدرس های ارسالی اصلاح شود.</translation>
+    </message>
+    <message>
+        <source>&amp;Address</source>
+        <translation>آدرس</translation>
+    </message>
+    <message>
+        <source>New sending address</source>
+        <translation>آدرس ارسالی جدید</translation>
+    </message>
+    <message>
+        <source>Edit receiving address</source>
+        <translation>ویرایش آدرس دریافتی</translation>
+    </message>
+    <message>
+        <source>Edit sending address</source>
+        <translation>ویرایش آدرس ارسالی</translation>
+    </message>
+    <message>
+        <source>The entered address "%1" is not a valid Bitcoin address.</source>
+        <translation>آدرس وارد شده "%1" آدرس معتبر بیت کوین نیست.</translation>
+    </message>
+    <message>
+        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <translation>آدرس وارد شده "%1" در حال حاظر در دفترچه آدرس ها موجود است با برچسب "%2" .</translation>
+    </message>
+    <message>
+        <source>Could not unlock wallet.</source>
+        <translation>نمیتوان کیف پول را باز کرد.</translation>
+    </message>
+    <message>
+        <source>New key generation failed.</source>
+        <translation>تولید کلید جدید به خطا انجامید.</translation>
+    </message>
+</context>
+<context>
+    <name>FreespaceChecker</name>
+    <message>
+        <source>A new data directory will be created.</source>
+        <translation>پوشه داده جدید ساخته خواهد شد</translation>
+    </message>
+    <message>
+        <source>name</source>
+        <translation>نام</translation>
+    </message>
+    <message>
+        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <translation>این پوشه در حال حاضر وجود دارد. اگر می‌خواهید یک دایرکتوری جدید در این‌جا ایجاد کنید، %1 را اضافه کنید.</translation>
+    </message>
+    <message>
+        <source>Path already exists, and is not a directory.</source>
+        <translation>مسیر داده شده موجود است و به یک پوشه اشاره نمی‌کند.</translation>
+    </message>
+    <message>
+        <source>Cannot create data directory here.</source>
+        <translation>نمیتوان در اینجا پوشه داده ساخت.</translation>
+    </message>
+</context>
+<context>
+    <name>HelpMessageDialog</name>
+    <message>
+        <source>version</source>
+        <translation>نسخه</translation>
+    </message>
+    <message>
+        <source>About %1</source>
+        <translation>حدود %1</translation>
+    </message>
+    <message>
+        <source>Command-line options</source>
+        <translation>گزینه های خط-فرمان</translation>
+    </message>
+</context>
+<context>
+    <name>Intro</name>
+    <message>
+        <source>Welcome</source>
+        <translation>خوش آمدید</translation>
+    </message>
+    <message>
+        <source>Welcome to %1.</source>
+        <translation>به %1 خوش آمدید.</translation>
+    </message>
+    <message>
+        <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
+        <translation>از آنجا که اولین مرتبه این برنامه اجرا می‌شود، شما می‌توانید محل ذخیره داده‌های %1 را انتخاب نمایید.</translation>
+    </message>
+    <message>
+        <source>Use the default data directory</source>
+        <translation>استفاده کردن از پوشه داده پیشفرض</translation>
+    </message>
+    <message>
+        <source>Use a custom data directory:</source>
+        <translation>استفاده کردن از پوشه داده مخصوص:</translation>
+    </message>
+    <message>
+        <source>Bitcoin</source>
+        <translation>بیت کوین</translation>
+    </message>
+    <message>
+        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
+        <translation>حداقل %1 گیگابایت اطلاعات در این شاخه ذخیره خواهد شد، که به مرور زمان افزایش خواهد یافت.</translation>
+    </message>
+    <message>
+        <source>Approximately %1 GB of data will be stored in this directory.</source>
+        <translation>تقریبا %1 گیگابایت داده در این شاخه ذخیره خواهد شد.</translation>
+    </message>
+    <message>
+        <source>The wallet will also be stored in this directory.</source>
+        <translation>کیف پول هم در همین دایرکتوری ذخیره می‌شود.</translation>
+    </message>
+    <message>
+        <source>Error: Specified data directory "%1" cannot be created.</source>
+        <translation>خطا: نمی‌توان پوشه‌ای برای داده‌ها در «%1» ایجاد کرد.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>خطا</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n GB of free space available</source>
+        <translation><numerusform>%n گیگابایت از فضای موچود است</numerusform><numerusform>%n گیگابایت از فضای موچود است</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>(of %n GB needed)</source>
+        <translation><numerusform>(از %n گیگابایت مورد نیاز)</numerusform><numerusform>(از %n گیگابایت مورد نیاز)</numerusform></translation>
+    </message>
+    </context>
+<context>
+    <name>ModalOverlay</name>
+    <message>
+        <source>Form</source>
+        <translation>فرم</translation>
+    </message>
+    <message>
+        <source>Number of blocks left</source>
+        <translation>تعداد بلوک‌های باقیمانده</translation>
+    </message>
+    <message>
+        <source>Unknown...</source>
+        <translation>ناشناس...</translation>
+    </message>
+    <message>
+        <source>Last block time</source>
+        <translation>زمان آخرین بلوک</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation>پیشرفت</translation>
+    </message>
+    <message>
+        <source>Progress increase per hour</source>
+        <translation>سرعت افزایش پیشرفت بر ساعت</translation>
+    </message>
+    <message>
+        <source>calculating...</source>
+        <translation>در حال محاسبه...</translation>
+    </message>
+    <message>
+        <source>Estimated time left until synced</source>
+        <translation>زمان تقریبی باقی‌مانده تا همگام شدن</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>پنهان کردن</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation>خروج</translation>
+    </message>
+    </context>
+<context>
+    <name>OpenURIDialog</name>
+    <message>
+        <source>URI:</source>
+        <translation>آدرس:</translation>
     </message>
 </context>
 <context>
@@ -3982,7 +4203,215 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">لغو</translation>
+        <translation>لغو</translation>
+    </message>
+</context>
+<context>
+    <name>bitcoin-core</name>
+    <message>
+        <source>The %s developers</source>
+        <translation>%s توسعه دهندگان</translation>
+    </message>
+    <message>
+        <source>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</source>
+        <translation>این یک نسخه ی آزمایشی است - با مسئولیت خودتان از آن استفاده کنید -  آن را در معدن و بازرگانی بکار نگیرید.</translation>
+    </message>
+    <message>
+        <source>Change index out of range</source>
+        <translation>تغییر دادن اندیس خارج از دامنه</translation>
+    </message>
+    <message>
+        <source>Copyright (C) %i-%i</source>
+        <translation>کپی رایت (C) %i-%i</translation>
+    </message>
+    <message>
+        <source>Corrupted block database detected</source>
+        <translation>یک پایگاه داده ی بلوک خراب یافت شد</translation>
+    </message>
+    <message>
+        <source>Do you want to rebuild the block database now?</source>
+        <translation>آیا میخواهید الان پایگاه داده بلاک را بازسازی کنید؟</translation>
+    </message>
+    <message>
+        <source>Error initializing block database</source>
+        <translation>خطا در آماده سازی پایگاه داده ی بلوک</translation>
+    </message>
+    <message>
+        <source>Error loading %s</source>
+        <translation>خطا بازگذاری %s</translation>
+    </message>
+    <message>
+        <source>Error loading block database</source>
+        <translation>خطا در بارگذاری پایگاه داده بلاک block</translation>
+    </message>
+    <message>
+        <source>Error opening block database</source>
+        <translation>خطا در بازکردن پایگاه داده بلاک block</translation>
+    </message>
+    <message>
+        <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
+        <translation>شنیدن هر گونه درگاه انجام پذیر نیست. ازlisten=0  برای اینکار استفاده کیند.</translation>
+    </message>
+    <message>
+        <source>Importing...</source>
+        <translation>در حال وارد کردن...</translation>
+    </message>
+    <message>
+        <source>Invalid amount for -%s=&lt;amount&gt;: '%s'</source>
+        <translation>میزان نامعتبر برای  -%s=&lt;amount&gt;: '%s'</translation>
+    </message>
+    <message>
+        <source>Upgrading txindex database</source>
+        <translation>ارتقا دادن پایگاه داده اندیس تراکنش ها یا txindex</translation>
+    </message>
+    <message>
+        <source>Loading P2P addresses...</source>
+        <translation>در حال بارگذاری آدرس های همتا-به-همتا یا P2P</translation>
+    </message>
+    <message>
+        <source>Loading banlist...</source>
+        <translation>در حال بارگذاری لیست بن...</translation>
+    </message>
+    <message>
+        <source>Not enough file descriptors available.</source>
+        <translation>توصیفگرهای فایل به اندازه کافی در دسترس نیست</translation>
+    </message>
+    <message>
+        <source>Replaying blocks...</source>
+        <translation>در حال بازبینی بلوک‌ها...</translation>
+    </message>
+    <message>
+        <source>The source code is available from %s.</source>
+        <translation>سورس کد موجود است از %s.</translation>
+    </message>
+    <message>
+        <source>Unable to generate keys</source>
+        <translation>نمیتوان کلید ها را تولید کرد</translation>
+    </message>
+    <message>
+        <source>Upgrading UTXO database</source>
+        <translation>ارتقا دادن پایگاه داده UTXO</translation>
+    </message>
+    <message>
+        <source>Verifying blocks...</source>
+        <translation>در حال تایید کردن بلاک ها...</translation>
+    </message>
+    <message>
+        <source>The transaction amount is too small to send after the fee has been deducted</source>
+        <translation>مبلغ تراکنش کمتر از آن است که پس از کسر هزینه  تراکنش قابل ارسال باشد</translation>
+    </message>
+    <message>
+        <source>Error reading from database, shutting down.</source>
+        <translation>خواندن از پایگاه داده با خطا مواجه شد,در حال خاموش شدن.</translation>
+    </message>
+    <message>
+        <source>Error upgrading chainstate database</source>
+        <translation>خطا در بارگذاری پایگاه داده ها</translation>
+    </message>
+    <message>
+        <source>Invalid -proxy address or hostname: '%s'</source>
+        <translation>آدرس پراکسی یا هاست نامعتبر: ' %s'</translation>
+    </message>
+    <message>
+        <source>Signing transaction failed</source>
+        <translation>ثبت تراکنش با خطا مواجه شد</translation>
+    </message>
+    <message>
+        <source>The transaction amount is too small to pay the fee</source>
+        <translation>حجم تراکنش بسیار کم است برای پرداخت کارمزد</translation>
+    </message>
+    <message>
+        <source>This is experimental software.</source>
+        <translation>این یک نرم افزار تجربی است.</translation>
+    </message>
+    <message>
+        <source>Transaction amount too small</source>
+        <translation>حجم تراکنش خیلی کم است</translation>
+    </message>
+    <message>
+        <source>Transaction too large</source>
+        <translation>حجم تراکنش خیلی زیاد است</translation>
+    </message>
+    <message>
+        <source>Unable to generate initial keys</source>
+        <translation>نمیتوان کلید های اولیه را تولید کرد.</translation>
+    </message>
+    <message>
+        <source>Verifying wallet(s)...</source>
+        <translation>در حال تایید شدن کیف پول(ها)...</translation>
+    </message>
+    <message>
+        <source>Warning: unknown new rules activated (versionbit %i)</source>
+        <translation>هشدار: قوانین جدید ناشناخته‌ای فعال شده‌اند (نسخه‌بیت %i)</translation>
+    </message>
+    <message>
+        <source>This is the transaction fee you may pay when fee estimates are not available.</source>
+        <translation>این هزینه تراکنشی است که در صورت عدم وجود هزینه تخمینی، پرداخت می کنید.</translation>
+    </message>
+    <message>
+        <source>%s is set very high!</source>
+        <translation>%s بسیار بزرگ انتخاب شده است.</translation>
+    </message>
+    <message>
+        <source>Starting network threads...</source>
+        <translation>ایجاد نخ‌های شبکه ...</translation>
+    </message>
+    <message>
+        <source>This is the minimum transaction fee you pay on every transaction.</source>
+        <translation>این کمترین فی تراکنش است که در هر تراکنش پرداخت می‌نمایید.</translation>
+    </message>
+    <message>
+        <source>This is the transaction fee you will pay if you send a transaction.</source>
+        <translation>این میزان کارمزد پرداختی شما در صورت ایجاد تراکنش انتقال میباشد.</translation>
+    </message>
+    <message>
+        <source>Transaction amounts must not be negative</source>
+        <translation>مقدار تراکنش نمی‌تواند منفی باشد.</translation>
+    </message>
+    <message>
+        <source>Transaction has too long of a mempool chain</source>
+        <translation>تراکنش بیش از حد طولانی از یک زنجیر مهر و موم شده است
+</translation>
+    </message>
+    <message>
+        <source>Transaction must have at least one recipient</source>
+        <translation>تراکنش باید حداقل یک دریافت کننده داشته باشد</translation>
+    </message>
+    <message>
+        <source>Unknown network specified in -onlynet: '%s'</source>
+        <translation>شبکه مشخص شده غیرقابل شناسایی در onlynet: '%s'</translation>
+    </message>
+    <message>
+        <source>Insufficient funds</source>
+        <translation>وجوه ناکافی</translation>
+    </message>
+    <message>
+        <source>Warning: Private keys detected in wallet {%s} with disabled private keys</source>
+        <translation>هشدار: کلید های خصوصی در کیف پول شما شناسایی شده است { %s} به همراه کلید های خصوصی غیر فعال</translation>
+    </message>
+    <message>
+        <source>Cannot write to data directory '%s'; check permissions.</source>
+        <translation>نمیتواند پوشه داده ها را بنویسد ' %s';دسترسی ها را بررسی کنید.</translation>
+    </message>
+    <message>
+        <source>Loading block index...</source>
+        <translation>لود شدن نمایه بلاکها..</translation>
+    </message>
+    <message>
+        <source>Loading wallet...</source>
+        <translation>wallet در حال لود شدن است...</translation>
+    </message>
+    <message>
+        <source>Cannot downgrade wallet</source>
+        <translation>قابلیت برگشت به نسخه قبلی برای wallet امکان پذیر نیست</translation>
+    </message>
+    <message>
+        <source>Rescanning...</source>
+        <translation>اسکنِ دوباره...</translation>
+    </message>
+    <message>
+        <source>Done loading</source>
+        <translation>اتمام لود شدن</translation>
     </message>
 </context>
 </TS>
