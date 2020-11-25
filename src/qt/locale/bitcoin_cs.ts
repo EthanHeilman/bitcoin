@@ -4353,6 +4353,10 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <source>Amount</source>
         <translation type="unfinished">Částka</translation>
     </message>
+    <message>
+        <source>Close all wallets</source>
+        <translation>Zavřít všechny peněženky</translation>
+    </message>
     </context>
 <context>
     <name>TransactionDescDialog</name>

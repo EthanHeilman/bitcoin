@@ -1949,6 +1949,10 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
         <translation type="unfinished">Άγνωστο. Συγχρονισμός επικεφαλίδων (%1, %2%)...</translation>
     </message>
+    <message>
+        <source>Close all wallets</source>
+        <translation>Κλείσιμο όλων των πορτοφολιών</translation>
+    </message>
     </context>
 <context>
     <name>OpenURIDialog</name>

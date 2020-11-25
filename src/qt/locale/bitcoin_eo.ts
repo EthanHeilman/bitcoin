@@ -143,6 +143,10 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Montri pasfrazon</translation>
     </message>
     <message>
+        <source>Show passphrase</source>
+        <translation>Montri pasfrazon</translation>
+    </message>
+    <message>
         <source>Encrypt wallet</source>
         <translation type="unfinished">Ĉifri la monujon</translation>
     </message>
@@ -193,6 +197,26 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>Your wallet is now encrypted. </source>
         <translation type="unfinished">Via monujo ĵus estas ĉifrata.</translation>
+    </message>
+    <message>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
+        <translation>Enigi la novan pasfrazon por la monujo. &lt;br/&gt;Bonvolu uzi pasfrazon de &lt;b&gt;dek aŭ pli hazardaj signoj&lt;/b&gt;, aŭ &lt;b&gt;ok aŭ pli vortoj&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <source>Enter the old passphrase and new passphrase for the wallet.</source>
+        <translation>Enigi la malnovan pasfrazon kaj la novan pasfrazon por la monujo.</translation>
+    </message>
+    <message>
+        <source>Wallet to be encrypted</source>
+        <translation>Monujo ĉifriĝota</translation>
+    </message>
+    <message>
+        <source>Your wallet is about to be encrypted. </source>
+        <translation>Via monujo estas ĉifriĝota.</translation>
+    </message>
+    <message>
+        <source>Your wallet is now encrypted. </source>
+        <translation>Via monujo ĵus estas ĉifrata.</translation>
     </message>
     <message>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
