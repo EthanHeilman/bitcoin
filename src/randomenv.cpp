@@ -12,6 +12,7 @@
 #include <clientversion.h>
 #include <compat/cpuid.h>
 #include <crypto/sha512.h>
+#include <rng/rngsha512.h>
 #include <support/cleanse.h>
 #include <util/time.h> // for GetTime()
 #ifdef WIN32
@@ -62,7 +63,7 @@ extern char** environ;
 
 namespace {
 
-void RandAddSeedPerfmon(CSHA512& hasher)
+void RandAddSeedPerfmon(CRNGSHA512& hasher)
 {
 #ifdef WIN32
     // Seed with the entire set of perfmon data
@@ -106,32 +107,32 @@ void RandAddSeedPerfmon(CSHA512& hasher)
  * Its raw memory representation is used directly.
  */
 template<typename T>
-CSHA512& operator<<(CSHA512& hasher, const T& data) {
+CRNGSHA512& operator<<(CRNGSHA512& hasher, const T& data) {
     static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
     static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
     static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
     static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
-    hasher.Write((const unsigned char*)&data, sizeof(data));
+    hasher.Write(CEntropySource((const unsigned char*)&data, sizeof(data), "TODO:<<"), "<<");
     return hasher;
 }
 
 #ifndef WIN32
-void AddSockaddr(CSHA512& hasher, const struct sockaddr *addr)
+void AddSockaddr(CRNGSHA512& hasher, const struct sockaddr *addr)
 {
     if (addr == nullptr) return;
     switch (addr->sa_family) {
     case AF_INET:
-        hasher.Write((const unsigned char*)addr, sizeof(sockaddr_in));
+        hasher.Write(CEntropySource((const unsigned char*)addr, sizeof(sockaddr_in), "AF_INET"), "AddSockaddr");
         break;
     case AF_INET6:
-        hasher.Write((const unsigned char*)addr, sizeof(sockaddr_in6));
+        hasher.Write(CEntropySource((const unsigned char*)addr, sizeof(sockaddr_in6), "AF_INET6"), "CEntropySource");
         break;
     default:
-        hasher.Write((const unsigned char*)&addr->sa_family, sizeof(addr->sa_family));
+        hasher.Write(CEntropySource((const unsigned char*)&addr->sa_family, sizeof(addr->sa_family), "default"), "CEntropySource");
     }
 }
 
-void AddFile(CSHA512& hasher, const char *path)
+void AddFile(CRNGSHA512& hasher, const char *path)
 {
     struct stat sb = {};
     int f = open(path, O_RDONLY);
@@ -139,11 +140,11 @@ void AddFile(CSHA512& hasher, const char *path)
     if (f != -1) {
         unsigned char fbuf[4096];
         int n;
-        hasher.Write((const unsigned char*)&f, sizeof(f));
+        hasher.Write(CEntropySource((const unsigned char*)&f, sizeof(f), "f_"+std::string(path)), "AddFile");
         if (fstat(f, &sb) == 0) hasher << sb;
         do {
             n = read(f, fbuf, sizeof(fbuf));
-            if (n > 0) hasher.Write(fbuf, n);
+            if (n > 0) hasher.Write(CEntropySource(fbuf, n, "fbuf_"+std::string(path)), "AddFile");
             total += n;
             /* not bothering with EINTR handling. */
         } while (n == sizeof(fbuf) && total < 1048576); // Read only the first 1 Mbyte
@@ -151,11 +152,11 @@ void AddFile(CSHA512& hasher, const char *path)
     }
 }
 
-void AddPath(CSHA512& hasher, const char *path)
+void AddPath(CRNGSHA512& hasher, const char *path)
 {
     struct stat sb = {};
     if (stat(path, &sb) == 0) {
-        hasher.Write((const unsigned char*)path, strlen(path) + 1);
+        hasher.Write(CEntropySource((const unsigned char*)path, strlen(path) + 1, "path_"+std::string(path)), "AddPath");
         hasher << sb;
     }
 }
@@ -163,7 +164,7 @@ void AddPath(CSHA512& hasher, const char *path)
 
 #if HAVE_SYSCTL
 template<int... S>
-void AddSysctl(CSHA512& hasher)
+void AddSysctl(CRNGSHA512& hasher)
 {
     int CTL[sizeof...(S)] = {S...};
     unsigned char buffer[65536];
@@ -171,22 +172,22 @@ void AddSysctl(CSHA512& hasher)
     int ret = sysctl(CTL, sizeof...(S), buffer, &siz, nullptr, 0);
     if (ret == 0 || (ret == -1 && errno == ENOMEM)) {
         hasher << sizeof(CTL);
-        hasher.Write((const unsigned char*)CTL, sizeof(CTL));
+        hasher.Write(CEntropySource((const unsigned char*)CTL, sizeof(CTL), "CTL"), "AddSysctl");
         if (siz > sizeof(buffer)) siz = sizeof(buffer);
         hasher << siz;
-        hasher.Write(buffer, siz);
+        hasher.Write(CEntropySource(buffer, siz, "Sysctl_buffer"), "AddSysctl");
     }
 }
 #endif
 
 #ifdef HAVE_GETCPUID
-void inline AddCPUID(CSHA512& hasher, uint32_t leaf, uint32_t subleaf, uint32_t& ax, uint32_t& bx, uint32_t& cx, uint32_t& dx)
+void inline AddCPUID(CRNGSHA512& hasher, uint32_t leaf, uint32_t subleaf, uint32_t& ax, uint32_t& bx, uint32_t& cx, uint32_t& dx)
 {
     GetCPUID(leaf, subleaf, ax, bx, cx, dx);
     hasher << leaf << subleaf << ax << bx << cx << dx;
 }
 
-void AddAllCPUID(CSHA512& hasher)
+void AddAllCPUID(CRNGSHA512& hasher)
 {
     uint32_t ax, bx, cx, dx;
     // Iterate over all standard leaves
@@ -222,7 +223,7 @@ void AddAllCPUID(CSHA512& hasher)
 #endif
 } // namespace
 
-void RandAddDynamicEnv(CSHA512& hasher)
+void RandAddDynamicEnv(CRNGSHA512& hasher)
 {
     RandAddSeedPerfmon(hasher);
 
@@ -303,7 +304,7 @@ void RandAddDynamicEnv(CSHA512& hasher)
     free(addr);
 }
 
-void RandAddStaticEnv(CSHA512& hasher)
+void RandAddStaticEnv(CRNGSHA512& hasher)
 {
     // Some compile-time static properties
     hasher << (CHAR_MIN < 0) << sizeof(void*) << sizeof(long) << sizeof(int);
@@ -319,7 +320,7 @@ void RandAddStaticEnv(CSHA512& hasher)
 #endif
 #ifdef __VERSION__
     const char* COMPILER_VERSION = __VERSION__;
-    hasher.Write((const unsigned char*)COMPILER_VERSION, strlen(COMPILER_VERSION) + 1);
+    hasher.Write(CEntropySource((const unsigned char*)COMPILER_VERSION, strlen(COMPILER_VERSION) + 1, "COMPILER_VERSION"), "RandAddStaticEnv");
 #endif
 
     // Bitcoin client version
@@ -357,7 +358,7 @@ void RandAddStaticEnv(CSHA512& hasher)
     // Hostname
     char hname[256];
     if (gethostname(hname, 256) == 0) {
-        hasher.Write((const unsigned char*)hname, strnlen(hname, 256));
+        hasher.Write(CEntropySource((const unsigned char*)hname, strnlen(hname, 256), "hostname"), "RandAddStaticEnv");
     }
 
 #if HAVE_DECL_GETIFADDRS
@@ -366,9 +367,9 @@ void RandAddStaticEnv(CSHA512& hasher)
     getifaddrs(&ifad);
     struct ifaddrs *ifit = ifad;
     while (ifit != NULL) {
-        hasher.Write((const unsigned char*)&ifit, sizeof(ifit));
-        hasher.Write((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1);
-        hasher.Write((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags));
+        hasher.Write(CEntropySource((const unsigned char*)&ifit, sizeof(ifit), "ifit"), "RandAddDynamicEnv");
+        hasher.Write(CEntropySource((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1, "ifa_name"), "RandAddDynamicEnv");
+        hasher.Write(CEntropySource((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags), "ifa_flags"), "RandAddDynamicEnv");
         AddSockaddr(hasher, ifit->ifa_addr);
         AddSockaddr(hasher, ifit->ifa_netmask);
         AddSockaddr(hasher, ifit->ifa_dstaddr);
@@ -381,11 +382,11 @@ void RandAddStaticEnv(CSHA512& hasher)
     // UNIX kernel information
     struct utsname name;
     if (uname(&name) != -1) {
-        hasher.Write((const unsigned char*)&name.sysname, strlen(name.sysname) + 1);
-        hasher.Write((const unsigned char*)&name.nodename, strlen(name.nodename) + 1);
-        hasher.Write((const unsigned char*)&name.release, strlen(name.release) + 1);
-        hasher.Write((const unsigned char*)&name.version, strlen(name.version) + 1);
-        hasher.Write((const unsigned char*)&name.machine, strlen(name.machine) + 1);
+        hasher.Write(CEntropySource((const unsigned char*)&name.sysname, strlen(name.sysname) + 1, "name.sysname"), "RandAddStaticEnv");
+        hasher.Write(CEntropySource((const unsigned char*)&name.nodename, strlen(name.nodename) + 1, "name.nodename"), "RandAddStaticEnv");
+        hasher.Write(CEntropySource((const unsigned char*)&name.release, strlen(name.release) + 1, "name.release"), "RandAddStaticEnv");
+        hasher.Write(CEntropySource((const unsigned char*)&name.version, strlen(name.version) + 1, "name.version"), "RandAddStaticEnv");
+        hasher.Write(CEntropySource((const unsigned char*)&name.machine, strlen(name.machine) + 1, "name.machine"), "RandAddStaticEnv");
     }
 
     /* Path and filesystem provided data */
@@ -485,7 +486,7 @@ void RandAddStaticEnv(CSHA512& hasher)
     // Env variables
     if (environ) {
         for (size_t i = 0; environ[i]; ++i) {
-            hasher.Write((const unsigned char*)environ[i], strlen(environ[i]));
+            hasher.Write(CEntropySource((const unsigned char*)environ[i], strlen(environ[i]),"environ"), "RandAddStaticEnv");
         }
     }
 

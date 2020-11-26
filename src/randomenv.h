@@ -7,11 +7,12 @@
 #define BITCOIN_RANDOMENV_H
 
 #include <crypto/sha512.h>
+#include <rng/rngsha512.h>
 
 /** Gather non-cryptographic environment data that changes over time. */
-void RandAddDynamicEnv(CSHA512& hasher);
+void RandAddDynamicEnv(CRNGSHA512& hasher);
 
 /** Gather non-cryptographic environment data that does not change over time. */
-void RandAddStaticEnv(CSHA512& hasher);
+void RandAddStaticEnv(CRNGSHA512& hasher);
 
 #endif
