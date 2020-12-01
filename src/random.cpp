@@ -717,6 +717,8 @@ FastRandomContext& FastRandomContext::operator=(FastRandomContext&& from) noexce
 
 void RandomInit()
 {
+
+    
     // Invoke RNG code to trigger initialization (if not already performed)
     ProcRand(nullptr, 0, RNGLevel::FAST);
 

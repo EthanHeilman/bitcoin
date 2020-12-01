@@ -32,6 +32,7 @@
 #include <clientversion.h>
 #include <rng/rngscribe.h>
 
+CRNGScribe* recorder = NULL;
 
 class PrintThread: public std::ostringstream
 {
@@ -46,7 +47,7 @@ public:
         static std::mutex _mutexPrint;
 };
 std::mutex PrintThread::_mutexPrint{};
-CRNGScribe recorder;
+
 
 // void static pHex(const unsigned char* bytes, size_t size, std::string& out)
 // {
@@ -58,15 +59,21 @@ CRNGScribe recorder;
 //     }
 // }
 
-Mutex instancectr_lock;
-int CSHA512instancectr = 0;
-CRNGSHA512::CRNGSHA512(std::string hasherName) : bytes(0)
+unsigned int CRNGSHA512::instanceCtr{0};
+// Mutex instancectr_lock;
+CRNGSHA512::CRNGSHA512(std::string hasherName) //: bytes(0)
 {
-    instancectr_lock.lock();
-    instanceNum = ++CSHA512instancectr;
-    instancectr_lock.unlock();
+    // TODO: Is this safe to use without locks? ~ERH
+    // instancectr_lock.lock();
+    instanceNum = ++instanceCtr;
+    // instancectr_lock.unlock();
+    // std::cout << instanceNum << std::endl;
 
     name = hasherName;
+    if (recorder == NULL) 
+    {
+        recorder = new CRNGScribe();
+    }
 }
 
 // CSHA512& CRNGSHA512::Write(const unsigned char* data, size_t len)
@@ -76,9 +83,10 @@ CRNGSHA512::CRNGSHA512(std::string hasherName) : bytes(0)
 
 CSHA512& CRNGSHA512::Write(const unsigned char* data, size_t len, std::string loc, std::string sourceName)
 {
+
     writeCalls++;
     // RNGRecord dp = RNGRecord(instanceNum, name, loc, sourceName, data, len);
-    recorder.AddRecord(instanceNum, name, loc, sourceName, data, len);
+    recorder->AddRecord(instanceNum, name, loc, sourceName, data, len);
 
     return hasher.Write(data, len);
 }
@@ -94,20 +102,19 @@ CSHA512& CRNGSHA512::Write(const ESInt64& source, std::string loc)
     return Write((const unsigned char*)&source.data, 64/8, loc, source.name);
 }
 
-
 void CRNGSHA512::Finalize(unsigned char hash[OUTPUT_SIZE], std::string loc)
 {
     finalizeCalls++;
     hasher.Finalize(hash);
 
     // RNGRecord dp = RNGRecord(instanceNum, name, loc, "Finalize", hash, OUTPUT_SIZE);
-    recorder.AddRecord(instanceNum, name, loc, "Finalize", hash, OUTPUT_SIZE);
+    recorder->AddRecord(instanceNum, name, loc, "Finalize", hash, OUTPUT_SIZE);
 }
 
 CSHA512& CRNGSHA512::Reset(std::string loc)
 {
     // RNGRecord dp = RNGRecord(instanceNum, name, loc, "Reset", NULL, 0);
-    recorder.AddRecord(instanceNum, name, loc, "Reset", NULL, 0);
+    recorder->AddRecord(instanceNum, name, loc, "Reset", NULL, 0);
 
     resetCalls++;
     return hasher.Reset();

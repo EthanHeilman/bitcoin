@@ -15,14 +15,16 @@
 /** A hasher class for SHA-512. */
 class CRNGSHA512
 {
-private:
-    uint64_t bytes;
 
+private:
+    static unsigned int instanceCtr;
+
+    uint64_t bytes;
     std::string name;
-    int writeCalls = 0;
-    int resetCalls = 0;
-    int finalizeCalls = 0;
-    int instanceNum = -1;
+    unsigned int writeCalls = 0;
+    unsigned int resetCalls = 0;
+    unsigned int finalizeCalls = 0;
+    unsigned int instanceNum = 0;
 
     CSHA512 hasher;
 

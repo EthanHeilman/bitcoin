@@ -44,166 +44,98 @@
 struct trecord 
 {
     // keys
-    int hasherId;
-    int locId;
-    int srcId;
+    unsigned int hasherId;
+    unsigned int locId;
+    unsigned int srcId;
 
     // labels
-    int dataLen;
+    unsigned int len;
     char * data;
 };
 
-class RNGRecord
-{
-public:
-    int hasherId = -1;
-    std::string hasher;
-    std::string loc;
-    std::string sourceName;
-    char * data;
-    size_t len;
 
-RNGRecord(int newHasherId, std::string newHasher, std::string newLoc, std::string newSourceName, 
-const unsigned char* newData, size_t newLen)
-{
-    hasherId = newHasherId;
-    hasher = newHasher;
-    loc = newLoc;
-    sourceName = newSourceName;
-
-    len = newLen;
-    data = new char[len];
-
-    std::memcpy(data, newData, len);
-}
-
-};
-
-
-class CRNGScribe
+class CRNGCodex
 {
 private:
-    size_t MAX_MEM_SIZE = 5;
-    std::vector<RNGRecord>* mem = NULL;
-    unsigned int currpart = 0;
     int64_t startTime = GetSystemTimeInSeconds();
 
-    std::vector<RNGRecord> recordsOld;
-
-    std::map<int, std::string> mapHasher;
-    std::map<std::string, int> mapLoc;
+public:
+    std::map<unsigned int, std::string> mapHasher;
+    std::map<std::string, unsigned int> mapLoc;
     int locCtr = 0;
-    std::map<std::string, int> mapSrc;
+    std::map<std::string, unsigned int> mapSrc;
     int srcCtr = 0;
     std::vector<trecord> vRecords;
 
+    ~CRNGCodex()
+    {
+		for (auto record : vRecords)
+        {
+            // data uses malloc so free all the memory in all of data.
+            if(record.len > 0)
+            {
+                std::cout << "Free " << record.len << " hId " << record.hasherId << " locId "  << record.locId << std::endl;
+                free(record.data);
+                std::cout << "Free " << record.len << " hId " << record.hasherId << " locId "  << record.locId << std::endl;
 
-public:
-    // void AddRecord(RNGRecord record)
-    // {
-    //     recordsOld.push_back(record);
-    // }
+            }
+        }
+	}
 
-    void WriteMem(const fs::path& path, std::vector<RNGRecord> *memToWrite)
+    void Write(fs::path path)
     {
         FILE *file = fsbridge::fopen(path, "wb");
         CAutoFile fileout(file, SER_DISK, CLIENT_VERSION);
-        if (fileout.IsNull()) {
-            fileout.fclose();
-            //TODO: Handle this better ~ERH
-            // PrintThread{}<<"DP: "<<"failed to write file"<<std::endl;
-            exit(1);
-        }
-
-        // Save the number of datapoints saved
-        size_t numDP = memToWrite->size();
-        std::cout << "writing out|| " << numDP << std::endl;
-
-        // fileout.write ((const char *) &numDP, sizeof (size_t));
-        fileout.write(reinterpret_cast<char const*>(&numDP), sizeof(&numDP));
-
-        for (auto dp :*memToWrite)
-        {
-            //TODO: Do I need to free each DP? ~ERH
-            // std::string hexstr = "";
-            // pHex((const unsigned char*)dp.data, dp.len, hexstr);
-            fileout<<"..." << dp.hasherId << dp.hasher << dp.loc << dp.sourceName;
-            // std::string datastr;
-            // pHex((const char*)dp.data, dp.len, &datastr);
-            // std::cout << "-->datastr||>" << dp.len << " " << datastr << std::endl;
-            fileout.write ((const char *) &dp.len, sizeof (size_t));
-            fileout.write(dp.data, dp.len);
-        }
-        fileout.fclose();
-        // ReadMem(path);
+        Serialize(fileout);
     }
 
-    template <typename T>
-    auto promote_to_printable_integer_type(T i) -> decltype(+i)
+    template <typename Stream>
+    void Serialize(Stream& s) const
     {
-        return +i;
-    }
+        s << mapHasher;
+        s << mapLoc;
+        s << mapSrc;
 
-    void ReadMem(const fs::path& path)
-    {
-        FILE *file = fsbridge::fopen(path, "rb");
-        CAutoFile filein(file, SER_DISK, CLIENT_VERSION);
-        if (filein.IsNull()) {
-            filein.fclose();
-            //TODO: Handle this better ~ERH
-            std::cout << "Failed to read" << std::endl;
-            exit(1);
-        }
-        std::cout << path << std::endl;
+        assert(vRecords.size() < UINT_MAX);
+        unsigned int numRecords = (unsigned int) vRecords.size();
+        s << (unsigned int) numRecords;
 
-        size_t numDP;
-        filein.read((char*)&numDP, 8);
-        std::cout<<"numDP||"<<numDP<<std::endl;
-
-        for (size_t i = 0; i < numDP; i++)
+        for (unsigned int i = 0; i < numRecords; i++)
         {
-            char start[4];
-            filein >> start;
-            std::cout << "reading||" << start << std::endl;
-
-            int hasherId;
-            std::string hasher;
-            std::string loc;
-            std::string sourceName;
-            filein >> hasherId;
-            filein >> hasher;
-            filein >> loc;
-            filein >> sourceName;
-
-            size_t dataLen;
-            filein.read((char*)&dataLen, 8);
-            std::cout<<"dataLen||"<<dataLen<<std::endl;
-
-            char databuff[dataLen];  
-            filein.read((char *)databuff, dataLen);
-
-            std::cout << "-->DP dump||>" << hasherId << " " << hasher << " " << loc << " " << sourceName << std::endl;
-            // std::string datastr;
-            // pHex(databuff, dataLen);
-            // std::cout << "-->datastr||>" << dataLen << " " << datastr << std::endl;
-
+            s << vRecords[i].hasherId;
+            s << vRecords[i].locId;
+            s << vRecords[i].srcId;
+            s << vRecords[i].len;
+            s.write(vRecords[i].data, vRecords[i].len);
         }
-
-        
-        filein.fclose();
-        // for (auto dp :*memToWrite)
-        // {
-        //     //TODO: Do I need to free each DP? ~ERH
-        //     fileout<<"DP:"<<dp.hasherId<<","<< dp.hasher <<","<< dp.loc <<","<<dp.sourceName;
-        //     fileout.write ((const char *) &dp.len, sizeof (size_t));
-        //     fileout.write(dp.data, dp.len);
-        // }
-        // fileout.fclose();
     }
 
-    Mutex mem_lock;
-    size_t AddRecord(int newHasherId, std::string newHasher, std::string newLoc, std::string newSrc, 
-const unsigned char* newData, size_t newLen)
+    template <typename Stream>
+    void Unserialize(Stream& s)
+    {
+        s >> mapHasher;
+        s >> mapLoc;
+        s >> mapSrc;
+
+        unsigned int numRecords;
+        s >> numRecords;
+
+        for (unsigned int i = 0; i < numRecords; i++)
+        {
+            trecord record;
+            s >> record.hasherId;
+            s >> record.locId;
+            s >> record.srcId;
+            s >> record.len;
+
+            record.data = (char *)malloc(sizeof(char) * record.len);
+            s.read(record.data, record.len);
+            vRecords.push_back(record);
+        }
+    }
+
+    size_t AddRecord(unsigned int newHasherId, std::string newHasher, std::string newLoc, std::string newSrc, 
+const unsigned char* newData, size_t len)
     {
         trecord record;
 
@@ -215,62 +147,73 @@ const unsigned char* newData, size_t newLen)
 
         if (mapLoc.find(newLoc) == mapLoc.end())
         {
-            mapLoc[newLoc] = locCtr++;
+            mapLoc[newLoc] = ++locCtr;
         }
         record.locId = mapLoc[newLoc];
 
         if (mapSrc.find(newSrc) == mapSrc.end())
         {
-            mapSrc[newSrc] = srcCtr++;
+            mapSrc[newSrc] = ++srcCtr;
         }
         record.srcId = mapSrc[newSrc];
 
-        record.dataLen = newLen;
-        record.data = (char *)newData;
+        record.len = len;
+        char* data = (char *)malloc(sizeof(char) * len);
+        memcpy(data, newData, len);
+        record.data = data;
 
         vRecords.push_back(record);
 
         return vRecords.size();
     }
+};
 
-    /*
-    void AddRecord(RNGRecord dp)
+
+class CRNGScribe
+{
+
+public:
+    size_t MAX_MEM_SIZE = 10000;
+    int64_t startTime = GetSystemTimeInSeconds();
+    unsigned int currpart = 0;
+    CRNGCodex* currCodex;
+
+
+    CRNGScribe()
     {
-        if (mem == NULL) mem = new std::vector<RNGRecord>();
+        currCodex = new CRNGCodex();
+    }
 
-        mem->push_back(dp);
 
+    Mutex mem_lock;
+    void AddRecord(unsigned int hasherId, std::string name, std::string loc, std::string src, 
+const unsigned char* data, size_t len)
+    {
+        currCodex->AddRecord(hasherId, name, loc, src, data, len);
 
-        if (mem->size() > MAX_MEM_SIZE)
+        // std::cout << "write1" << std::endl; 
+
+        if (mem_lock.try_lock())
         {
-            if (mem_lock.try_lock())
+            if (currCodex->vRecords.size() >= MAX_MEM_SIZE)
             {
-                std::vector<RNGRecord> *memToWrite = mem;
-                mem = new std::vector<RNGRecord>();
+                CRNGCodex* codexToWrite = currCodex;
+                currCodex = new CRNGCodex();
                 mem_lock.unlock();
 
                 currpart += 1;
                 std::string spath = strprintf("/tmp/rng_%" PRId64 ".%i.dat", this->startTime, currpart);
-                // std::string spath = std::format("/tmp/rng_{}_{}.dat", part, time);
-                WriteMem(fs::path(spath), memToWrite);
-                
-                free(memToWrite);
-            }
 
+                codexToWrite->Write(fs::path(spath));
+                delete codexToWrite; // Since we have written the codex to disk we can free up its memory
+            }
+            else
+            {
+                mem_lock.unlock();
+            }
         }
     }
-    */
-
-    // void pHex(char* bytes, size_t size)
-    // {
-    //     char const hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',  'B','C','D','E','F'};
-    //     for (size_t i = 0; i < size; ++i) {
-    //         const char ch = bytes[i];
-    //         std::cout << &hex[(ch  & 0xF0) >> 4] << &hex[ch & 0xF];
-    //     }
-    // }
 
 };
-
 
 #endif // BITCOIN_RNG_TRACER_H
