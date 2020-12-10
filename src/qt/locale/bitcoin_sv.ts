@@ -474,6 +474,14 @@ Försök igen.</translation>
         <translation>Uppdaterad</translation>
     </message>
     <message>
+        <source>&amp;Load PSBT from file...</source>
+        <translation>&amp;Läs in PSBT från fil...</translation>
+    </message>
+    <message>
+        <source>Load PSBT from clipboard...</source>
+        <translation>Läs in PSBT från urklipp...</translation>
+    </message>
+    <message>
         <source>Node window</source>
         <translation>Nod-fönster</translation>
     </message>
@@ -510,8 +518,24 @@ Försök igen.</translation>
         <translation>Stäng plånboken</translation>
     </message>
     <message>
+        <source>Close All Wallets...</source>
+        <translation>Stäng alla plånböcker...</translation>
+    </message>
+    <message>
+        <source>Close all wallets</source>
+        <translation>Stäng alla plånböcker</translation>
+    </message>
+    <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
         <translation>Visa %1 hjälpmeddelande för att få en lista med möjliga Bitcoin kommandoradsalternativ.</translation>
+    </message>
+    <message>
+        <source>&amp;Mask values</source>
+        <translation>&amp;Dölj värden</translation>
+    </message>
+    <message>
+        <source>Mask the values in the Overview tab</source>
+        <translation>Dölj värden i översiktsfliken</translation>
     </message>
     <message>
         <source>default wallet</source>
@@ -620,6 +644,10 @@ Försök igen.</translation>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Denna plånbok är &lt;b&gt;krypterad&lt;/b&gt; och för närvarande &lt;b&gt;låst&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>Original message:</source>
+        <translation>Ursprungligt meddelande:</translation>
     </message>
     </context>
 <context>
@@ -2845,6 +2873,10 @@ Försök igen.</translation>
     <message>
         <source>Create</source>
         <translation type="unfinished">Skapa</translation>
+    </message>
+    <message>
+        <source>Close all wallets</source>
+        <translation>Stäng alla plånböcker</translation>
     </message>
     </context>
 <context>

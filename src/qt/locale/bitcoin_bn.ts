@@ -3,15 +3,15 @@
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation type="unfinished">ঠিকানা বা লেবেল পরিবর্তন করতে ডান ক্লিক করুন।</translation>
+        <translation>ঠিকানা কিংবা লেভেল সম্পাদনার জন্য রাইট-ক্লিক করুন</translation>
     </message>
     <message>
         <source>Create a new address</source>
-        <translation type="unfinished">নতুন একটি ঠিকানা তৈরি করুন</translation>
+        <translation>নতুন একটি ঠিকানা তৈরি করুন</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">নতুন</translation>
+        <translation>নতুন</translation>
     </message>
     <message>
         <source>Copy the currently selected address to the system clipboard</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;কপি</translation>
+        <translation>&amp;কপি</translation>
     </message>
     <message>
         <source>C&amp;lose</source>
@@ -27,19 +27,27 @@
     </message>
     <message>
         <source>Delete the currently selected address from the list</source>
-        <translation type="unfinished">বাছাইকৃত ঠিকানাটি লিস্ট থেকে মুছুন</translation>
+        <translation>বাছাইকৃত ঠিকানাটি লিস্ট থেকে মুছুন</translation>
     </message>
     <message>
         <source>Enter address or label to search</source>
-        <translation type="unfinished">খুঁজতে ঠিকানা বা লেবেল লিখুন</translation>
+        <translation>Enter address or label to search</translation>
+    </message>
+    <message>
+        <source>Export the data in the current tab to a file</source>
+        <translation>বর্তমান ট্যাবের ডেটা একটি ফাইলে এক্সপোর্ট করুন</translation>
+    </message>
+    <message>
+        <source>&amp;Export</source>
+        <translation>&amp;এক্সপোর্ট</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;মুছুন</translation>
+        <translation>&amp;মুছুন</translation>
     </message>
     <message>
         <source>Choose the address to send coins to</source>
-        <translation type="unfinished">কয়েন পাঠানোর ঠিকানা বাছাই করুন</translation>
+        <translation>কয়েন পাঠানোর ঠিকানা বাছাই করুন</translation>
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.

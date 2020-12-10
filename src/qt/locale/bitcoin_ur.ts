@@ -34,6 +34,10 @@
         <translation type="unfinished">پتہ یا لیبل تلاشی کے لئے درج کریں</translation>
     </message>
     <message>
+        <source>Enter address or label to search</source>
+        <translation>پتہ یا لیبل تلاشی کے لئے درج کریں</translation>
+    </message>
+    <message>
         <source>Export the data in the current tab to a file</source>
         <translation type="unfinished">موجودہ ڈیٹا کو فائیل میں محفوظ کریں</translation>
     </message>
@@ -147,12 +151,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">بٹوے کو خفیہ کریں</translation>
     </message>
     <message>
-        <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">پرس کو غیر مقفل کرنے کے لئے اس آپریشن کو آپ کے بٹوے کا پاسفریز درکار ہے۔</translation>
+        <source>Unlock wallet</source>
+        <translation>بستہ کھولیں</translation>
     </message>
     <message>
-        <source>Unlock wallet</source>
-        <translation type="unfinished">بستہ کھولیں</translation>
+        <source>Decrypt wallet</source>
+        <translation>ڈکرپٹ والیٹ</translation>
     </message>
     <message>
         <source>Change passphrase</source>
@@ -160,7 +164,32 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation type="unfinished">پرس کی خفیہ کاری کی تصدیق کریں</translation>
+        <translation>پرس کی خفیہ کاری کی تصدیق کریں</translation>
+    </message>
+    </context>
+<context>
+    <name>BanTableModel</name>
+    </context>
+<context>
+    <name>BitcoinGUI</name>
+    <message>
+        <source>&amp;About %1</source>
+        <translation>&amp;معلومات%1</translation>
+    </message>
+    <message>
+        <source>Show information about %1</source>
+        <translation>%1 کے بارے میں معلومات دکھایں</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>نقص</translation>
+    </message>
+    </context>
+<context>
+    <name>CoinControlDialog</name>
+    <message>
+        <source>Amount:</source>
+        <translation>رقم:</translation>
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>

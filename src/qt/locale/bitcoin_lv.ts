@@ -3,7 +3,7 @@
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation type="unfinished">Spiediet labo peles klikšķi, lai labotu adresi vai birku</translation>
+        <translation>Spiediet labo peles klikšķi, lai labotu adresi vai birku</translation>
     </message>
     <message>
         <source>Create a new address</source>
@@ -70,6 +70,10 @@
         <translation type="unfinished">Šīs ir jūsu Bitcoin adreses, kuras izmantojamas maksājumu veikšanai. Vienmēr pārbaudiet summu un saņēmēja adresi pirms monētu nosūtīšanas.</translation>
     </message>
     <message>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Šīs ir jūsu Bitcoin adreses, kuras izmantojamas maksājumu veikšanai. Vienmēr pārbaudiet summu un saņēmēja adresi pirms monētu nosūtīšanas.</translation>
+    </message>
+    <message>
         <source>&amp;Copy Address</source>
         <translation type="unfinished">&amp;Kopēt adresi</translation>
     </message>
@@ -91,8 +95,16 @@
         <translation type="unfinished">Mēģinot saglabāt adrešu sarakstu %1 radās kļūda. Lūdzu mēģiniet vēlreiz.</translation>
     </message>
     <message>
+        <source>Comma separated file (*.csv)</source>
+        <translation>Ar komatiem atdalīts fails (*.csv)</translation>
+    </message>
+    <message>
         <source>Exporting Failed</source>
         <translation type="unfinished">Eksportēšana Neizdevās</translation>
+    </message>
+    <message>
+        <source>There was an error trying to save the address list to %1. Please try again.</source>
+        <translation>Mēģinot saglabāt adrešu sarakstu %1 radās kļūda. Mēģiniet vēlreiz.</translation>
     </message>
 </context>
 <context>
@@ -141,8 +153,20 @@
         <translation type="unfinished">Lai veiktu šo darbību, nepieciešama jūsu maciņa slepenā frāze maciņa atvēršanai.</translation>
     </message>
     <message>
+        <source>This operation needs your wallet passphrase to unlock the wallet.</source>
+        <translation>Lai veiktu šo darbību, nepieciešama jūsu maciņa slepenā frāze maciņa atvēršanai.</translation>
+    </message>
+    <message>
         <source>Unlock wallet</source>
-        <translation type="unfinished">Atslēgt maciņu</translation>
+        <translation>Atslēgt maciņu</translation>
+    </message>
+    <message>
+        <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
+        <translation>Lai veiktu šo darbību, nepieciešama jūsu maciņa slepenā frāze maciņa dekriptēšanai.</translation>
+    </message>
+    <message>
+        <source>Decrypt wallet</source>
+        <translation>Atšifrēt maciņu</translation>
     </message>
     <message>
         <source>Change passphrase</source>
@@ -175,6 +199,10 @@
     <message>
         <source>Wallet to be encrypted</source>
         <translation type="unfinished">Maciņu nepieciešams šifrēt.</translation>
+    </message>
+    <message>
+        <source>Wallet to be encrypted</source>
+        <translation>Maciņu nepieciešams šifrēt.</translation>
     </message>
     <message>
         <source>Your wallet is now encrypted. </source>
@@ -1276,6 +1304,10 @@
     </context>
 <context>
     <name>TransactionView</name>
+    <message>
+        <source>Comma separated file (*.csv)</source>
+        <translation>Ar komatiem atdalīts fails (*.csv)</translation>
+    </message>
     <message>
         <source>Confirmed</source>
         <translation type="unfinished">Apstiprināts</translation>

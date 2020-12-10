@@ -3,7 +3,7 @@
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation type="unfinished">برای ویرایش نشانی یا برچسب راست-کلیک کنید</translation>
+        <translation>برای ویرایش آدرس یا برچسب‌گذاری راست‌کلیک کنید</translation>
     </message>
     <message>
         <source>Create a new address</source>
@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>Copy the currently selected address to the system clipboard</source>
-        <translation type="unfinished">کپی کردن آدرس انتخاب شده در کلیپ برد سیستم</translation>
+        <translation>کپی‌کردن آدرس انتخاب‌شده به حافظهٔ کلیپ‌بورد سیستم</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -119,7 +119,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>(no label)</source>
-        <translation type="unfinished">(برچسبی ندارد)</translation>
+        <translation>(بدون برچسب)</translation>
     </message>
 </context>
 <context>

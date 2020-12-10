@@ -1629,7 +1629,11 @@ Això és ideal per a carteres de mode només lectura.</translation>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
-    </context>
+    <message>
+        <source>Compiled without sqlite support (required for descriptor wallets)</source>
+        <translation>Compilat sense el suport sqlite (requerit per carteres descriptor)</translation>
+    </message>
+</context>
 <context>
     <name>EditAddressDialog</name>
     <message>
@@ -2272,12 +2276,40 @@ Això és ideal per a carteres de mode només lectura.</translation>
         <translation>Desa...</translation>
     </message>
     <message>
+        <source>Close</source>
+        <translation>Tanca</translation>
+    </message>
+    <message>
+        <source>Failed to load transaction: %1</source>
+        <translation>Ha fallat la càrrega de la transacció: %1</translation>
+    </message>
+    <message>
+        <source>Failed to sign transaction: %1</source>
+        <translation>Ha fallat la firma de la transacció: %1</translation>
+    </message>
+    <message>
         <source>Could not sign any more inputs.</source>
         <translation>No s'han pogut firmar més entrades.</translation>
     </message>
     <message>
+        <source>Signed %1 inputs, but more signatures are still required.</source>
+        <translation>Firmades %1 entrades, però encara es requereixen més firmes.</translation>
+    </message>
+    <message>
+        <source>Signed transaction successfully. Transaction is ready to broadcast.</source>
+        <translation>La transacció s'ha firmat correctament. La transacció està a punt per emetre's.</translation>
+    </message>
+    <message>
         <source>Unknown error processing transaction.</source>
         <translation>Error desconnegut al processar la transacció.</translation>
+    </message>
+    <message>
+        <source>Transaction broadcast failed: %1</source>
+        <translation>L'emissió de la transacció ha fallat: %1</translation>
+    </message>
+    <message>
+        <source>PSBT copied to clipboard.</source>
+        <translation>PSBT copiada al porta-retalls.</translation>
     </message>
     <message>
         <source>Save Transaction Data</source>
@@ -2286,6 +2318,18 @@ Això és ideal per a carteres de mode només lectura.</translation>
     <message>
         <source>Partially Signed Transaction (Binary) (*.psbt)</source>
         <translation>Transacció Parcialment Firmada (Binari) (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT saved to disk.</source>
+        <translation>PSBT guardada al disc.</translation>
+    </message>
+    <message>
+        <source> * Sends %1 to %2</source>
+        <translation>*Envia %1 a %2</translation>
+    </message>
+    <message>
+        <source>Unable to calculate transaction fee or total transaction amount.</source>
+        <translation>Incapaç de calcular la comissió de transacció o la quantitat total de la transacció</translation>
     </message>
     <message>
         <source>Pays transaction fee: </source>
@@ -2310,6 +2354,14 @@ Això és ideal per a carteres de mode només lectura.</translation>
     <message>
         <source>Transaction still needs signature(s).</source>
         <translation>La transacció encara necessita una o vàries firmes.</translation>
+    </message>
+    <message>
+        <source>(But this wallet cannot sign transactions.)</source>
+        <translation>(Però aquesta cartera no pot firmar transaccions.)</translation>
+    </message>
+    <message>
+        <source>(But this wallet does not have the right keys.)</source>
+        <translation>(Però aquesta cartera no té les claus correctes.)</translation>
     </message>
     <message>
         <source>Transaction is fully signed and ready for broadcast.</source>
@@ -3239,6 +3291,10 @@ Nota: Com que la comissió es calcula en funció dels bytes, una comissió de "1
         <translation>Esteu segur que ho voleu enviar?</translation>
     </message>
     <message>
+        <source>Create Unsigned</source>
+        <translation>Creació sense firmar</translation>
+    </message>
+    <message>
         <source>Save Transaction Data</source>
         <translation>Guarda Dades de Transacció</translation>
     </message>
@@ -3247,12 +3303,20 @@ Nota: Com que la comissió es calcula en funció dels bytes, una comissió de "1
         <translation>Transacció Parcialment Firmada (Binari) (*.psbt)</translation>
     </message>
     <message>
+        <source>PSBT saved</source>
+        <translation>PSBT guardada</translation>
+    </message>
+    <message>
         <source>or</source>
         <translation>o</translation>
     </message>
     <message>
         <source>You can increase the fee later (signals Replace-By-Fee, BIP-125).</source>
         <translation>Pot incrementar la comissió més tard (senyala Replace-By-Fee o substitució per comissió, BIP-125).</translation>
+    </message>
+    <message>
+        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitcoin Transaction (PSBT) which you can save or copy and then sign with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
+        <translation>Si us plau, revisa la teva proposta de transacció. Es produirà una transacció de Bitcoin amb firma parcial (PSBT) que podeu guardar o copiar i després firmar, per exemple, amb una cartera %1, o amb una cartera física compatible amb PSBT.</translation>
     </message>
     <message>
         <source>Please, review your transaction.</source>
@@ -4589,7 +4653,11 @@ Això és ideal per a carteres de mode només lectura.</translation>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
         <translation type="unfinished">Desconegut. Sincronització de les capçaleres (%1, %2%)...</translation>
     </message>
-    </context>
+    <message>
+        <source>Are you sure you wish to close all wallets?</source>
+        <translation>Esteu segur que voleu tancar totes les carteres?</translation>
+    </message>
+</context>
 <context>
     <name>OpenURIDialog</name>
     <message>
@@ -6751,7 +6819,7 @@ Nota: atès que la tarifa es calcula per byte, una tarifa de "100 satoshis per k
         <source>No wallet has been loaded.
 Go to File &gt; Open Wallet to load a wallet.
 - OR -</source>
-        <translation type="unfinished">No s'ha carregat cap cartera. 
+        <translation>No s'ha carregat cap cartera. 
 Ves a Arxiu &gt; Obrir Cartera per a carregar cartera. 
 - O -</translation>
     </message>
@@ -6855,6 +6923,26 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
         <translation type="unfinished">Exporta les dades de la pestanya actual a un fitxer</translation>
     </message>
     <message>
+        <source>Unable to decode PSBT from clipboard (invalid base64)</source>
+        <translation>Incapaç de descodificar la PSBT del porta-retalls (base64 invàlida)</translation>
+    </message>
+    <message>
+        <source>Load Transaction Data</source>
+        <translation>Carrega dades de transacció</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (*.psbt)</source>
+        <translation>Transacció Parcialment Firmada (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT file must be smaller than 100 MiB</source>
+        <translation>L'arxiu PSBT ha de ser més petit que 100MiB</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT</source>
+        <translation>Incapaç de descodificar la PSBT</translation>
+    </message>
+    <message>
         <source>Backup Wallet</source>
         <translation type="unfinished">Còpia de seguretat de la cartera</translation>
     </message>
@@ -6923,12 +7011,20 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
         <translation>S'ha produït un error en llegir %s. Totes les claus es llegeixen correctament, però les dades de la transacció o les entrades de la llibreta d'adreces podrien faltar o ser incorrectes.</translation>
     </message>
     <message>
+        <source>More than one onion bind address is provided. Using %s for the automatically created Tor onion service.</source>
+        <translation> Es proporciona més d'una adreça de vinculació. Utilitzant %s pel servei Tor onion automàticament creat.</translation>
+    </message>
+    <message>
         <source>Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly.</source>
         <translation>Comproveu que la data i hora de l'ordinador són correctes. Si el rellotge és incorrecte, %s no funcionarà correctament.</translation>
     </message>
     <message>
         <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
         <translation>Contribueix si trobes %s útil. Visita %s per obtenir més informació sobre el programari.</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Unknown sqlite wallet schema version %d. Only version %d is supported</source>
+        <translation>SQLiteDatabase: esquema de cartera sqlite de versió %d desconegut. Només és compatible la versió %d</translation>
     </message>
     <message>
         <source>The block database contains a block which appears to be from the future. This may be due to your computer's date and time being set incorrectly. Only rebuild the block database if you are sure that your computer's date and time are correct</source>
@@ -7035,6 +7131,10 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
         <translation>No s'ha pogut escanejar novament la cartera durant la inicialització</translation>
     </message>
     <message>
+        <source>Failed to verify database</source>
+        <translation>Ha fallat la verificació de la base de dades</translation>
+    </message>
+    <message>
         <source>Importing...</source>
         <translation>S'està important...</translation>
     </message>
@@ -7061,6 +7161,10 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
     <message>
         <source>Invalid amount for -fallbackfee=&lt;amount&gt;: '%s'</source>
         <translation>Import invàlid per -fallbackfee=&lt;amount&gt;: '%s'</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to read database verification error: %s</source>
+        <translation>SQLiteDatabase: ha fallat la lectura de la base de dades. Error de verificació: %s</translation>
     </message>
     <message>
         <source>Specified blocks directory "%s" does not exist.</source>
@@ -7157,6 +7261,14 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
     <message>
         <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
         <translation>Cal que torneu a construir la base de dades fent servir -reindex per tornar al mode no podat. Això tornarà a baixar la cadena de blocs sencera</translation>
+    </message>
+    <message>
+        <source>A fatal internal error occurred, see debug.log for details</source>
+        <translation>S'ha produït un error intern fatal. Consulteu debug.log per a més detalls</translation>
+    </message>
+    <message>
+        <source>Disk space is too low!</source>
+        <translation>L'espai de disc és insuficient!</translation>
     </message>
     <message>
         <source>Error reading from database, shutting down.</source>

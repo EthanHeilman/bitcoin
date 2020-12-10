@@ -1594,7 +1594,1256 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished">不明</translation>
+        <translation>不明</translation>
+    </message>
+</context>
+<context>
+    <name>QRImageWidget</name>
+    <message>
+        <source>&amp;Save Image...</source>
+        <translation>画像を保存(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Copy Image</source>
+        <translation>画像をコピー(&amp;C)</translation>
+    </message>
+    <message>
+        <source>Resulting URI too long, try to reduce the text for label / message.</source>
+        <translation>生成されたURIが長すぎです。ラベルやメッセージのテキストを短くしてください。</translation>
+    </message>
+    <message>
+        <source>Error encoding URI into QR Code.</source>
+        <translation>URIをQRコードへ変換している際にエラーが発生しました。</translation>
+    </message>
+    <message>
+        <source>QR code support not available.</source>
+        <translation>QRコードは利用できません。</translation>
+    </message>
+    <message>
+        <source>Save QR Code</source>
+        <translation>QRコードの保存</translation>
+    </message>
+    <message>
+        <source>PNG Image (*.png)</source>
+        <translation>PNG画像 (*.png)</translation>
+    </message>
+</context>
+<context>
+    <name>RPCConsole</name>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
+    <message>
+        <source>Client version</source>
+        <translation>クライアントのバージョン</translation>
+    </message>
+    <message>
+        <source>&amp;Information</source>
+        <translation>情報(&amp;I)</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>全般</translation>
+    </message>
+    <message>
+        <source>Using BerkeleyDB version</source>
+        <translation>使用している BerkleyDB のバージョン</translation>
+    </message>
+    <message>
+        <source>Datadir</source>
+        <translation>データ ディレクトリ</translation>
+    </message>
+    <message>
+        <source>To specify a non-default location of the data directory use the '%1' option.</source>
+        <translation>データディレクトリを初期値以外にするには '%1' オプションを使用します。</translation>
+    </message>
+    <message>
+        <source>Blocksdir</source>
+        <translation>ブロックディレクトリ</translation>
+    </message>
+    <message>
+        <source>To specify a non-default location of the blocks directory use the '%1' option.</source>
+        <translation>ブロックディレクトリを初期値以外にするには '%1' オプションを使用します。</translation>
+    </message>
+    <message>
+        <source>Startup time</source>
+        <translation>起動日時</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>ネットワーク</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>Number of connections</source>
+        <translation>接続数</translation>
+    </message>
+    <message>
+        <source>Block chain</source>
+        <translation>ブロック チェーン</translation>
+    </message>
+    <message>
+        <source>Memory Pool</source>
+        <translation>メモリ プール</translation>
+    </message>
+    <message>
+        <source>Current number of transactions</source>
+        <translation>現在の取引数</translation>
+    </message>
+    <message>
+        <source>Memory usage</source>
+        <translation>メモリ使用量</translation>
+    </message>
+    <message>
+        <source>Wallet: </source>
+        <translation>ウォレット:</translation>
+    </message>
+    <message>
+        <source>(none)</source>
+        <translation>(なし)</translation>
+    </message>
+    <message>
+        <source>&amp;Reset</source>
+        <translation>リセット(&amp;R)</translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation>受信</translation>
+    </message>
+    <message>
+        <source>Sent</source>
+        <translation>送信</translation>
+    </message>
+    <message>
+        <source>&amp;Peers</source>
+        <translation>ピア(&amp;P)</translation>
+    </message>
+    <message>
+        <source>Banned peers</source>
+        <translation>Banされたピア</translation>
+    </message>
+    <message>
+        <source>Select a peer to view detailed information.</source>
+        <translation>詳しい情報を見たいピアを選択してください。</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation>方向</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>バージョン</translation>
+    </message>
+    <message>
+        <source>Starting Block</source>
+        <translation>開始ブロック</translation>
+    </message>
+    <message>
+        <source>Synced Headers</source>
+        <translation>同期済みヘッダ</translation>
+    </message>
+    <message>
+        <source>Synced Blocks</source>
+        <translation>同期済みブロック</translation>
+    </message>
+    <message>
+        <source>The mapped Autonomous System used for diversifying peer selection.</source>
+        <translation>ピア選択の多様化に使用できるマップ化された自律システム。</translation>
+    </message>
+    <message>
+        <source>Mapped AS</source>
+        <translation>マップ化された自律システム</translation>
+    </message>
+    <message>
+        <source>User Agent</source>
+        <translation>ユーザーエージェント</translation>
+    </message>
+    <message>
+        <source>Node window</source>
+        <translation>ノードウィンドウ</translation>
+    </message>
+    <message>
+        <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>現在のデータディレクトリから %1 のデバッグ用ログファイルを開きます。ログファイルが巨大な場合、数秒かかることがあります。</translation>
+    </message>
+    <message>
+        <source>Decrease font size</source>
+        <translation>文字サイズを縮小</translation>
+    </message>
+    <message>
+        <source>Increase font size</source>
+        <translation>文字サイズを拡大</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>サービス</translation>
+    </message>
+    <message>
+        <source>Connection Time</source>
+        <translation>接続時間</translation>
+    </message>
+    <message>
+        <source>Last Send</source>
+        <translation>最終送信</translation>
+    </message>
+    <message>
+        <source>Last Receive</source>
+        <translation>最終受信</translation>
+    </message>
+    <message>
+        <source>Ping Time</source>
+        <translation>Ping時間</translation>
+    </message>
+    <message>
+        <source>The duration of a currently outstanding ping.</source>
+        <translation>現在実行中の ping にかかっている時間。</translation>
+    </message>
+    <message>
+        <source>Ping Wait</source>
+        <translation>Ping待ち</translation>
+    </message>
+    <message>
+        <source>Min Ping</source>
+        <translation>最小 Ping</translation>
+    </message>
+    <message>
+        <source>Time Offset</source>
+        <translation>時間オフセット</translation>
+    </message>
+    <message>
+        <source>Last block time</source>
+        <translation>最終ブロックの日時</translation>
+    </message>
+    <message>
+        <source>&amp;Open</source>
+        <translation>開く(&amp;O)</translation>
+    </message>
+    <message>
+        <source>&amp;Console</source>
+        <translation>コンソール(&amp;C)</translation>
+    </message>
+    <message>
+        <source>&amp;Network Traffic</source>
+        <translation>ネットワークトラフィック(&amp;N)</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>合計</translation>
+    </message>
+    <message>
+        <source>In:</source>
+        <translation>入力:</translation>
+    </message>
+    <message>
+        <source>Out:</source>
+        <translation>出力:</translation>
+    </message>
+    <message>
+        <source>Debug log file</source>
+        <translation>デバッグ用ログファイル</translation>
+    </message>
+    <message>
+        <source>Clear console</source>
+        <translation>コンソールをクリア</translation>
+    </message>
+    <message>
+        <source>1 &amp;hour</source>
+        <translation>1時間(&amp;H)</translation>
+    </message>
+    <message>
+        <source>1 &amp;day</source>
+        <translation>1日(&amp;D)</translation>
+    </message>
+    <message>
+        <source>1 &amp;week</source>
+        <translation>1週間(&amp;W)</translation>
+    </message>
+    <message>
+        <source>1 &amp;year</source>
+        <translation>1年(&amp;Y)</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>切断(&amp;D)</translation>
+    </message>
+    <message>
+        <source>Ban for</source>
+        <translation>Banする:</translation>
+    </message>
+    <message>
+        <source>&amp;Unban</source>
+        <translation>Banを解除する(&amp;U)</translation>
+    </message>
+    <message>
+        <source>Welcome to the %1 RPC console.</source>
+        <translation>%1 の RPC コンソールへようこそ。</translation>
+    </message>
+    <message>
+        <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
+        <translation>上下の矢印で履歴をたどれます。%1 でスクリーンを消去できます。</translation>
+    </message>
+    <message>
+        <source>Type %1 for an overview of available commands.</source>
+        <translation>使用可能なコマンドを見るには %1 と入力します。</translation>
+    </message>
+    <message>
+        <source>For more information on using this console type %1.</source>
+        <translation>詳しくは、コンソールで %1 と入力してください。</translation>
+    </message>
+    <message>
+        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
+        <translation>警告: 以前から詐欺師が活発に活動しており、この画面でユーザーにコマンドを入力させてウォレットの中身を盗もうとしています。コマンドを実行した結果何が起こるかを完全に理解していない場合は、このコンソールを利用しないでください。</translation>
+    </message>
+    <message>
+        <source>Network activity disabled</source>
+        <translation>ネットワーク活動が無効になりました</translation>
+    </message>
+    <message>
+        <source>Executing command without any wallet</source>
+        <translation>どのウォレットも使わずにコマンドを実行します</translation>
+    </message>
+    <message>
+        <source>Executing command using "%1" wallet</source>
+        <translation>"%1" ウォレットを使ってコマンドを実行します</translation>
+    </message>
+    <message>
+        <source>(node id: %1)</source>
+        <translation>(ノードID: %1)</translation>
+    </message>
+    <message>
+        <source>via %1</source>
+        <translation>%1 経由</translation>
+    </message>
+    <message>
+        <source>never</source>
+        <translation>まだ無し</translation>
+    </message>
+    <message>
+        <source>Inbound</source>
+        <translation>内向き</translation>
+    </message>
+    <message>
+        <source>Outbound</source>
+        <translation>外向き</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>不明</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiveCoinsDialog</name>
+    <message>
+        <source>&amp;Amount:</source>
+        <translation>金額:(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Label:</source>
+        <translation>ラベル(&amp;L):</translation>
+    </message>
+    <message>
+        <source>&amp;Message:</source>
+        <translation>メッセージ (&amp;M):</translation>
+    </message>
+    <message>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
+        <translation>支払いリクエストに添付するメッセージ（任意）。支払リクエスト開始時に表示されます。注意: メッセージは Bitcoin ネットワーク上へ送信されません。</translation>
+    </message>
+    <message>
+        <source>An optional label to associate with the new receiving address.</source>
+        <translation>新規受取用アドレスに紐づけるラベル（任意）。</translation>
+    </message>
+    <message>
+        <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
+        <translation>このフォームで支払いをリクエストしましょう。全ての入力欄は&lt;b&gt;任意入力&lt;/b&gt;です。</translation>
+    </message>
+    <message>
+        <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
+        <translation>リクエストする金額（任意）。特定の金額をリクエストしない場合は、この欄は空白のままかゼロにしてください。</translation>
+    </message>
+    <message>
+        <source>An optional label to associate with the new receiving address (used by you to identify an invoice).  It is also attached to the payment request.</source>
+        <translation>新しい受取用アドレスに紐付ける任意のラベル(インボイスの判別に使えます)。支払いリクエストにも添付されます。</translation>
+    </message>
+    <message>
+        <source>An optional message that is attached to the payment request and may be displayed to the sender.</source>
+        <translation>支払いリクエストに任意で添付できるメッセージで、送り主に表示されます。</translation>
+    </message>
+    <message>
+        <source>&amp;Create new receiving address</source>
+        <translation>新しい受取用アドレスを作成</translation>
+    </message>
+    <message>
+        <source>Clear all fields of the form.</source>
+        <translation>全ての入力欄をクリア</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>クリア</translation>
+    </message>
+    <message>
+        <source>Native segwit addresses (aka Bech32 or BIP-173) reduce your transaction fees later on and offer better protection against typos, but old wallets don't support them. When unchecked, an address compatible with older wallets will be created instead.</source>
+        <translation>ネイティブ Segwit アドレス(別名: Bech32 アドレス・ BIP-173 アドレス)を利用することで、取引手数料が安くなり、誤入力防止機能も強化されますが、Segwit アドレスをサポートしない古いウォレットとは取引できません。チェックを外すと、古いウォレットとの互換性を保ったアドレスが代わりに生成されます。</translation>
+    </message>
+    <message>
+        <source>Generate native segwit (Bech32) address</source>
+        <translation>Segwit アドレス（Bech32 アドレス）を生成</translation>
+    </message>
+    <message>
+        <source>Requested payments history</source>
+        <translation>支払いリクエスト履歴</translation>
+    </message>
+    <message>
+        <source>Show the selected request (does the same as double clicking an entry)</source>
+        <translation>選択されたリクエストを表示（項目をダブルクリックすることでも表示できます）</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>表示</translation>
+    </message>
+    <message>
+        <source>Remove the selected entries from the list</source>
+        <translation>選択項目をリストから削除</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <source>Copy URI</source>
+        <translation>URIをコピー</translation>
+    </message>
+    <message>
+        <source>Copy label</source>
+        <translation>ラベルをコピー</translation>
+    </message>
+    <message>
+        <source>Copy message</source>
+        <translation>メッセージをコピー</translation>
+    </message>
+    <message>
+        <source>Copy amount</source>
+        <translation>金額をコピー</translation>
+    </message>
+    <message>
+        <source>Could not unlock wallet.</source>
+        <translation>ウォレットをアンロックできませんでした。</translation>
+    </message>
+    </context>
+<context>
+    <name>ReceiveRequestDialog</name>
+    <message>
+        <source>Address:</source>
+        <translation>アドレス：</translation>
+    </message>
+    <message>
+        <source>Amount:</source>
+        <translation>金額:</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation>ラベル:</translation>
+    </message>
+    <message>
+        <source>Message:</source>
+        <translation>メッセージ:</translation>
+    </message>
+    <message>
+        <source>Wallet:</source>
+        <translation>ウォレット:</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URI</source>
+        <translation>URIをコピーする(&amp;U)</translation>
+    </message>
+    <message>
+        <source>Copy &amp;Address</source>
+        <translation>アドレスをコピー(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Save Image...</source>
+        <translation>画像を保存(&amp;S)...</translation>
+    </message>
+    <message>
+        <source>Request payment to %1</source>
+        <translation>%1 への支払いリクエスト</translation>
+    </message>
+    <message>
+        <source>Payment information</source>
+        <translation>支払い情報</translation>
+    </message>
+</context>
+<context>
+    <name>RecentRequestsTableModel</name>
+    <message>
+        <source>Date</source>
+        <translation>日時</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>ラベル</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation>メッセージ</translation>
+    </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(ラベル無し)</translation>
+    </message>
+    <message>
+        <source>(no message)</source>
+        <translation>(メッセージ無し)</translation>
+    </message>
+    <message>
+        <source>(no amount requested)</source>
+        <translation>(指定無し)</translation>
+    </message>
+    <message>
+        <source>Requested</source>
+        <translation>リクエストされた金額</translation>
+    </message>
+</context>
+<context>
+    <name>SendCoinsDialog</name>
+    <message>
+        <source>Send Coins</source>
+        <translation>コインの送金</translation>
+    </message>
+    <message>
+        <source>Coin Control Features</source>
+        <translation>コインコントロール機能</translation>
+    </message>
+    <message>
+        <source>Inputs...</source>
+        <translation>インプット...</translation>
+    </message>
+    <message>
+        <source>automatically selected</source>
+        <translation>自動選択</translation>
+    </message>
+    <message>
+        <source>Insufficient funds!</source>
+        <translation>残高不足です！</translation>
+    </message>
+    <message>
+        <source>Quantity:</source>
+        <translation>選択数:</translation>
+    </message>
+    <message>
+        <source>Bytes:</source>
+        <translation>バイト数:</translation>
+    </message>
+    <message>
+        <source>Amount:</source>
+        <translation>金額:</translation>
+    </message>
+    <message>
+        <source>Fee:</source>
+        <translation>手数料:</translation>
+    </message>
+    <message>
+        <source>After Fee:</source>
+        <translation>手数料差引後金額:</translation>
+    </message>
+    <message>
+        <source>Change:</source>
+        <translation>お釣り:</translation>
+    </message>
+    <message>
+        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
+        <translation>チェックが付いているにもかかわらず、お釣りアドレスが空欄や無効である場合、お釣りは新しく生成されたアドレスへ送金されます。</translation>
+    </message>
+    <message>
+        <source>Custom change address</source>
+        <translation>カスタムお釣りアドレス</translation>
+    </message>
+    <message>
+        <source>Transaction Fee:</source>
+        <translation>トランザクション手数料：</translation>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation>選択...</translation>
+    </message>
+    <message>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
+        <translation>代替料金を利用することで、承認されるまでに数時間または数日 (ないし一生承認されない) トランザクションを送信してしまう可能性があります。手動にて手数料を選択するか、完全なブロックチェーンの検証が終わるまで待つことを検討しましょう</translation>
+    </message>
+    <message>
+        <source>Warning: Fee estimation is currently not possible.</source>
+        <translation>警告: 手数料推定機能は現在利用できません。</translation>
+    </message>
+    <message>
+        <source>Specify a custom fee per kB (1,000 bytes) of the transaction's virtual size.
+
+Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis per kB" for a transaction size of 500 bytes (half of 1 kB) would ultimately yield a fee of only 50 satoshis.</source>
+        <translation>トランザクションの仮想サイズの1 kB(1,000 バイト)あたりのカスタム手数料を指定する。
+
+注: 手数料はバイト単位で計算されるので、500 バイト(1 kBの半分)のトランザクションサイズに対する「1 kBあたり 100 satoshi」の手数料は、最終的にはわずか 50 satoshi となります。</translation>
+    </message>
+    <message>
+        <source>per kilobyte</source>
+        <translation>1キロバイトあたり</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>隠す</translation>
+    </message>
+    <message>
+        <source>Recommended:</source>
+        <translation>推奨:</translation>
+    </message>
+    <message>
+        <source>Custom:</source>
+        <translation>カスタム:</translation>
+    </message>
+    <message>
+        <source>(Smart fee not initialized yet. This usually takes a few blocks...)</source>
+        <translation>（スマート手数料はまだ初期化されていません。これにはおおよそ数ブロックほどかかります...）</translation>
+    </message>
+    <message>
+        <source>Send to multiple recipients at once</source>
+        <translation>一度に複数の送金先に送る</translation>
+    </message>
+    <message>
+        <source>Add &amp;Recipient</source>
+        <translation>送金先を追加(&amp;R)</translation>
+    </message>
+    <message>
+        <source>Clear all fields of the form.</source>
+        <translation>全ての入力欄をクリア</translation>
+    </message>
+    <message>
+        <source>Dust:</source>
+        <translation>ダスト:</translation>
+    </message>
+    <message>
+        <source>Hide transaction fee settings</source>
+        <translation>トランザクション手数料の設定を隠す</translation>
+    </message>
+    <message>
+        <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
+        <translation>ブロック内の空きよりトランザクション流量が少ない場合、マイナーや中継ノードは最低限の手数料でも処理することがあります。この最低限の手数料だけを支払っても問題ありませんが、一度トランザクションの需要がネットワークの処理能力を超えてしまった場合には、トランザクションが永久に承認されなくなってしまう可能性があることにご注意ください。</translation>
+    </message>
+    <message>
+        <source>A too low fee might result in a never confirming transaction (read the tooltip)</source>
+        <translation>手数料が低すぎるとトランザクションが永久に承認されなくなる可能性があります (ツールチップを参照)</translation>
+    </message>
+    <message>
+        <source>Confirmation time target:</source>
+        <translation>目標承認時間</translation>
+    </message>
+    <message>
+        <source>Enable Replace-By-Fee</source>
+        <translation>Replace-By-Fee を有効化する</translation>
+    </message>
+    <message>
+        <source>With Replace-By-Fee (BIP-125) you can increase a transaction's fee after it is sent. Without this, a higher fee may be recommended to compensate for increased transaction delay risk.</source>
+        <translation>Replace-By-Fee(手数料の上乗せ: BIP-125)機能を有効にすることで、トランザクション送信後でも手数料を上乗せすることができます。この機能を利用しない場合、予め手数料を多めに見積もっておかないと取引が遅れる可能性があります。</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>全てクリア(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Balance:</source>
+        <translation>残高:</translation>
+    </message>
+    <message>
+        <source>Confirm the send action</source>
+        <translation>送金内容を確認</translation>
+    </message>
+    <message>
+        <source>S&amp;end</source>
+        <translation>送金(&amp;E)</translation>
+    </message>
+    <message>
+        <source>Copy quantity</source>
+        <translation>選択数をコピー</translation>
+    </message>
+    <message>
+        <source>Copy amount</source>
+        <translation>金額をコピー</translation>
+    </message>
+    <message>
+        <source>Copy fee</source>
+        <translation>手数料をコピー</translation>
+    </message>
+    <message>
+        <source>Copy after fee</source>
+        <translation>手数料差引後金額をコピー</translation>
+    </message>
+    <message>
+        <source>Copy bytes</source>
+        <translation>バイト数をコピーす</translation>
+    </message>
+    <message>
+        <source>Copy dust</source>
+        <translation>ダストをコピー</translation>
+    </message>
+    <message>
+        <source>Copy change</source>
+        <translation>お釣りをコピー</translation>
+    </message>
+    <message>
+        <source>%1 (%2 blocks)</source>
+        <translation>%1 (%2 ブロック)</translation>
+    </message>
+    <message>
+        <source>Cr&amp;eate Unsigned</source>
+        <translation>未署名で作成</translation>
+    </message>
+    <message>
+        <source>Creates a Partially Signed Bitcoin Transaction (PSBT) for use with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
+        <translation>オフライン%1ウォレットまたはPSBTに対応したハードウェアウォレットと合わせて使用するためのPSBT(部分的に署名されたトランザクション)を作成します。</translation>
+    </message>
+    <message>
+        <source> from wallet '%1'</source>
+        <translation>ウォレット '%1' から</translation>
+    </message>
+    <message>
+        <source>%1 to '%2'</source>
+        <translation>%1 から '%2'</translation>
+    </message>
+    <message>
+        <source>%1 to %2</source>
+        <translation>%1 送金先: %2</translation>
+    </message>
+    <message>
+        <source>Do you want to draft this transaction?</source>
+        <translation>このトランザクションのひな形を作成しますか？</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to send?</source>
+        <translation>送金してもよろしいですか？</translation>
+    </message>
+    <message>
+        <source>Create Unsigned</source>
+        <translation>未署名で作成</translation>
+    </message>
+    <message>
+        <source>Save Transaction Data</source>
+        <translation>トランザクションデータの保存</translation>
+    </message>
+    <message>
+        <source>PSBT saved</source>
+        <translation>PSBTは保存されました。</translation>
+    </message>
+    <message>
+        <source>or</source>
+        <translation>または</translation>
+    </message>
+    <message>
+        <source>You can increase the fee later (signals Replace-By-Fee, BIP-125).</source>
+        <translation>手数料は後から上乗せ可能です(Replace-By-Fee(手数料の上乗せ: BIP-125)機能が有効)。</translation>
+    </message>
+    <message>
+        <source>Please, review your transaction.</source>
+        <translation>取引内容の最終確認をしてください。</translation>
+    </message>
+    <message>
+        <source>Transaction fee</source>
+        <translation>取引手数料</translation>
+    </message>
+    <message>
+        <source>Not signalling Replace-By-Fee, BIP-125.</source>
+        <translation>Replace-By-Fee(手数料の上乗せ: BIP-125)機能は有効になっていません。</translation>
+    </message>
+    <message>
+        <source>Total Amount</source>
+        <translation>合計</translation>
+    </message>
+    <message>
+        <source>To review recipient list click "Show Details..."</source>
+        <translation>受信者の一覧を確認するには "詳細を表示..." をクリック</translation>
+    </message>
+    <message>
+        <source>Confirm send coins</source>
+        <translation>送金の確認</translation>
+    </message>
+    <message>
+        <source>Confirm transaction proposal</source>
+        <translation>トランザクション提案を承認する</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation>送金</translation>
+    </message>
+    <message>
+        <source>Watch-only balance:</source>
+        <translation>監視限定残高</translation>
+    </message>
+    <message>
+        <source>The recipient address is not valid. Please recheck.</source>
+        <translation>送金先アドレスが不正です。再確認してください。</translation>
+    </message>
+    <message>
+        <source>The amount to pay must be larger than 0.</source>
+        <translation>支払い総額は0より大きい必要があります。</translation>
+    </message>
+    <message>
+        <source>The amount exceeds your balance.</source>
+        <translation>支払い総額が残高を超えています。</translation>
+    </message>
+    <message>
+        <source>The total exceeds your balance when the %1 transaction fee is included.</source>
+        <translation>取引手数料 %1 を含めた総額が残高を超えています。</translation>
+    </message>
+    <message>
+        <source>Duplicate address found: addresses should only be used once each.</source>
+        <translation>重複したアドレスが見つかりました: アドレスはそれぞれ一度のみ使用することができます。</translation>
+    </message>
+    <message>
+        <source>Transaction creation failed!</source>
+        <translation>取引の作成に失敗しました！</translation>
+    </message>
+    <message>
+        <source>A fee higher than %1 is considered an absurdly high fee.</source>
+        <translation>%1 よりも高い手数料は、異常に高すぎです。</translation>
+    </message>
+    <message>
+        <source>Payment request expired.</source>
+        <translation>支払いリクエストが期限切れです。</translation>
+    </message>
+    <message numerus="yes">
+        <source>Estimated to begin confirmation within %n block(s).</source>
+        <translation><numerusform>予想される承認開始ブロック: %n ブロック以内</numerusform></translation>
+    </message>
+    <message>
+        <source>Warning: Invalid Bitcoin address</source>
+        <translation>警告: 無効な Bitcoin アドレス</translation>
+    </message>
+    <message>
+        <source>Warning: Unknown change address</source>
+        <translation>警告：正体不明のお釣りアドレスです</translation>
+    </message>
+    <message>
+        <source>Confirm custom change address</source>
+        <translation>カスタムお釣りアドレスの確認</translation>
+    </message>
+    <message>
+        <source>The address you selected for change is not part of this wallet. Any or all funds in your wallet may be sent to this address. Are you sure?</source>
+        <translation>お釣り用として指定されたアドレスはこのウォレットのものではありません。このウォレットの一部又は全部の資産がこのアドレスへ送金されます。よろしいですか？</translation>
+    </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(ラベル無し)</translation>
+    </message>
+</context>
+<context>
+    <name>SendCoinsEntry</name>
+    <message>
+        <source>A&amp;mount:</source>
+        <translation>金額(&amp;A):</translation>
+    </message>
+    <message>
+        <source>Pay &amp;To:</source>
+        <translation>送金先(&amp;T):</translation>
+    </message>
+    <message>
+        <source>&amp;Label:</source>
+        <translation>ラベル(&amp;L):</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>これまでに送金したことがあるアドレスから選択</translation>
+    </message>
+    <message>
+        <source>The Bitcoin address to send the payment to</source>
+        <translation>支払い先 Bitcoin アドレス</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>クリップボードからアドレスを貼り付け</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Remove this entry</source>
+        <translation>この項目を削除</translation>
+    </message>
+    <message>
+        <source>The amount to send in the selected unit</source>
+        <translation>送金する金額の単位を選択</translation>
+    </message>
+    <message>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive less bitcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
+        <translation>手数料は送金する金額から差し引かれます。送金先には金額欄で指定した額よりも少ない Bitcoin が送られます。送金先が複数ある場合は、手数料は均等に分けられます。</translation>
+    </message>
+    <message>
+        <source>S&amp;ubtract fee from amount</source>
+        <translation>送金額から手数料を差し引く(&amp;U)</translation>
+    </message>
+    <message>
+        <source>Use available balance</source>
+        <translation>利用可能な残額を使用</translation>
+    </message>
+    <message>
+        <source>Message:</source>
+        <translation>メッセージ:</translation>
+    </message>
+    <message>
+        <source>This is an unauthenticated payment request.</source>
+        <translation>これは未認証の支払いリクエストです。</translation>
+    </message>
+    <message>
+        <source>This is an authenticated payment request.</source>
+        <translation>これは認証済みの支払いリクエストです。</translation>
+    </message>
+    <message>
+        <source>Enter a label for this address to add it to the list of used addresses</source>
+        <translation>このアドレスに対するラベルを入力することで、送金したことがあるアドレスの一覧に追加することができます</translation>
+    </message>
+    <message>
+        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
+        <translation>bitcoin: URIに添付されていたメッセージです。これは参照用として取引とともに保存されます。注意: メッセージは Bitcoin ネットワーク上へ送信されません。</translation>
+    </message>
+    <message>
+        <source>Pay To:</source>
+        <translation>送金先:</translation>
+    </message>
+    <message>
+        <source>Memo:</source>
+        <translation>メモ:</translation>
+    </message>
+</context>
+<context>
+    <name>ShutdownWindow</name>
+    <message>
+        <source>%1 is shutting down...</source>
+        <translation>%1 をシャットダウンしています...</translation>
+    </message>
+    <message>
+        <source>Do not shut down the computer until this window disappears.</source>
+        <translation>このウィンドウが消えるまでコンピュータをシャットダウンしないでください。</translation>
+    </message>
+</context>
+<context>
+    <name>SignVerifyMessageDialog</name>
+    <message>
+        <source>Signatures - Sign / Verify a Message</source>
+        <translation>署名 - メッセージの署名・検証</translation>
+    </message>
+    <message>
+        <source>&amp;Sign Message</source>
+        <translation>メッセージの署名(&amp;S)</translation>
+    </message>
+    <message>
+        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoins sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
+        <translation>あなたが所有しているアドレスでメッセージや契約書に署名をすることで、それらのアドレスへ送られた Bitcoin を受け取ることができることを証明できます。フィッシング攻撃者があなたを騙して、あなたの身分情報に署名させようとしている可能性があるため、よくわからないものやランダムな文字列に対して署名しないでください。あなたが同意した、よく詳細の記された文言にのみ署名するようにしてください。</translation>
+    </message>
+    <message>
+        <source>The Bitcoin address to sign the message with</source>
+        <translation>メッセージの署名に使用する Bitcoin アドレス</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>これまでに使用したことがあるアドレスから選択</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>クリップボードからアドレスを貼り付け</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Enter the message you want to sign here</source>
+        <translation>署名するメッセージを入力</translation>
+    </message>
+    <message>
+        <source>Signature</source>
+        <translation>署名</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>この署名をシステムのクリップボードにコピー</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Bitcoin address</source>
+        <translation>メッセージに署名してこの Bitcoin アドレスを所有していることを証明</translation>
+    </message>
+    <message>
+        <source>Sign &amp;Message</source>
+        <translation>メッセージを署名(&amp;M)</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>入力欄の内容を全て消去</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>全てクリア(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Verify Message</source>
+        <translation>メッセージの検証(&amp;V)</translation>
+    </message>
+    <message>
+        <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack. Note that this only proves the signing party receives with the address, it cannot prove sendership of any transaction!</source>
+        <translation>送金先のアドレスと、メッセージ（改行やスペース、タブなども完全に一致させること）および署名を以下に入力し、メッセージを検証します。中間者攻撃により騙されるのを防ぐため、署名対象のメッセージから書かれていること以上の意味を読み取ろうとしないでください。また、これは署名作成者がこのアドレスで受け取れることを証明するだけであり、取引の送信権限を証明するものではありません！</translation>
+    </message>
+    <message>
+        <source>The Bitcoin address the message was signed with</source>
+        <translation>メッセージの署名に使われた Bitcoin アドレス</translation>
+    </message>
+    <message>
+        <source>The signed message to verify</source>
+        <translation>検証したい署名済みメッセージ</translation>
+    </message>
+    <message>
+        <source>The signature given when the message was signed</source>
+        <translation>メッセージの署名時に生成された署名</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
+        <translation>メッセージを検証して指定された Bitcoin アドレスで署名されたことを確認</translation>
+    </message>
+    <message>
+        <source>Verify &amp;Message</source>
+        <translation>メッセージを検証(&amp;M)</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>入力欄の内容を全て消去</translation>
+    </message>
+    <message>
+        <source>Click "Sign Message" to generate signature</source>
+        <translation>「メッセージを署名」をクリックして署名を生成</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>不正なアドレスが入力されました。</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>アドレスが正しいか確かめてから、もう一度試してください。</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>入力されたアドレスに紐づく鍵がありません。</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>ウォレットのアンロックはキャンセルされました。</translation>
+    </message>
+    <message>
+        <source>No error</source>
+        <translation>エラーなし</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>入力されたアドレスの秘密鍵は利用できません。</translation>
+    </message>
+    <message>
+        <source>Message signing failed.</source>
+        <translation>メッセージの署名に失敗しました。</translation>
+    </message>
+    <message>
+        <source>Message signed.</source>
+        <translation>メッセージに署名しました。</translation>
+    </message>
+    <message>
+        <source>The signature could not be decoded.</source>
+        <translation>署名が復号できませんでした。</translation>
+    </message>
+    <message>
+        <source>Please check the signature and try again.</source>
+        <translation>署名が正しいか確認してから、もう一度試してください。</translation>
+    </message>
+    <message>
+        <source>The signature did not match the message digest.</source>
+        <translation>署名がメッセージダイジェストと一致しませんでした。</translation>
+    </message>
+    <message>
+        <source>Message verification failed.</source>
+        <translation>メッセージの検証に失敗しました。</translation>
+    </message>
+    <message>
+        <source>Message verified.</source>
+        <translation>メッセージは検証されました。</translation>
+    </message>
+</context>
+<context>
+    <name>TrafficGraphWidget</name>
+    <message>
+        <source>KB/s</source>
+        <translation>KB/秒</translation>
+    </message>
+</context>
+<context>
+    <name>TransactionDesc</name>
+    <message numerus="yes">
+        <source>Open for %n more block(s)</source>
+        <translation><numerusform>あと %n ブロックは未承認の予定</numerusform></translation>
+    </message>
+    <message>
+        <source>Open until %1</source>
+        <translation>%1 まで未承認の予定</translation>
+    </message>
+    <message>
+        <source>conflicted with a transaction with %1 confirmations</source>
+        <translation>%1 承認の取引と衝突</translation>
+    </message>
+    <message>
+        <source>0/unconfirmed, %1</source>
+        <translation>0/未承認, %1</translation>
+    </message>
+    <message>
+        <source>in memory pool</source>
+        <translation>メモリプール内</translation>
+    </message>
+    <message>
+        <source>not in memory pool</source>
+        <translation>メモリプール外</translation>
+    </message>
+    <message>
+        <source>abandoned</source>
+        <translation>送信中止</translation>
+    </message>
+    <message>
+        <source>%1/unconfirmed</source>
+        <translation>%1/未承認</translation>
+    </message>
+    <message>
+        <source>%1 confirmations</source>
+        <translation>%1 承認</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>状態</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>日付</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>ソース</translation>
+    </message>
+    <message>
+        <source>Generated</source>
+        <translation>生成</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation>送金元</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>不明</translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation>送金先</translation>
+    </message>
+    <message>
+        <source>own address</source>
+        <translation>自分のアドレス</translation>
+    </message>
+    <message>
+        <source>watch-only</source>
+        <translation>ウォッチ限定</translation>
+    </message>
+    <message>
+        <source>label</source>
+        <translation>ラベル</translation>
+    </message>
+    <message>
+        <source>Credit</source>
+        <translation>貸方</translation>
+    </message>
+    <message numerus="yes">
+        <source>matures in %n more block(s)</source>
+        <translation><numerusform>あと %n ブロックで成熟</numerusform></translation>
+    </message>
+    <message>
+        <source>not accepted</source>
+        <translation>承認されていない</translation>
+    </message>
+    <message>
+        <source>Debit</source>
+        <translation>借方</translation>
+    </message>
+    <message>
+        <source>Total debit</source>
+        <translation>借方総計</translation>
+    </message>
+    <message>
+        <source>Total credit</source>
+        <translation>貸方総計</translation>
+    </message>
+    <message>
+        <source>Transaction fee</source>
+        <translation>取引手数料</translation>
+    </message>
+    <message>
+        <source>Net amount</source>
+        <translation>正味金額</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation>メッセージ</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>コメント</translation>
+    </message>
+    <message>
+        <source>Transaction ID</source>
+        <translation>取引ID</translation>
+    </message>
+    <message>
+        <source>Transaction total size</source>
+        <translation>トランザクションの全体サイズ</translation>
+    </message>
+    <message>
+        <source>Transaction virtual size</source>
+        <translation>トランザクションの仮想サイズ</translation>
+    </message>
+    <message>
+        <source>Output index</source>
+        <translation>アウトプット インデックス数</translation>
+    </message>
+    <message>
+        <source> (Certificate was not verified)</source>
+        <translation>(証明書は検証されませんでした)</translation>
+    </message>
+    <message>
+        <source>Merchant</source>
+        <translation>リクエスト元</translation>
+    </message>
+    <message>
+        <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to "not accepted" and it won't be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
+        <translation>生成されたコインは、%1 ブロックの間成熟させたあとに使用可能になります。このブロックは生成された際、ブロックチェーンに取り込まれるためにネットワークに放流されました。ブロックチェーンに取り込まれられなかった場合、取引状態が「承認されていない」に変更され、コインは使用不能になります。これは、別のノードがあなたの数秒前にブロックを生成した場合に時々起こる場合があります。</translation>
+    </message>
+    <message>
+        <source>Debug information</source>
+        <translation>デバッグ情報</translation>
+    </message>
+    <message>
+        <source>Transaction</source>
+        <translation>トランザクション</translation>
+    </message>
+    <message>
+        <source>Inputs</source>
+        <translation>インプット</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -1779,8 +3028,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">エラー: レガシーウォレットは、アドレスタイプ「legacy」および「p2sh-segwit」、「bech32」のみをサポートします</translation>
     </message>
     <message>
-        <source>Fee estimation failed. Fallbackfee is disabled. Wait a few blocks or enable -fallbackfee.</source>
-        <translation type="unfinished">手数料推定に失敗しました。代替手数料が無効です。数ブロック待つか、-fallbackfee オプションを有効にしてください。</translation>
+        <source>Transaction status. Hover over this field to show number of confirmations.</source>
+        <translation>トランザクションステータス。このフィールドの上にカーソルを合わせると承認数が表示されます。</translation>
     </message>
     <message>
         <source>File %s already exists. If you are sure this is what you want, move it out of the way first.</source>
@@ -6044,6 +7293,10 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">このタブのデータをファイルにエクスポート</translation>
     </message>
     <message>
+        <source>Load Transaction Data</source>
+        <translation>トランザクションデータのロード</translation>
+    </message>
+    <message>
         <source>Backup Wallet</source>
         <translation type="unfinished">ウォレットのバックアップ</translation>
     </message>
@@ -6222,6 +7475,10 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Failed to rescan the wallet during initialization</source>
         <translation>初期化中にウォレットの再スキャンに失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to verify database</source>
+        <translation>データベースの検証に失敗しました</translation>
     </message>
     <message>
         <source>Importing...</source>

@@ -58,6 +58,10 @@
         <translation type="unfinished">තෝ&amp;රන්න</translation>
     </message>
     <message>
+        <source>C&amp;hoose</source>
+        <translation>තෝරන්න</translation>
+    </message>
+    <message>
         <source>Sending addresses</source>
         <translation type="unfinished">යවන ලිපින</translation>
     </message>
@@ -345,16 +349,8 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <source>&amp;Overview</source>
-        <translation type="unfinished">&amp;දළ විශ්ලේෂණය</translation>
-    </message>
-    <message>
-        <source>Show general overview of wallet</source>
-        <translation type="unfinished">පසුම්බිය පිළිබඳ සාමාන්‍ය දළ විශ්ලේෂණය පෙන්වන්න</translation>
-    </message>
-    <message>
-        <source>&amp;Transactions</source>
-        <translation type="unfinished">&amp;ගනුදෙනු</translation>
+        <source>Synchronizing with network...</source>
+        <translation>ජාලය සමග සමමුහුර්ත ව‌ෙමින්...</translation>
     </message>
     <message>
         <source>Browse transaction history</source>
