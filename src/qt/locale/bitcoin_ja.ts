@@ -4747,6 +4747,10 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">このタブのデータをファイルにエクスポート</translation>
     </message>
     <message>
+        <source>Load Transaction Data</source>
+        <translation>トランザクションデータのロード</translation>
+    </message>
+    <message>
         <source>Backup Wallet</source>
         <translation type="unfinished">ウォレットのバックアップ</translation>
     </message>

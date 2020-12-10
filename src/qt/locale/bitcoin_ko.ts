@@ -76,6 +76,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 서명은 '레거시' 타입의 주소만 가능합니다.</translation>
     </message>
     <message>
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+Signing is only possible with addresses of the type 'legacy'.</source>
+        <translation>지불 수신용 비트코인주소. 신규 주소를 만들려면 'Create new receiving address' 버튼을 사용하세요. 사인은 '레거시' 타입의 주소만 가능합니다.</translation>
+    </message>
+    <message>
         <source>&amp;Copy Address</source>
         <translation type="unfinished">주소 복사(&amp;C)</translation>
     </message>
@@ -2002,7 +2007,15 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
         <translation type="unfinished">알 수 없음. 헤더 동기화 중(%1, %2)...</translation>
     </message>
-    </context>
+    <message>
+        <source>Close all wallets</source>
+        <translation>모든 지갑 닫기</translation>
+    </message>
+    <message>
+        <source>Are you sure you wish to close all wallets?</source>
+        <translation>정말로 모든 지갑들을 닫으시겠습니까?</translation>
+    </message>
+</context>
 <context>
     <name>OpenURIDialog</name>
     <message>
@@ -4370,6 +4383,10 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">수수료를 올리시겠습니까?</translation>
     </message>
     <message>
+        <source>Do you want to draft a transaction with fee increase?</source>
+        <translation>수수료가 인상 된 거래를 작성 하시겠습니까?</translation>
+    </message>
+    <message>
         <source>Current fee:</source>
         <translation type="unfinished">현재 수수료:</translation>
     </message>
@@ -4392,6 +4409,10 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Can't draft transaction.</source>
         <translation type="unfinished">거래 초안을 작성할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Can't draft transaction.</source>
+        <translation>거래 초안을 작성할 수 없습니다.</translation>
     </message>
     <message>
         <source>PSBT copied</source>
@@ -4423,6 +4444,26 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Export the data in the current tab to a file</source>
         <translation type="unfinished">현재 탭에 있는 데이터를 파일로 내보내기</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT from clipboard (invalid base64)</source>
+        <translation>클립 보드에서 PSBT를 디코딩 할 수 없습니다 (잘못된 base64).</translation>
+    </message>
+    <message>
+        <source>Load Transaction Data</source>
+        <translation>트랜젝션 데이터 불러오기</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (*.psbt)</source>
+        <translation>부분적으로 서명된 비트코인 트랜잭션 (* .psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT file must be smaller than 100 MiB</source>
+        <translation>PSBT 파일은 100MiB보다 작아야합니다.</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT</source>
+        <translation>PSBT를 디코드 할 수 없음</translation>
     </message>
     <message>
         <source>Backup Wallet</source>

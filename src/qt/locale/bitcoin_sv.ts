@@ -1589,6 +1589,10 @@ Försök igen.</translation>
         <source>Create</source>
         <translation type="unfinished">Skapa</translation>
     </message>
+    <message>
+        <source>Close all wallets</source>
+        <translation>Stäng alla plånböcker</translation>
+    </message>
     </context>
 <context>
     <name>EditAddressDialog</name>

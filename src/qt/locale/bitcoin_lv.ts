@@ -70,6 +70,10 @@
         <translation type="unfinished">Šīs ir jūsu Bitcoin adreses, kuras izmantojamas maksājumu veikšanai. Vienmēr pārbaudiet summu un saņēmēja adresi pirms monētu nosūtīšanas.</translation>
     </message>
     <message>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Šīs ir jūsu Bitcoin adreses, kuras izmantojamas maksājumu veikšanai. Vienmēr pārbaudiet summu un saņēmēja adresi pirms monētu nosūtīšanas.</translation>
+    </message>
+    <message>
         <source>&amp;Copy Address</source>
         <translation type="unfinished">&amp;Kopēt adresi</translation>
     </message>
@@ -89,6 +93,10 @@
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
         <translation type="unfinished">Mēģinot saglabāt adrešu sarakstu %1 radās kļūda. Lūdzu mēģiniet vēlreiz.</translation>
+    </message>
+    <message>
+        <source>Comma separated file (*.csv)</source>
+        <translation>Ar komatiem atdalīts fails (*.csv)</translation>
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -141,6 +149,10 @@
         <translation type="unfinished">Lai veiktu šo darbību, nepieciešama jūsu maciņa slepenā frāze maciņa atvēršanai.</translation>
     </message>
     <message>
+        <source>This operation needs your wallet passphrase to unlock the wallet.</source>
+        <translation>Lai veiktu šo darbību, nepieciešama jūsu maciņa slepenā frāze maciņa atvēršanai.</translation>
+    </message>
+    <message>
         <source>Unlock wallet</source>
         <translation type="unfinished">Atslēgt maciņu</translation>
     </message>
@@ -175,6 +187,10 @@
     <message>
         <source>Wallet to be encrypted</source>
         <translation type="unfinished">Maciņu nepieciešams šifrēt.</translation>
+    </message>
+    <message>
+        <source>Wallet to be encrypted</source>
+        <translation>Maciņu nepieciešams šifrēt.</translation>
     </message>
     <message>
         <source>Your wallet is now encrypted. </source>
@@ -1276,6 +1292,10 @@
     </context>
 <context>
     <name>TransactionView</name>
+    <message>
+        <source>Comma separated file (*.csv)</source>
+        <translation>Ar komatiem atdalīts fails (*.csv)</translation>
+    </message>
     <message>
         <source>Confirmed</source>
         <translation type="unfinished">Apstiprināts</translation>

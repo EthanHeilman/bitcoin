@@ -1954,7 +1954,11 @@ Això és ideal per a carteres de mode només lectura.</translation>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
         <translation type="unfinished">Desconegut. Sincronització de les capçaleres (%1, %2%)...</translation>
     </message>
-    </context>
+    <message>
+        <source>Are you sure you wish to close all wallets?</source>
+        <translation>Esteu segur que voleu tancar totes les carteres?</translation>
+    </message>
+</context>
 <context>
     <name>OpenURIDialog</name>
     <message>
@@ -4218,6 +4222,26 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
     <message>
         <source>Export the data in the current tab to a file</source>
         <translation type="unfinished">Exporta les dades de la pestanya actual a un fitxer</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT from clipboard (invalid base64)</source>
+        <translation>Incapaç de descodificar la PSBT del porta-retalls (base64 invàlida)</translation>
+    </message>
+    <message>
+        <source>Load Transaction Data</source>
+        <translation>Carrega dades de transacció</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (*.psbt)</source>
+        <translation>Transacció Parcialment Firmada (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT file must be smaller than 100 MiB</source>
+        <translation>L'arxiu PSBT ha de ser més petit que 100MiB</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT</source>
+        <translation>Incapaç de descodificar la PSBT</translation>
     </message>
     <message>
         <source>Backup Wallet</source>

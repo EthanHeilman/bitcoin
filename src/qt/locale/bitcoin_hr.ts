@@ -2070,6 +2070,10 @@ Potpisivanje je moguće samo sa 'legacy' adresama. </translation>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
         <translation type="unfinished">Nepoznato. Sinkroniziranje zaglavlja blokova (%1, %2%)...</translation>
     </message>
+    <message>
+        <source>Close all wallets</source>
+        <translation>Zatvori sve novčanike</translation>
+    </message>
     </context>
 <context>
     <name>OpenURIDialog</name>

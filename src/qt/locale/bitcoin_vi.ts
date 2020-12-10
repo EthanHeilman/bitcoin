@@ -155,7 +155,11 @@
         <source>The supplied passphrases do not match.</source>
         <translation type="unfinished">Mật khẩu đã nhập không đúng.</translation>
     </message>
-    </context>
+    <message>
+        <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
+        <translation>Lỗi nghiêm trong. %1 không thể tiếp tục và sẽ thoát ra</translation>
+    </message>
+</context>
 <context>
     <name>BitcoinApplication</name>
     <message>
@@ -227,7 +231,11 @@
             <numerusform>%nnăm</numerusform>
         </translation>
     </message>
-    </context>
+    <message>
+        <source>Could not generate new %1 address</source>
+        <translation>Không thể tạo ra %1 địa chỉ mới</translation>
+    </message>
+</context>
 <context>
     <name>bitcoin-core</name>
     <message>
@@ -651,7 +659,15 @@
         <source>Are you sure you wish to close the wallet &lt;i&gt;%1&lt;/i&gt;?</source>
         <translation type="unfinished">Bạn có chắc chắn muốn đóng ví không &lt;i&gt;%1&lt;/i&gt;?</translation>
     </message>
-    </context>
+    <message>
+        <source>Close all wallets</source>
+        <translation>Đóng tất cả ví</translation>
+    </message>
+    <message>
+        <source>Are you sure you wish to close all wallets?</source>
+        <translation>Bạn có chắc chắn muốn đóng tất cả ví không?</translation>
+    </message>
+</context>
 <context>
     <name>CreateWalletDialog</name>
     <message>

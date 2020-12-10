@@ -58,6 +58,10 @@
         <translation type="unfinished">තෝ&amp;රන්න</translation>
     </message>
     <message>
+        <source>C&amp;hoose</source>
+        <translation>තෝරන්න</translation>
+    </message>
+    <message>
         <source>Sending addresses</source>
         <translation type="unfinished">යවන ලිපින</translation>
     </message>
