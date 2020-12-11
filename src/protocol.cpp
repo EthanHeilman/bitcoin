@@ -14,6 +14,8 @@ namespace NetMsgType {
 const char *VERSION="version";
 const char *VERACK="verack";
 const char *ADDR="addr";
+const char *ADDRV2="addrv2";
+const char *SENDADDRV2="sendaddrv2";
 const char *INV="inv";
 const char *GETDATA="getdata";
 const char *MERKLEBLOCK="merkleblock";
@@ -52,6 +54,8 @@ const static std::string allNetMessageTypes[] = {
     NetMsgType::VERSION,
     NetMsgType::VERACK,
     NetMsgType::ADDR,
+    NetMsgType::ADDRV2,
+    NetMsgType::SENDADDRV2,
     NetMsgType::INV,
     NetMsgType::GETDATA,
     NetMsgType::MERKLEBLOCK,
@@ -199,7 +203,6 @@ static std::string serviceFlagToStr(size_t bit)
     switch ((ServiceFlags)service_flag) {
     case NODE_NONE: abort();  // impossible
     case NODE_NETWORK:         return "NETWORK";
-    case NODE_GETUTXO:         return "GETUTXO";
     case NODE_BLOOM:           return "BLOOM";
     case NODE_WITNESS:         return "WITNESS";
     case NODE_COMPACT_FILTERS: return "COMPACT_FILTERS";

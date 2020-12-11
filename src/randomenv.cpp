@@ -54,7 +54,7 @@
 #include <sys/vmmeter.h>
 #endif
 #endif
-#ifdef __linux__
+#if defined(HAVE_STRONG_GETAUXVAL) || defined(HAVE_WEAK_GETAUXVAL)
 #include <sys/auxv.h>
 #endif
 
@@ -68,8 +68,9 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
 #ifdef WIN32
     // Seed with the entire set of perfmon data
 
-    // This can take up to 2 seconds, so only do it every 10 minutes
-    static std::atomic<std::chrono::seconds> last_perfmon{std::chrono::seconds{0}};
+    // This can take up to 2 seconds, so only do it every 10 minutes.
+    // Initialize last_perfmon to 0 seconds, we don't skip the first call.
+    static std::atomic<std::chrono::seconds> last_perfmon{0s};
     auto last_time = last_perfmon.load();
     auto current_time = GetTime<std::chrono::seconds>();
     if (current_time < last_time + std::chrono::minutes{10}) return;
@@ -84,7 +85,7 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
         ret = RegQueryValueExA(HKEY_PERFORMANCE_DATA, "Global", nullptr, nullptr, vData.data(), &nSize);
         if (ret != ERROR_MORE_DATA || vData.size() >= nMaxSize)
             break;
-        vData.resize(std::max((vData.size() * 3) / 2, nMaxSize)); // Grow size of buffer exponentially
+        vData.resize(std::min((vData.size() * 3) / 2, nMaxSize)); // Grow size of buffer exponentially
     }
     RegCloseKey(HKEY_PERFORMANCE_DATA);
     if (ret == ERROR_SUCCESS) {
@@ -326,7 +327,7 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
     // Bitcoin client version
     hasher << CLIENT_VERSION;
 
-#ifdef __linux__
+#if defined(HAVE_STRONG_GETAUXVAL) || defined(HAVE_WEAK_GETAUXVAL)
     // Information available through getauxval()
 #  ifdef AT_HWCAP
     hasher << getauxval(AT_HWCAP);
@@ -346,7 +347,7 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
     const char* exec_str = (const char*)getauxval(AT_EXECFN);
     if (exec_str) hasher.Write((const unsigned char*)exec_str, strlen(exec_str) + 1);
 #  endif
-#endif // __linux__
+#endif // HAVE_STRONG_GETAUXVAL || HAVE_WEAK_GETAUXVAL
 
 #ifdef HAVE_GETCPUID
     AddAllCPUID(hasher);

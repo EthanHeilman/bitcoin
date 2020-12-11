@@ -17,6 +17,7 @@
 #include <node/coinstats.h>
 #include <node/context.h>
 #include <node/utxo_snapshot.h>
+#include <policy/fees.h>
 #include <policy/feerate.h>
 #include <policy/policy.h>
 #include <policy/rbf.h>
@@ -79,6 +80,15 @@ ChainstateManager& EnsureChainman(const util::Ref& context)
         throw JSONRPCError(RPC_INTERNAL_ERROR, "Node chainman not found");
     }
     return *node.chainman;
+}
+
+CBlockPolicyEstimator& EnsureFeeEstimator(const util::Ref& context)
+{
+    NodeContext& node = EnsureNodeContext(context);
+    if (!node.fee_estimator) {
+        throw JSONRPCError(RPC_INTERNAL_ERROR, "Fee estimation disabled");
+    }
+    return *node.fee_estimator;
 }
 
 /* Calculate the difficulty for a given block index.
@@ -1354,6 +1364,7 @@ RPCHelpMan getblockchaininfo()
     BuriedForkDescPushBack(softforks, "csv", consensusParams.CSVHeight);
     BuriedForkDescPushBack(softforks, "segwit", consensusParams.SegwitHeight);
     BIP9SoftForkDescPushBack(softforks, "testdummy", consensusParams, Consensus::DEPLOYMENT_TESTDUMMY);
+    BIP9SoftForkDescPushBack(softforks, "taproot", consensusParams, Consensus::DEPLOYMENT_TAPROOT);
     obj.pushKV("softforks",             softforks);
 
     obj.pushKV("warnings", GetWarnings(false).original);
@@ -1815,12 +1826,12 @@ static RPCHelpMan getblockstats()
                 {RPCResult::Type::NUM, "outs", "The number of outputs"},
                 {RPCResult::Type::NUM, "subsidy", "The block subsidy"},
                 {RPCResult::Type::NUM, "swtotal_size", "Total size of all segwit transactions"},
-                {RPCResult::Type::NUM, "swtotal_weight", "Total weight of all segwit transactions divided by segwit scale factor (4)"},
+                {RPCResult::Type::NUM, "swtotal_weight", "Total weight of all segwit transactions"},
                 {RPCResult::Type::NUM, "swtxs", "The number of segwit transactions"},
                 {RPCResult::Type::NUM, "time", "The block time"},
                 {RPCResult::Type::NUM, "total_out", "Total amount in all outputs (excluding coinbase and thus reward [ie subsidy + totalfee])"},
                 {RPCResult::Type::NUM, "total_size", "Total size of all non-coinbase transactions"},
-                {RPCResult::Type::NUM, "total_weight", "Total weight of all non-coinbase transactions divided by segwit scale factor (4)"},
+                {RPCResult::Type::NUM, "total_weight", "Total weight of all non-coinbase transactions"},
                 {RPCResult::Type::NUM, "totalfee", "The fee total"},
                 {RPCResult::Type::NUM, "txs", "The number of transactions (including coinbase)"},
                 {RPCResult::Type::NUM, "utxo_increase", "The increase/decrease in the number of unspent outputs"},

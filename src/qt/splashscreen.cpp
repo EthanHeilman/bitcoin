@@ -14,6 +14,7 @@
 #include <interfaces/wallet.h>
 #include <qt/guiutil.h>
 #include <qt/networkstyle.h>
+#include <qt/walletmodel.h>
 #include <util/system.h>
 #include <util/translation.h>
 
@@ -24,8 +25,8 @@
 #include <QScreen>
 
 
-SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) :
-    QWidget(nullptr, f), curAlignment(0)
+SplashScreen::SplashScreen(const NetworkStyle* networkStyle)
+    : QWidget(), curAlignment(0)
 {
     // set reference point, paddings
     int paddingRight            = 50;
@@ -196,6 +197,7 @@ void SplashScreen::subscribeToCoreSignals()
 void SplashScreen::handleLoadWallet()
 {
 #ifdef ENABLE_WALLET
+    if (!WalletModel::isWalletEnabled()) return;
     m_handler_load_wallet = m_node->walletClient().handleLoadWallet([this](std::unique_ptr<interfaces::Wallet> wallet) {
         m_connected_wallet_handlers.emplace_back(wallet->handleShowProgress(std::bind(ShowProgress, this, std::placeholders::_1, std::placeholders::_2, false)));
         m_connected_wallets.emplace_back(std::move(wallet));
