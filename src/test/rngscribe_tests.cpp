@@ -45,14 +45,14 @@ BOOST_AUTO_TEST_CASE(simple_serialization)
     outRecorder.Serialize(stream);
     
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords.size(), 0);
-    BOOST_CHECK_EQUAL((int)inRecorder.mapHasher.size(), 0);
+    BOOST_CHECK_EQUAL((int)inRecorder.mapType.size(), 0);
 
     inRecorder.Unserialize(stream);
 
     // Check map hasher
-    BOOST_CHECK_EQUAL((int)inRecorder.mapHasher.size(), 2);
-    BOOST_CHECK_EQUAL(inRecorder.mapHasher[1], "test_hasher1");
-    BOOST_CHECK_EQUAL(inRecorder.mapHasher[2], "test_hasher2");
+    BOOST_CHECK_EQUAL((int)inRecorder.mapType.size(), 2);
+    BOOST_CHECK_EQUAL((int)inRecorder.mapType["test_hasher1"], 1);
+    BOOST_CHECK_EQUAL((int)inRecorder.mapType["test_hasher2"], 2);
 
     BOOST_CHECK_EQUAL((int)inRecorder.mapLoc.size(), 3);
     BOOST_CHECK_EQUAL((int)inRecorder.mapLoc["test_locationA"], 1);
@@ -67,17 +67,22 @@ BOOST_AUTO_TEST_CASE(simple_serialization)
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords.size(), 3);
 
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[0].hasherId, 1);
+    BOOST_CHECK_EQUAL((int)inRecorder.vRecords[0].hasherType, 1);
+
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[0].locId, 1);
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[0].srcId, 1);
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[0].len, 0);
 
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[1].hasherId, 2);
+    BOOST_CHECK_EQUAL((int)inRecorder.vRecords[1].hasherType, 2);
+
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[1].locId, 2);
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[1].srcId, 1);
     BOOST_CHECK_EQUAL(inRecorder.vRecords[1].len, data_len2);
     BOOST_CHECK_EQUAL(inRecorder.vRecords[1].data, "12345");
 
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[2].hasherId, 1);
+    BOOST_CHECK_EQUAL((int)inRecorder.vRecords[2].hasherType, 1);
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[2].locId, 3);
     BOOST_CHECK_EQUAL((int)inRecorder.vRecords[2].srcId, 2);
     BOOST_CHECK_EQUAL(inRecorder.vRecords[2].len, data_len3);

@@ -107,6 +107,26 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
  * Note that this does not serialize the passed object (like stream.h's << operators do).
  * Its raw memory representation is used directly.
  */
+// template<typename T>
+// CRNGSHA512& operator+(CRNGSHA512& hasher, std::tuple<const T&, std::string, std::string> entsrc) {
+//     static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
+//     static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
+//     static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
+//     static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
+//     hasher.Write(CEntropySource((const unsigned char*)&(entsrc[0]), sizeof(entsrc[0]), "TODO:<<"), "<<");
+//     return hasher;
+// }
+
+template<typename T>
+CRNGSHA512& XSW(CRNGSHA512& hasher, const T& data, std::string src, std::string loc) {
+    static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
+    static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
+    static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
+    static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
+    hasher.Write(CEntropySource((const unsigned char*)&data, sizeof(data), src), loc);
+    return hasher;
+}
+
 template<typename T>
 CRNGSHA512& operator<<(CRNGSHA512& hasher, const T& data) {
     static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
@@ -158,7 +178,8 @@ void AddPath(CRNGSHA512& hasher, const char *path)
     struct stat sb = {};
     if (stat(path, &sb) == 0) {
         hasher.Write(CEntropySource((const unsigned char*)path, strlen(path) + 1, "path_"+std::string(path)), "AddPath");
-        hasher << sb;
+        
+        XSW(hasher, sb, "sb", "AddPath");
     }
 }
 #endif
@@ -172,10 +193,12 @@ void AddSysctl(CRNGSHA512& hasher)
     size_t siz = 65536;
     int ret = sysctl(CTL, sizeof...(S), buffer, &siz, nullptr, 0);
     if (ret == 0 || (ret == -1 && errno == ENOMEM)) {
-        hasher << sizeof(CTL);
+        XSW(hasher, sizeof(CTL), "sizeof(CTL)", "AddSysctl");
+
         hasher.Write(CEntropySource((const unsigned char*)CTL, sizeof(CTL), "CTL"), "AddSysctl");
         if (siz > sizeof(buffer)) siz = sizeof(buffer);
-        hasher << siz;
+        XSW(hasher, siz, "siz", "AddSysctl");
+
         hasher.Write(CEntropySource(buffer, siz, "Sysctl_buffer"), "AddSysctl");
     }
 }
@@ -185,7 +208,13 @@ void AddSysctl(CRNGSHA512& hasher)
 void inline AddCPUID(CRNGSHA512& hasher, uint32_t leaf, uint32_t subleaf, uint32_t& ax, uint32_t& bx, uint32_t& cx, uint32_t& dx)
 {
     GetCPUID(leaf, subleaf, ax, bx, cx, dx);
-    hasher << leaf << subleaf << ax << bx << cx << dx;
+    XSW(hasher, leaf, "AddCPUID leaf", "RandAddStaticEnv");
+    XSW(hasher, subleaf, "AddCPUID subleaf", "RandAddStaticEnv");
+    XSW(hasher, ax, "AddCPUID ax", "RandAddStaticEnv");
+    XSW(hasher, bx, "AddCPUID bx", "RandAddStaticEnv");
+    XSW(hasher, cx, "AddCPUID cx", "RandAddStaticEnv");
+    XSW(hasher, dx, "AddCPUID dx", "RandAddStaticEnv");
+
 }
 
 void AddAllCPUID(CRNGSHA512& hasher)
@@ -232,35 +261,42 @@ void RandAddDynamicEnv(CRNGSHA512& hasher)
 #ifdef WIN32
     FILETIME ftime;
     GetSystemTimeAsFileTime(&ftime);
-    hasher << ftime;
+    XSW(hasher, GetSystemTimeAsFileTime, "GetSystemTimeAsFileTime", "RandAddDynamicEnv");
+
 #else
     struct timespec ts = {};
 #    ifdef CLOCK_MONOTONIC
     clock_gettime(CLOCK_MONOTONIC, &ts);
-    hasher << ts;
+    XSW(hasher, ts, "clock_gettime CLOCK_MONOTONIC", "RandAddDynamicEnv");
+
 #    endif
 #    ifdef CLOCK_REALTIME
     clock_gettime(CLOCK_REALTIME, &ts);
-    hasher << ts;
+    XSW(hasher, ts, "clock_gettime CLOCK_REALTIME", "RandAddDynamicEnv");
+
 #    endif
 #    ifdef CLOCK_BOOTTIME
     clock_gettime(CLOCK_BOOTTIME, &ts);
-    hasher << ts;
+    XSW(hasher, ts, "clock_gettime CLOCK_BOOTTIME", "RandAddDynamicEnv");
+
 #    endif
     // gettimeofday is available on all UNIX systems, but only has microsecond precision.
     struct timeval tv = {};
     gettimeofday(&tv, nullptr);
-    hasher << tv;
+    XSW(hasher, tv, "gettimeofday", "RandAddDynamicEnv");
+
 #endif
     // Probably redundant, but also use all the clocks C++11 provides:
-    hasher << std::chrono::system_clock::now().time_since_epoch().count();
-    hasher << std::chrono::steady_clock::now().time_since_epoch().count();
-    hasher << std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    XSW(hasher, std::chrono::system_clock::now().time_since_epoch().count(), "std::chrono::system_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
+
+    XSW(hasher, std::chrono::steady_clock::now().time_since_epoch().count(), "std::chrono::steady_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
+    XSW(hasher, std::chrono::high_resolution_clock::now().time_since_epoch().count(), "std::chrono::high_resolution_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
 
 #ifndef WIN32
     // Current resource usage.
     struct rusage usage = {};
-    if (getrusage(RUSAGE_SELF, &usage) == 0) hasher << usage;
+    if (getrusage(RUSAGE_SELF, &usage) == 0) XSW(hasher, usage, "usage", "RandAddDynamicEnv");
+
 #endif
 
 #ifdef __linux__
@@ -301,23 +337,38 @@ void RandAddDynamicEnv(CRNGSHA512& hasher)
 
     // Stack and heap location
     void* addr = malloc(4097);
-    hasher << &addr << addr;
+    XSW(hasher, &addr, "&addr", "RandAddDynamicEnv");
+    XSW(hasher, addr, "addr", "RandAddDynamicEnv");
+
+
     free(addr);
 }
 
 void RandAddStaticEnv(CRNGSHA512& hasher)
 {
     // Some compile-time static properties
-    hasher << (CHAR_MIN < 0) << sizeof(void*) << sizeof(long) << sizeof(int);
+    XSW(hasher, (CHAR_MIN < 0), "CHAR_MIN < 0)", "RandAddStaticEnv");
+    XSW(hasher, sizeof(void*), "sizeof(void*)", "RandAddStaticEnv");
+    XSW(hasher, sizeof(long), "sizeof(long)", "RandAddStaticEnv");
+    XSW(hasher, sizeof(int), "sizeof(int)", "RandAddStaticEnv");
+
+
+
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && defined(__GNUC_PATCHLEVEL__)
-    hasher << __GNUC__ << __GNUC_MINOR__ << __GNUC_PATCHLEVEL__;
+    XSW(hasher, __GNUC__, "__GNUC__", "RandAddStaticEnv");
+    XSW(hasher, __GNUC_MINOR__, "__GNUC_MINOR__", "RandAddStaticEnv");
+    XSW(hasher, __GNUC_PATCHLEVEL__, "__GNUC_PATCHLEVEL__", "RandAddStaticEnv");
+
 #endif
 #ifdef _MSC_VER
-    hasher << _MSC_VER;
+    XSW(hasher, _MSC_VER, "_MSC_VER", "RandAddStaticEnv");
+
 #endif
-    hasher << __cplusplus;
+    XSW(hasher, __cplusplus, "__cplusplus", "RandAddStaticEnv");
+
 #ifdef _XOPEN_VERSION
-    hasher << _XOPEN_VERSION;
+    XSW(hasher, _XOPEN_VERSION, "_XOPEN_VERSION", "RandAddStaticEnv");
+
 #endif
 #ifdef __VERSION__
     const char* COMPILER_VERSION = __VERSION__;
@@ -325,15 +376,17 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
 #endif
 
     // Bitcoin client version
-    hasher << CLIENT_VERSION;
+    XSW(hasher, CLIENT_VERSION, "CLIENT_VERSION", "RandAddStaticEnv");
 
 #if defined(HAVE_STRONG_GETAUXVAL) || defined(HAVE_WEAK_GETAUXVAL)
     // Information available through getauxval()
 #  ifdef AT_HWCAP
-    hasher << getauxval(AT_HWCAP);
+    XSW(hasher, getauxval(AT_HWCAP), "getauxval(AT_HWCAP)", "RandAddStaticEnv");
+
 #  endif
 #  ifdef AT_HWCAP2
-    hasher << getauxval(AT_HWCAP2);
+    XSW(hasher, getauxval(AT_HWCAP2), "getauxval(AT_HWCAP2)", "RandAddStaticEnv");
+
 #  endif
 #  ifdef AT_RANDOM
     const unsigned char* random_aux = (const unsigned char*)getauxval(AT_RANDOM);
@@ -352,9 +405,12 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
 #ifdef HAVE_GETCPUID
     AddAllCPUID(hasher);
 #endif
-
     // Memory locations
-    hasher << &hasher << &RandAddStaticEnv << &malloc << &errno << &environ;
+    XSW(hasher, &hasher, "&hasher", "RandAddStaticEnv");
+    XSW(hasher, &RandAddStaticEnv, "&RandAddStaticEnv", "RandAddStaticEnv");
+    XSW(hasher, &malloc, "&malloc", "RandAddStaticEnv");
+    XSW(hasher, &errno, "&errno", "RandAddStaticEnv");
+    XSW(hasher, &environ, "&environ", "RandAddStaticEnv");
 
     // Hostname
     char hname[256];
@@ -493,9 +549,18 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
 
     // Process, thread, user, session, group, ... ids.
 #ifdef WIN32
-    hasher << GetCurrentProcessId() << GetCurrentThreadId();
+    XSW(hasher, GetCurrentProcessId(), "GetCurrentProcessId()", "RandAddStaticEnv");
+    XSW(hasher, GetCurrentThreadId(), "GetCurrentThreadId()", "RandAddStaticEnv");
+
 #else
-    hasher << getpid() << getppid() << getsid(0) << getpgid(0) << getuid() << geteuid() << getgid() << getegid();
+    XSW(hasher, getpid(), "getpid()", "RandAddStaticEnv");
+    XSW(hasher, getppid(), "getppid()", "RandAddStaticEnv");
+    XSW(hasher, getsid(0), "getsid(0)", "RandAddStaticEnv");
+    XSW(hasher, getpgid(0), "getpgid(0)", "RandAddStaticEnv");
+    XSW(hasher, getuid(), "getuid()", "RandAddStaticEnv");
+    XSW(hasher, geteuid(), "geteuid()", "RandAddStaticEnv");
+    XSW(hasher, getgid(), "getgid()", "RandAddStaticEnv");
+    XSW(hasher, getegid(), "getegid()", "RandAddStaticEnv");
 #endif
-    hasher << std::this_thread::get_id();
+    XSW(hasher, std::this_thread::get_id(), "std::this_thread::get_id()", "RandAddStaticEnv");
 }

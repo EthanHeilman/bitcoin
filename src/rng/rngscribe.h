@@ -45,6 +45,7 @@ struct trecord
 {
     // keys
     unsigned int hasherId;
+    unsigned int hasherType;
     unsigned int locId;
     unsigned int srcId;
 
@@ -60,7 +61,9 @@ private:
     int64_t startTime = GetSystemTimeInSeconds();
 
 public:
-    std::map<unsigned int, std::string> mapHasher;
+    // std::map<unsigned int, std::string> mapHasher;
+    std::map<std::string, unsigned int> mapType;
+    int typeCtr = 0;
     std::map<std::string, unsigned int> mapLoc;
     int locCtr = 0;
     std::map<std::string, unsigned int> mapSrc;
@@ -92,7 +95,7 @@ public:
     template <typename Stream>
     void Serialize(Stream& s) const
     {
-        s << mapHasher;
+        s << mapType;
         s << mapLoc;
         s << mapSrc;
 
@@ -103,6 +106,7 @@ public:
         for (unsigned int i = 0; i < numRecords; i++)
         {
             s << vRecords[i].hasherId;
+            s << vRecords[i].hasherType;
             s << vRecords[i].locId;
             s << vRecords[i].srcId;
             s << vRecords[i].len;
@@ -113,7 +117,7 @@ public:
     template <typename Stream>
     void Unserialize(Stream& s)
     {
-        s >> mapHasher;
+        s >> mapType;
         s >> mapLoc;
         s >> mapSrc;
 
@@ -124,6 +128,7 @@ public:
         {
             trecord record;
             s >> record.hasherId;
+            s >> record.hasherType;
             s >> record.locId;
             s >> record.srcId;
             s >> record.len;
@@ -138,12 +143,13 @@ public:
 const unsigned char* newData, size_t len)
     {
         trecord record;
-
-        if (mapHasher.find(newHasherId) == mapHasher.end())
-        {
-            mapHasher[newHasherId] = newHasher;
-        }
         record.hasherId = newHasherId;
+
+        if (mapType.find(newHasher) == mapType.end())
+        {
+            mapType[newHasher] = ++typeCtr;
+        }
+        record.hasherType = mapType[newHasher];
 
         if (mapLoc.find(newLoc) == mapLoc.end())
         {
@@ -173,7 +179,7 @@ class CRNGScribe
 {
 
 public:
-    size_t MAX_MEM_SIZE = 10000;
+    size_t MAX_MEM_SIZE = 100000;
     int64_t startTime = GetSystemTimeInSeconds();
     unsigned int currpart = 0;
     CRNGCodex* currCodex;
@@ -199,13 +205,18 @@ const unsigned char* data, size_t len)
             {
                 CRNGCodex* codexToWrite = currCodex;
                 currCodex = new CRNGCodex();
-                mem_lock.unlock();
+                // mem_lock.unlock();
 
                 currpart += 1;
-                std::string spath = strprintf("/tmp/rng_%" PRId64 ".%i.dat", this->startTime, currpart);
+                std::string sdir = "/tmp/rngbook_"+std::to_string(this->startTime);
 
+                if (!fs::exists(sdir))
+                    fs::create_directories(sdir);
+                
+                std::string spath = sdir+"/"+std::to_string(currpart)+".dat";
                 codexToWrite->Write(fs::path(spath));
                 delete codexToWrite; // Since we have written the codex to disk we can free up its memory
+                mem_lock.unlock();
             }
             else
             {
