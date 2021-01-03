@@ -3,7 +3,7 @@
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation type="unfinished">לחץ על הלחצן הימני בעכבר לעריכת הכתובת או התווית</translation>
+        <translation>לעריכת הכתובת או התווית יש ללחוץ על הלחצן הימני בעכבר</translation>
     </message>
     <message>
         <source>Create a new address</source>
@@ -242,8 +242,413 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>BitcoinApplication</name>
     <message>
-        <source>Runaway exception</source>
-        <translation type="unfinished">חריגת בריחה</translation>
+        <source>Sign &amp;message...</source>
+        <translation>חתום &amp;הודעה...</translation>
+    </message>
+    <message>
+        <source>Synchronizing with network...</source>
+        <translation>מסתנכרן עם הרשת...</translation>
+    </message>
+    <message>
+        <source>&amp;Overview</source>
+        <translation>&amp;סקירה</translation>
+    </message>
+    <message>
+        <source>Show general overview of wallet</source>
+        <translation>הצג סקירה כללית של הארנק</translation>
+    </message>
+    <message>
+        <source>&amp;Transactions</source>
+        <translation>&amp;העברות</translation>
+    </message>
+    <message>
+        <source>Browse transaction history</source>
+        <translation>עיין בהיסטוריית ההעברות</translation>
+    </message>
+    <message>
+        <source>E&amp;xit</source>
+        <translation>י&amp;ציאה</translation>
+    </message>
+    <message>
+        <source>Quit application</source>
+        <translation>יציאה מהיישום</translation>
+    </message>
+    <message>
+        <source>&amp;About %1</source>
+        <translation>על &amp;אודות %1</translation>
+    </message>
+    <message>
+        <source>Show information about %1</source>
+        <translation>הצגת מידע על %1</translation>
+    </message>
+    <message>
+        <source>About &amp;Qt</source>
+        <translation>על אודות &amp;Qt</translation>
+    </message>
+    <message>
+        <source>Show information about Qt</source>
+        <translation>הצגת מידע על Qt</translation>
+    </message>
+    <message>
+        <source>&amp;Options...</source>
+        <translation>&amp;אפשרויות...</translation>
+    </message>
+    <message>
+        <source>Modify configuration options for %1</source>
+        <translation>שינוי אפשרויות התצורה עבור %1</translation>
+    </message>
+    <message>
+        <source>&amp;Encrypt Wallet...</source>
+        <translation>&amp;הצפנת הארנק...</translation>
+    </message>
+    <message>
+        <source>&amp;Backup Wallet...</source>
+        <translation>&amp;גיבוי הארנק...</translation>
+    </message>
+    <message>
+        <source>&amp;Change Passphrase...</source>
+        <translation>&amp;שנה סיסמה...</translation>
+    </message>
+    <message>
+        <source>Open &amp;URI...</source>
+        <translation>פתיחת &amp;כתובת משאב...</translation>
+    </message>
+    <message>
+        <source>Create Wallet...</source>
+        <translation>יצירת ארנק...</translation>
+    </message>
+    <message>
+        <source>Create a new wallet</source>
+        <translation>יצירת ארנק חדש</translation>
+    </message>
+    <message>
+        <source>Wallet:</source>
+        <translation>ארנק:</translation>
+    </message>
+    <message>
+        <source>Click to disable network activity.</source>
+        <translation>לחץ כדי לנטרל את פעילות הרשת.</translation>
+    </message>
+    <message>
+        <source>Network activity disabled.</source>
+        <translation>פעילות הרשת נוטרלה.</translation>
+    </message>
+    <message>
+        <source>Click to enable network activity again.</source>
+        <translation>לחץ כדי לחדש את פעילות הרשת.</translation>
+    </message>
+    <message>
+        <source>Syncing Headers (%1%)...</source>
+        <translation>הכותרות מתעדכנות (%1%)...</translation>
+    </message>
+    <message>
+        <source>Reindexing blocks on disk...</source>
+        <translation>המקטעים נוספים למפתח בכונן…</translation>
+    </message>
+    <message>
+        <source>Proxy is &lt;b&gt;enabled&lt;/b&gt;: %1</source>
+        <translation>שרת הפרוקסי &lt;b&gt;פעיל&lt;/b&gt;: %1</translation>
+    </message>
+    <message>
+        <source>Send coins to a Bitcoin address</source>
+        <translation>שליחת מטבעות לכתובת ביטקוין</translation>
+    </message>
+    <message>
+        <source>Backup wallet to another location</source>
+        <translation>גיבוי הארנק למיקום אחר</translation>
+    </message>
+    <message>
+        <source>Change the passphrase used for wallet encryption</source>
+        <translation>שינוי הסיסמה המשמשת להצפנת הארנק</translation>
+    </message>
+    <message>
+        <source>&amp;Verify message...</source>
+        <translation>&amp;אימות הודעה…</translation>
+    </message>
+    <message>
+        <source>&amp;Send</source>
+        <translation>&amp;שליחה</translation>
+    </message>
+    <message>
+        <source>&amp;Receive</source>
+        <translation>&amp;קבלה</translation>
+    </message>
+    <message>
+        <source>&amp;Show / Hide</source>
+        <translation>ה&amp;צגה / הסתרה</translation>
+    </message>
+    <message>
+        <source>Show or hide the main Window</source>
+        <translation>הצגה או הסתרה של החלון הראשי</translation>
+    </message>
+    <message>
+        <source>Encrypt the private keys that belong to your wallet</source>
+        <translation>הצפנת המפתחות הפרטיים ששייכים לארנק שלך</translation>
+    </message>
+    <message>
+        <source>Sign messages with your Bitcoin addresses to prove you own them</source>
+        <translation>חתום על הודעות עם כתובות הביטקוין שלך כדי להוכיח שהן בבעלותך</translation>
+    </message>
+    <message>
+        <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
+        <translation>אמת הודעות כדי להבטיח שהן נחתמו עם כתובת ביטקוין מסוימות</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;קובץ</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>&amp;הגדרות</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>ע&amp;זרה</translation>
+    </message>
+    <message>
+        <source>Tabs toolbar</source>
+        <translation>סרגל כלים לשוניות</translation>
+    </message>
+    <message>
+        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
+        <translation>בקשת תשלומים (יצירה של קודים מסוג QR וסכימות כתובות משאב של :bitcoin)</translation>
+    </message>
+    <message>
+        <source>Show the list of used sending addresses and labels</source>
+        <translation>הצג את רשימת הכתובות לשליחה שהיו בשימוש לרבות התוויות</translation>
+    </message>
+    <message>
+        <source>Show the list of used receiving addresses and labels</source>
+        <translation>הצגת רשימת הכתובות והתוויות הנמצאות בשימוש</translation>
+    </message>
+    <message>
+        <source>&amp;Command-line options</source>
+        <translation>אפשרויות &amp;שורת הפקודה</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n active connection(s) to Bitcoin network</source>
+        <translation><numerusform>חיבור אחד פעיל לרשת ביטקוין</numerusform><numerusform>%n חיבורים פעילים לרשת ביטקוין</numerusform><numerusform>%n חיבורים פעילים לרשת ביטקוין</numerusform><numerusform>%n חיבורים פעילים לרשת ביטקוין</numerusform></translation>
+    </message>
+    <message>
+        <source>Indexing blocks on disk...</source>
+        <translation>המקטעים על הכונן מסודרים באינדקס…</translation>
+    </message>
+    <message>
+        <source>Processing blocks on disk...</source>
+        <translation>מעבד בלוקים על הדיסק...</translation>
+    </message>
+    <message numerus="yes">
+        <source>Processed %n block(s) of transaction history.</source>
+        <translation><numerusform>%n מקטע של היסטוריית העברות עבר עיבוד</numerusform><numerusform>%n מקטעים של היסטוריית העברות עברו עיבוד</numerusform><numerusform>%n מקטעים של היסטוריית העברות עברו עיבוד</numerusform><numerusform>%n מקטעים של היסטוריית העברות עברו עיבוד</numerusform></translation>
+    </message>
+    <message>
+        <source>%1 behind</source>
+        <translation>%1 מאחור</translation>
+    </message>
+    <message>
+        <source>Last received block was generated %1 ago.</source>
+        <translation>המקטע האחרון שהתקבל נוצר לפני %1.</translation>
+    </message>
+    <message>
+        <source>Transactions after this will not yet be visible.</source>
+        <translation>עסקאות שבוצעו לאחר העברה זו לא יופיעו.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>שגיאה</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>אזהרה</translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation>מידע</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translation>עדכני</translation>
+    </message>
+    <message>
+        <source>&amp;Load PSBT from file...</source>
+        <translation>&amp;העלה PSBT מקובץ...</translation>
+    </message>
+    <message>
+        <source>Load Partially Signed Bitcoin Transaction</source>
+        <translation>העלה עיסקת ביטקוין חתומה חלקית</translation>
+    </message>
+    <message>
+        <source>Load PSBT from clipboard...</source>
+        <translation>טעינת PSBT מלוח הגזירים...</translation>
+    </message>
+    <message>
+        <source>Load Partially Signed Bitcoin Transaction from clipboard</source>
+        <translation>טעינת עסקת ביטקוין חתומה חלקית מלוח הגזירים</translation>
+    </message>
+    <message>
+        <source>Node window</source>
+        <translation>חלון צומת</translation>
+    </message>
+    <message>
+        <source>Open node debugging and diagnostic console</source>
+        <translation>פתיחת ניפוי באגים בצומת וגם מסוף בקרה לאבחון</translation>
+    </message>
+    <message>
+        <source>&amp;Sending addresses</source>
+        <translation>&amp;כתובות למשלוח</translation>
+    </message>
+    <message>
+        <source>&amp;Receiving addresses</source>
+        <translation>&amp;כתובות לקבלה</translation>
+    </message>
+    <message>
+        <source>Open a bitcoin: URI</source>
+        <translation>פתיחת ביטקוין: כתובת משאב</translation>
+    </message>
+    <message>
+        <source>Open Wallet</source>
+        <translation>פתיחת ארנק</translation>
+    </message>
+    <message>
+        <source>Open a wallet</source>
+        <translation>פתיחת ארנק</translation>
+    </message>
+    <message>
+        <source>Close Wallet...</source>
+        <translation>סגירת ארנק...</translation>
+    </message>
+    <message>
+        <source>Close wallet</source>
+        <translation>סגירת ארנק</translation>
+    </message>
+    <message>
+        <source>Close All Wallets...</source>
+        <translation>סגירת כל הארנקים...</translation>
+    </message>
+    <message>
+        <source>Close all wallets</source>
+        <translation>סגירת כל הארנקים</translation>
+    </message>
+    <message>
+        <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
+        <translation>יש להציג את הודעת העזרה של %1 כדי להציג רשימה עם אפשרויות שורת פקודה לביטקוין</translation>
+    </message>
+    <message>
+        <source>&amp;Mask values</source>
+        <translation>&amp;הסוואת ערכים</translation>
+    </message>
+    <message>
+        <source>Mask the values in the Overview tab</source>
+        <translation>הסווה את הערכים בלשונית התיאור הכללי
+</translation>
+    </message>
+    <message>
+        <source>default wallet</source>
+        <translation>ארנק בררת מחדל</translation>
+    </message>
+    <message>
+        <source>No wallets available</source>
+        <translation>אין ארנקים זמינים</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;חלון</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>מזעור</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>הגדלה</translation>
+    </message>
+    <message>
+        <source>Main Window</source>
+        <translation>חלון עיקרי</translation>
+    </message>
+    <message>
+        <source>%1 client</source>
+        <translation>לקוח %1</translation>
+    </message>
+    <message>
+        <source>Connecting to peers...</source>
+        <translation>מתבצעת התחברות לעמיתים…</translation>
+    </message>
+    <message>
+        <source>Catching up...</source>
+        <translation>מתבצע עדכון…</translation>
+    </message>
+    <message>
+        <source>Error: %1</source>
+        <translation>שגיאה: %1</translation>
+    </message>
+    <message>
+        <source>Date: %1
+</source>
+        <translation>תאריך: %1
+</translation>
+    </message>
+    <message>
+        <source>Amount: %1
+</source>
+        <translation>סכום: %1
+</translation>
+    </message>
+    <message>
+        <source>Wallet: %1
+</source>
+        <translation>ארנק: %1
+</translation>
+    </message>
+    <message>
+        <source>Type: %1
+</source>
+        <translation>סוג: %1
+</translation>
+    </message>
+    <message>
+        <source>Label: %1
+</source>
+        <translation>תווית: %1
+</translation>
+    </message>
+    <message>
+        <source>Address: %1
+</source>
+        <translation>כתובת: %1
+</translation>
+    </message>
+    <message>
+        <source>Sent transaction</source>
+        <translation>העברת שליחה</translation>
+    </message>
+    <message>
+        <source>Incoming transaction</source>
+        <translation>העברת קבלה</translation>
+    </message>
+    <message>
+        <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
+        <translation>ייצור מפתחות HD &lt;b&gt;מופעל&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</source>
+        <translation>ייצור מפתחות HD &lt;b&gt;כבוי&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>Private key &lt;b&gt;disabled&lt;/b&gt;</source>
+        <translation>מפתח פרטי &lt;b&gt;נוטרל&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
+        <translation>הארנק &lt;b&gt;מוצפן&lt;/b&gt; ו&lt;b&gt;פתוח&lt;/b&gt; כרגע</translation>
+    </message>
+    <message>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
+        <translation>הארנק &lt;b&gt;מוצפן&lt;/b&gt; ו&lt;b&gt;נעול&lt;/b&gt; כרגע</translation>
+    </message>
+    <message>
+        <source>Original message:</source>
+        <translation>הודעה מקורית:</translation>
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
@@ -401,6 +806,10 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>CreateWalletActivity</name>
     <message>
+        <source>Creating Wallet &lt;b&gt;%1&lt;/b&gt;...</source>
+        <translation>יצירת הארנק &lt;b&gt;%1&lt;/b&gt; מתבצעת...</translation>
+    </message>
+    <message>
         <source>Create wallet failed</source>
         <translation>יצירת הארנק נכשלה</translation>
     </message>
@@ -421,7 +830,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Encrypt the wallet. The wallet will be encrypted with a passphrase of your choice.</source>
-        <translation>הצפן את הארנק. הארנק יהיה מוצפן באמצעות סיסמא לבחירתך.</translation>
+        <translation>הצפנת הארנק. הארנק יהיה מוצפן באמצעות סיסמה לבחירתך.</translation>
     </message>
     <message>
         <source>Encrypt Wallet</source>
@@ -542,7 +951,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>About %1</source>
-        <translation>אודות %1</translation>
+        <translation>על אודות %1</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1171,7 +1580,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Transaction is missing some information about inputs.</source>
-        <translation>לעיסקה חסר חלק מהמידע לגבי הקלטים.</translation>
+        <translation>לעסקה חסר חלק מהמידע לגבי הקלט.</translation>
     </message>
     <message>
         <source>Transaction still needs signature(s).</source>
@@ -4749,10 +5158,6 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly.</source>
         <translation>נא בדקו שהתאריך והשעה במחשב שלכם נכונים! אם השעון שלכם לא מסונכרן, %s לא יעבוד כהלכה.</translation>
-    </message>
-    <message>
-        <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
-        <translation>אנא שקלו תרומה אם מצאתם את %s שימושי. בקרו ב %s למידע נוסף על התוכנה.</translation>
     </message>
     <message>
         <source>The block database contains a block which appears to be from the future. This may be due to your computer's date and time being set incorrectly. Only rebuild the block database if you are sure that your computer's date and time are correct</source>

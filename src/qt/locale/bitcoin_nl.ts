@@ -3,7 +3,7 @@
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation type="unfinished">Rechtermuisklik om adres of label te wijzigen</translation>
+        <translation>rechts klikken op adres of label te wijzigen</translation>
     </message>
     <message>
         <source>Create a new address</source>
@@ -47,11 +47,11 @@
     </message>
     <message>
         <source>Choose the address to send coins to</source>
-        <translation type="unfinished">Kies het adres om de munten naar te versturen</translation>
+        <translation>Kies het adres om de munten te versturen</translation>
     </message>
     <message>
         <source>Choose the address to receive coins with</source>
-        <translation type="unfinished">Kies het adres om munten op te ontvangen</translation>
+        <translation>Kies het adres om munten te ontvangen</translation>
     </message>
     <message>
         <source>C&amp;hoose</source>
@@ -89,7 +89,7 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
     </message>
     <message>
         <source>Export Address List</source>
-        <translation type="unfinished">Exporteer adressenlijst</translation>
+        <translation>Exporteer adressenlijst</translation>
     </message>
     <message>
         <source>Comma separated file</source>
@@ -98,12 +98,7 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
-        <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Een fout is opgetreden tijdens het opslaan van deze adreslijst naar %1. Probeer nogmaals.</translation>
-    </message>
-    <message>
-        <source>Exporting Failed</source>
-        <translation type="unfinished">Exporteren mislukt</translation>
+        <translation>Een fout is opgetreden tijdens het opslaan van deze adreslijst naar %1. Probeer nogmaals.</translation>
     </message>
 </context>
 <context>
@@ -460,7 +455,11 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <source>Create</source>
         <translation>Creëer</translation>
     </message>
-    </context>
+    <message>
+        <source>Compiled without sqlite support (required for descriptor wallets)</source>
+        <translation>Gecompileerd zonder ondersteuning van sqlite (noodzakelijk voor beschrijvende portemonees)</translation>
+    </message>
+</context>
 <context>
     <name>EditAddressDialog</name>
     <message>
@@ -1119,6 +1118,10 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation>Kon geen inputs meer ondertekenen.</translation>
     </message>
     <message>
+        <source>Signed transaction successfully. Transaction is ready to broadcast.</source>
+        <translation>Transactie succesvol getekend. Transactie is klaar voor verzending.</translation>
+    </message>
+    <message>
         <source>Unknown error processing transaction.</source>
         <translation>Onbekende fout bij verwerken van transactie.</translation>
     </message>
@@ -1139,6 +1142,26 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation>Transactiedata Opslaan</translation>
     </message>
     <message>
+        <source>Partially Signed Transaction (Binary) (*.psbt)</source>
+        <translation>Gedeeltelijk Ondertekende Transactie (Binair) (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT saved to disk.</source>
+        <translation>PSBT opgeslagen op de schijf</translation>
+    </message>
+    <message>
+        <source> * Sends %1 to %2</source>
+        <translation>Verstuur %1 naar %2</translation>
+    </message>
+    <message>
+        <source>Unable to calculate transaction fee or total transaction amount.</source>
+        <translation>Onmogelijk om de transactie kost of totale bedrag te berekenen.</translation>
+    </message>
+    <message>
+        <source>Pays transaction fee: </source>
+        <translation>Betaald transactiekosten:</translation>
+    </message>
+    <message>
         <source>Total Amount</source>
         <translation>Totaalbedrag</translation>
     </message>
@@ -1146,7 +1169,35 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <source>or</source>
         <translation>of</translation>
     </message>
-    </context>
+    <message>
+        <source>Transaction has %1 unsigned inputs.</source>
+        <translation>Transactie heeft %1 niet ondertekende ingaves.</translation>
+    </message>
+    <message>
+        <source>Transaction is missing some information about inputs.</source>
+        <translation>Transactie heeft nog ontbrekende informatie over ingaves.</translation>
+    </message>
+    <message>
+        <source>Transaction still needs signature(s).</source>
+        <translation>Transactie heeft nog handtekening(en) nodig.</translation>
+    </message>
+    <message>
+        <source>(But this wallet cannot sign transactions.)</source>
+        <translation>(Deze wallet kan geen transacties tekenen.)</translation>
+    </message>
+    <message>
+        <source>(But this wallet does not have the right keys.)</source>
+        <translation>(Maar deze portemonnee heeft niet de juiste sleutels.)</translation>
+    </message>
+    <message>
+        <source>Transaction is fully signed and ready for broadcast.</source>
+        <translation>Transactie is volledig getekend en is klaar voor verzending</translation>
+    </message>
+    <message>
+        <source>Transaction status is unknown.</source>
+        <translation>Transactie status is onbekend</translation>
+    </message>
+</context>
 <context>
     <name>PaymentServer</name>
     <message>
@@ -1242,8 +1293,12 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation type="unfinished">Fout: %1</translation>
     </message>
     <message>
-        <source>%1 didn't yet exit safely…</source>
-        <translation type="unfinished">%1 werd nog niet veilig afgesloten...</translation>
+        <source>Error initializing settings: %1</source>
+        <translation>Fout bij het initializeren van de gegevens: %1</translation>
+    </message>
+    <message>
+        <source>%1 didn't yet exit safely...</source>
+        <translation>%1 sloot nog niet veilig af...</translation>
     </message>
     <message>
         <source>unknown</source>
@@ -1420,6 +1475,10 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation>Nodevenster</translation>
     </message>
     <message>
+        <source>Current block height</source>
+        <translation>Huidige block hoogte</translation>
+    </message>
+    <message>
         <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation>Open het %1 debug-logbestand van de huidige gegevensmap. Dit kan een aantal seconden duren voor grote logbestanden.</translation>
     </message>
@@ -1430,6 +1489,10 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     <message>
         <source>Increase font size</source>
         <translation>Vergroot lettergrootte</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Rechten</translation>
     </message>
     <message>
         <source>Services</source>
@@ -1686,9 +1749,21 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <source>Could not unlock wallet.</source>
         <translation>Kon de portemonnee niet openen.</translation>
     </message>
-    </context>
+    <message>
+        <source>Could not generate new %1 address</source>
+        <translation>Kan geen nieuw %1 adres genereren</translation>
+    </message>
+</context>
 <context>
     <name>ReceiveRequestDialog</name>
+    <message>
+        <source>Request payment to ...</source>
+        <translation>Verzoek tot betaling aan ...</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Adres:</translation>
+    </message>
     <message>
         <source>Amount:</source>
         <translation>Bedrag:</translation>
@@ -1972,8 +2047,20 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
         <translation>Weet u zeker dat u wilt verzenden?</translation>
     </message>
     <message>
+        <source>Create Unsigned</source>
+        <translation>Creër ongetekende</translation>
+    </message>
+    <message>
         <source>Save Transaction Data</source>
         <translation>Transactiedata Opslaan</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (Binary) (*.psbt)</source>
+        <translation>Gedeeltelijk Ondertekende Tansactie (Binair) (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT saved</source>
+        <translation>PSBT opgeslagen</translation>
     </message>
     <message>
         <source>or</source>
@@ -1982,6 +2069,11 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     <message>
         <source>You can increase the fee later (signals Replace-By-Fee, BIP-125).</source>
         <translation>Je kunt de vergoeding later verhogen (signaleert Replace-By-Fee, BIP-125).</translation>
+    </message>
+    <message>
+        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitcoin Transaction (PSBT) which you can save or copy and then sign with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
+        <translation>Gelieve uw transactie voorstel te controleren. Deze actie zal een Gedeeltelijk Getekende Bitcoin Transactie (PSBT) produceren die je kan opslaan of kopiëre en vervolgends ondertekenen.
+Vb. een offline %1 portemonee, of een PSBT-combatiebele hardware portemonee.</translation>
     </message>
     <message>
         <source>Please, review your transaction.</source>
@@ -5863,7 +5955,11 @@ Vb. een offline %1 portemonee, of een PSBT-combatiebele hardware portemonee.</tr
         <source>Pay To:</source>
         <translation type="unfinished">Betaal Aan:</translation>
     </message>
-    </context>
+    <message>
+        <source>Are you sure you wish to close all wallets?</source>
+        <translation>Ben je zeker dat je alle portefeuilles wilt sluiten?</translation>
+    </message>
+</context>
 <context>
     <name>SendConfirmationDialog</name>
     <message>
@@ -6436,7 +6532,7 @@ Vb. een offline %1 portemonee, of een PSBT-combatiebele hardware portemonee.</tr
         <source>No wallet has been loaded.
 Go to File &gt; Open Wallet to load a wallet.
 - OR -</source>
-        <translation type="unfinished">Geen portemonee is geladen.
+        <translation>Geen portemonee is geladen.
 Ga naar Bestand &gt; Open portemonee om er één te openen.
 - OF -</translation>
     </message>
@@ -6544,6 +6640,26 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
         <translation type="unfinished">Exporteer de data in de huidige tab naar een bestand</translation>
     </message>
     <message>
+        <source>Unable to decode PSBT from clipboard (invalid base64)</source>
+        <translation>Onmogelijk om het PSBT te ontcijferen van het klembord (ongeldige base64)</translation>
+    </message>
+    <message>
+        <source>Load Transaction Data</source>
+        <translation>Laad Transactie Data</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (*.psbt)</source>
+        <translation>Gedeeltelijk ondertekende transactie (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT file must be smaller than 100 MiB</source>
+        <translation>Het PSBT bestand moet kleiner dan 100 MiB te zijn.</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT</source>
+        <translation>Niet in staat om de PSBT te decoderen</translation>
+    </message>
+    <message>
         <source>Backup Wallet</source>
         <translation type="unfinished">Portemonnee backuppen</translation>
     </message>
@@ -6612,12 +6728,28 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
         <translation>Waarschuwing: Fout bij het lezen van %s! Alle sleutels zijn in goede orde uitgelezen, maar transactiedata of adresboeklemma's zouden kunnen ontbreken of fouten bevatten.</translation>
     </message>
     <message>
+        <source>More than one onion bind address is provided. Using %s for the automatically created Tor onion service.</source>
+        <translation>Meer dan één onion bind adres is voorzien. %s wordt gebruik voor het automatisch gecreëerde Tor onion service.</translation>
+    </message>
+    <message>
         <source>Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly.</source>
         <translation>Waarschuwing: Controleer dat de datum en tijd van uw computer correct zijn ingesteld! Bij een onjuist ingestelde klok zal %s niet goed werken.</translation>
     </message>
     <message>
         <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
         <translation>Gelieve bij te dragen als je %s nuttig vindt. Bezoek %s voor meer informatie over de software.</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to prepare the statement to fetch sqlite wallet schema version: %s</source>
+        <translation>SQLite Databank: Mislukt om het statement voor te bereiden dat het sqlite portemonnee schema versie ophaalt: %s</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to prepare the statement to fetch the application id: %s</source>
+        <translation>SQLite Databank: mislukt om het statement voor te bereiden dat de applicatie id ophaalt: %s</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Unknown sqlite wallet schema version %d. Only version %d is supported</source>
+        <translation>SQLite Databank: Onbekende sqlite portemonee schema versie %d. Enkel %d wordt ondersteund.</translation>
     </message>
     <message>
         <source>The block database contains a block which appears to be from the future. This may be due to your computer's date and time being set incorrectly. Only rebuild the block database if you are sure that your computer's date and time are correct</source>
@@ -6724,6 +6856,14 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
         <translation>Portemonnee herscannen tijdens initialisatie mislukt</translation>
     </message>
     <message>
+        <source>Failed to verify database</source>
+        <translation>Mislukt om de databank te controleren</translation>
+    </message>
+    <message>
+        <source>Ignoring duplicate -wallet %s.</source>
+        <translation>Negeren gedupliceerde -portemonnee %s</translation>
+    </message>
+    <message>
         <source>Importing...</source>
         <translation>Importeren...</translation>
     </message>
@@ -6750,6 +6890,30 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
     <message>
         <source>Invalid amount for -fallbackfee=&lt;amount&gt;: '%s'</source>
         <translation>Ongeldig bedrag voor -fallbackfee=&lt;bedrag&gt;: '%s'</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to execute statement to verify database: %s</source>
+        <translation>SQLite Databank: mislukt om het statement uit te voeren dat de de databank verifieert: %s</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to fetch sqlite wallet schema version: %s</source>
+        <translation>SQLite Databank: mislukt om het sqlite portemonee schema op te halen: %s</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to fetch the application id: %s</source>
+        <translation>SQLite Databank: mislukt om de applicatie id op te halen: %s</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to prepare statement to verify database: %s</source>
+        <translation>SQLite Databank: mislukt om de databank verificatie statement voor te bereiden: %s</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Failed to read database verification error: %s</source>
+        <translation>SQLite Databank: mislukt om de databank verificatie code op te halen: %s</translation>
+    </message>
+    <message>
+        <source>SQLiteDatabase: Unexpected application id. Expected %u, got %u</source>
+        <translation>SQLite Databank: Onverwachte applicatie id. Verwacht werd %u, maar kreeg %u</translation>
     </message>
     <message>
         <source>Specified blocks directory "%s" does not exist.</source>
@@ -6836,6 +7000,14 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
         <translation>Fout: luisteren naar binnenkomende verbindingen mislukt (luisteren gaf foutmelding %s)</translation>
     </message>
     <message>
+        <source>%s corrupt. Try using the wallet tool bitcoin-wallet to salvage or restoring a backup.</source>
+        <translation>%s is corrupt. Probeer de portemonnee tool bitcoin-portemonnee om het probleem op te lossen of een backup terug te zetten.</translation>
+    </message>
+    <message>
+        <source>Cannot upgrade a non HD split wallet without upgrading to support pre split keypool. Please use version 169900 or no version specified.</source>
+        <translation>Niet mogelijk om een niet HD gesplitste portefeuille up te daten, zonder de pre split keypool te ondersteunen. Gelieve versie 1699000 of 'geen versie gespecifieerd' te gebruiken.</translation>
+    </message>
+    <message>
         <source>Invalid amount for -maxtxfee=&lt;amount&gt;: '%s' (must be at least the minrelay fee of %s to prevent stuck transactions)</source>
         <translation>ongeldig bedrag voor -maxtxfee=&lt;bedrag&gt;: '%s' (moet ten minste de minimale doorgeefvergoeding van %s zijn om vastgelopen transacties te voorkomen)</translation>
     </message>
@@ -6844,8 +7016,33 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
         <translation>Het transactiebedrag is te klein om te versturen nadat de transactievergoeding in mindering is gebracht</translation>
     </message>
     <message>
+        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded using a build with a newer version of Berkeley DB. If so, please use the software that last loaded this wallet</source>
+        <translation>Deze fout komt mogelijks voor wanneer de portefeuille niet correct is afgesloten en dat deze de laatste keer geladen werd met een nieuwere versie van de Berkeley DB. 
+Indien dit het geval is, gelieve de software te gebruiken waarmee deze portefeuille de laatste keer werd geladen.</translation>
+    </message>
+    <message>
+        <source>This is the maximum transaction fee you pay (in addition to the normal fee) to prioritize partial spend avoidance over regular coin selection.</source>
+        <translation>Dit is de maximale transactie kost die je betaalt (bovenop de normale kosten) om een hogere prioriteit te geven aan het vermijden van gedeeltelijke uitgaven dan de reguliere munt selectie.</translation>
+    </message>
+    <message>
+        <source>Transaction needs a change address, but we can't generate it. Please call keypoolrefill first.</source>
+        <translation>De transactie heeft een 'change' adres nodig, maar we kunnen er geen genereren. Gelieve eest keypoolrefill op te roepen.</translation>
+    </message>
+    <message>
         <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
         <translation>U moet de database herbouwen met -reindex om terug te gaan naar de niet-prune modus. Dit zal de gehele blokketen opnieuw downloaden.</translation>
+    </message>
+    <message>
+        <source>A fatal internal error occurred, see debug.log for details</source>
+        <translation>Een fatale interne fout heeft zich voor gedaan, zie debug.log voor details</translation>
+    </message>
+    <message>
+        <source>Cannot set -peerblockfilters without -blockfilterindex.</source>
+        <translation>Kan -peerblockfilters niet zetten zonder -blockfilterindex</translation>
+    </message>
+    <message>
+        <source>Disk space is too low!</source>
+        <translation>Schijfruimte is te klein!</translation>
     </message>
     <message>
         <source>Error reading from database, shutting down.</source>
@@ -6858,6 +7055,14 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
     <message>
         <source>Error: Disk space is low for %s</source>
         <translation>Fout: Weinig schijfruimte voor %s</translation>
+    </message>
+    <message>
+        <source>Error: Keypool ran out, please call keypoolrefill first</source>
+        <translation>Keypool op geraakt, roep alsjeblieft eerst keypoolrefill functie aan</translation>
+    </message>
+    <message>
+        <source>Fee rate (%s) is lower than the minimum fee rate setting (%s)</source>
+        <translation>Tarief (%s) is lager dan het minimum tarief (%s)</translation>
     </message>
     <message>
         <source>Invalid -onion address or hostname: '%s'</source>
@@ -6878,6 +7083,10 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
     <message>
         <source>Need to specify a port with -whitebind: '%s'</source>
         <translation>Verplicht een poort met -whitebind op te geven: '%s'</translation>
+    </message>
+    <message>
+        <source>No proxy server specified. Use -proxy=&lt;ip&gt; or -proxy=&lt;ip:port&gt;.</source>
+        <translation>Geen proxy server gedefinieerd. Gebruik -proxy=&lt;ip&gt;of -proxy=&lt;ip:port&gt;.</translation>
     </message>
     <message>
         <source>Prune mode is incompatible with -blockfilterindex.</source>
