@@ -78,7 +78,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation>지불 수신용 비트코인주소. 신규 주소를 만들려면 'Create new receiving address' 버튼을 사용하세요. 사인은 '레거시' 타입의 주소만 가능합니다.</translation>
+        <translation>비트코인을 받는 계좌 주소입니다. 신규 주소를 만들려면 수신 탭의 '새 수신 주소를 생성하기' 버튼을 사용하십시오.
+서명은 '레거시' 타입의 주소만 가능합니다.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>

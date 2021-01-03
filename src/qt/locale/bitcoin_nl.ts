@@ -3667,7 +3667,11 @@ Vb. een offline %1 portemonee, of een PSBT-combatiebele hardware portemonee.</tr
         <source>Pay To:</source>
         <translation type="unfinished">Betaal Aan:</translation>
     </message>
-    </context>
+    <message>
+        <source>Are you sure you wish to close all wallets?</source>
+        <translation>Ben je zeker dat je alle portefeuilles wilt sluiten?</translation>
+    </message>
+</context>
 <context>
     <name>SendConfirmationDialog</name>
     <message>
@@ -4346,6 +4350,26 @@ Ga naar Bestand &gt; Open portemonee om er één te openen.
     <message>
         <source>Export the data in the current tab to a file</source>
         <translation type="unfinished">Exporteer de data in de huidige tab naar een bestand</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT from clipboard (invalid base64)</source>
+        <translation>Onmogelijk om het PSBT te ontcijferen van het klembord (ongeldige base64)</translation>
+    </message>
+    <message>
+        <source>Load Transaction Data</source>
+        <translation>Laad Transactie Data</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (*.psbt)</source>
+        <translation>Gedeeltelijk ondertekende transactie (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT file must be smaller than 100 MiB</source>
+        <translation>Het PSBT bestand moet kleiner dan 100 MiB te zijn.</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT</source>
+        <translation>Niet in staat om de PSBT te decoderen</translation>
     </message>
     <message>
         <source>Backup Wallet</source>

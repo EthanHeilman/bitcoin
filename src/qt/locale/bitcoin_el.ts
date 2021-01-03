@@ -4223,6 +4223,10 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Εξαγωγή δεδομένων καρτέλας σε αρχείο</translation>
     </message>
     <message>
+        <source>Load Transaction Data</source>
+        <translation>Φόρτωση δεδομένων συναλλαγής</translation>
+    </message>
+    <message>
         <source>Backup Wallet</source>
         <translation type="unfinished">Αντίγραφο ασφαλείας Πορτοφολιού</translation>
     </message>

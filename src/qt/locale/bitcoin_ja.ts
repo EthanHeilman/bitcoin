@@ -76,6 +76,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 署名は、タイプが「レガシー」のアドレスのみ可能です。</translation>
     </message>
     <message>
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+Signing is only possible with addresses of the type 'legacy'.</source>
+        <translation>これらは支払いを受け取るための、あなたの Bitcoin アドレスです。新しいアドレスを作成するには受取タブ内の「新しい受取用アドレスを作成」ボタンを使用します。</translation>
+    </message>
+    <message>
         <source>&amp;Copy Address</source>
         <translation type="unfinished">アドレスをコピー(&amp;C)</translation>
     </message>
@@ -4749,6 +4754,18 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Load Transaction Data</source>
         <translation>トランザクションデータのロード</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (*.psbt)</source>
+        <translation>部分的に署名されたトランザクション (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT file must be smaller than 100 MiB</source>
+        <translation>PSBTファイルは、100MBより小さい必要があります.</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT</source>
+        <translation>PSBTファイルを復号できません.</translation>
     </message>
     <message>
         <source>Backup Wallet</source>

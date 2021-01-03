@@ -18,6 +18,10 @@
         <translation type="unfinished">کۆپیکردنی ناونیشانی هەڵبژێردراوی ئێستا بۆ کلیپ بۆردی سیستەم</translation>
     </message>
     <message>
+        <source>Copy the currently selected address to the system clipboard</source>
+        <translation>کۆپیکردنی ناونیشانی هەڵبژێردراوی ئێستا بۆ کلیپ بۆردی سیستەم</translation>
+    </message>
+    <message>
         <source>&amp;Copy</source>
         <translation type="unfinished">&amp;ڕوونووس</translation>
     </message>
@@ -36,6 +40,18 @@
     <message>
         <source>Export the data in the current tab to a file</source>
         <translation type="unfinished">ناردنی داتا لە خشتەبەندی ئێستا بۆ فایلێک</translation>
+    </message>
+    <message>
+        <source>Delete the currently selected address from the list</source>
+        <translation>سڕینەوەی ناونیشانی هەڵبژێردراوی ئێستا لە لیستەکە</translation>
+    </message>
+    <message>
+        <source>Enter address or label to search</source>
+        <translation>ناونیشانێک بنووسە یان پێناسەیەک داخڵ بکە بۆ گەڕان</translation>
+    </message>
+    <message>
+        <source>Export the data in the current tab to a file</source>
+        <translation>ناردنی داتا لە خشتەبەندی ئێستا بۆ فایلێک</translation>
     </message>
     <message>
         <source>&amp;Export</source>
@@ -76,12 +92,46 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 واژووکردن تەنها دەکرێت لەگەڵ ناونیشانەکانی جۆری 'میرات'.</translation>
     </message>
     <message>
+        <source>Choose the address to send coins to</source>
+        <translation>ناونیشانەکە هەڵبژێرە بۆ ناردنی دراوەکان بۆ</translation>
+    </message>
+    <message>
+        <source>Choose the address to receive coins with</source>
+        <translation>ناونیشانەکە هەڵبژێرە بۆ وەرگرتنی دراوەکان لەگەڵ</translation>
+    </message>
+    <message>
+        <source>C&amp;hoose</source>
+        <translation>&amp;هەڵبژێرە</translation>
+    </message>
+    <message>
+        <source>Sending addresses</source>
+        <translation>ناردنی ناونیشانەکان</translation>
+    </message>
+    <message>
+        <source>Receiving addresses</source>
+        <translation>وەرگرتنی ناونیشانەکان</translation>
+    </message>
+    <message>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>ئەمانە ناونیشانی بیتکۆبیتەکانی تۆنە بۆ ناردنی پارەدانەکان. هەمیشە بڕی و ناونیشانی وەرگرەکان بپشکنە پێش ناردنی دراوەکان.</translation>
+    </message>
+    <message>
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+Signing is only possible with addresses of the type 'legacy'.</source>
+        <translation>ئەمانە ناونیشانی بیتکۆبیتەکانی تۆنە بۆ وەرگرتنی پارەدانەکان. دوگمەی 'دروستکردنیناونیشانی وەرگرتنی نوێ' لە تابی وەرگرتندا بۆ دروستکردنی ناونیشانی نوێ بەکاربێنە.
+واژووکردن تەنها دەکرێت لەگەڵ ناونیشانەکانی جۆری 'میرات'.</translation>
+    </message>
+    <message>
         <source>&amp;Copy Address</source>
         <translation type="unfinished">&amp;ڕوونووسکردن ناوونیشان</translation>
     </message>
     <message>
         <source>Copy &amp;Label</source>
         <translation type="unfinished">کۆپی &amp;ناونیشان</translation>
+    </message>
+    <message>
+        <source>Copy &amp;Label</source>
+        <translation>کۆپی &amp;ناونیشان</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -510,6 +560,10 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <extracomment>Title of Peers Table column which states the network the peer connected through.</extracomment>
         <translation type="unfinished">تۆڕ</translation>
     </message>
+    <message>
+        <source>Error initializing settings: %1</source>
+        <translation>هەڵە لە دەستپێکردنی ڕێکخستنەکان: %1</translation>
+    </message>
     </context>
 <context>
     <name>QRImageWidget</name>
@@ -612,12 +666,32 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">پیشاندانی داواکارییە دیاریکراوەکان (هەمان کرتەی دووانی کرتەکردن دەکات لە تۆمارێک)</translation>
     </message>
     <message>
+        <source>Show the selected request (does the same as double clicking an entry)</source>
+        <translation>پیشاندانی داواکارییە دیاریکراوەکان (هەمان کرتەی دووانی کرتەکردن دەکات لە تۆمارێک)</translation>
+    </message>
+    <message>
         <source>Show</source>
         <translation type="unfinished">پیشاندان</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation type="unfinished">سڕینەوە</translation>
+    </message>
+    <message>
+        <source>Copy URI</source>
+        <translation>Copy URI</translation>
+    </message>
+    <message>
+        <source>Copy label</source>
+        <translation>Copy label</translation>
+    </message>
+    <message>
+        <source>Copy message</source>
+        <translation>Copy message</translation>
+    </message>
+    <message>
+        <source>Copy amount</source>
+        <translation>Copy amount</translation>
     </message>
     </context>
 <context>
@@ -629,6 +703,14 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>Message:</source>
         <translation type="unfinished">پەیام:</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URI</source>
+        <translation>Copy &amp;URI</translation>
+    </message>
+    <message>
+        <source>Copy &amp;Address</source>
+        <translation>Copy &amp;Address</translation>
     </message>
     </context>
 <context>
@@ -669,6 +751,42 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
         <translation type="unfinished">کاتێک قەبارەی مامەڵە کەمتر بێت لە بۆشایی بلۆکەکان، لەوانەیە کانەکان و گرێکانی گواستنەوە کەمترین کرێ جێبەجێ بکەن. پێدانی تەنیا ئەم کەمترین کرێیە تەنیا باشە، بەڵام ئاگاداربە کە ئەمە دەتوانێت ببێتە هۆی ئەوەی کە هەرگیز مامەڵەیەکی پشتڕاستکردنەوە ئەنجام بدرێت جارێک داواکاری زیاتر هەیە بۆ مامەڵەکانی بیت کۆبیتکۆ لەوەی کە تۆڕەکە دەتوانێت ئەنجامی بدات.</translation>
+    </message>
+    <message>
+        <source>Hide transaction fee settings</source>
+        <translation>شاردنەوەی ڕێکخستنەکانی باجی مامەڵە</translation>
+    </message>
+    <message>
+        <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
+        <translation>کاتێک قەبارەی مامەڵە کەمتر بێت لە بۆشایی بلۆکەکان، لەوانەیە کانەکان و گرێکانی گواستنەوە کەمترین کرێ جێبەجێ بکەن. پێدانی تەنیا ئەم کەمترین کرێیە تەنیا باشە، بەڵام ئاگاداربە کە ئەمە دەتوانێت ببێتە هۆی ئەوەی کە هەرگیز مامەڵەیەکی پشتڕاستکردنەوە ئەنجام بدرێت جارێک داواکاری زیاتر هەیە بۆ مامەڵەکانی بیت کۆبیتکۆ لەوەی کە تۆڕەکە دەتوانێت ئەنجامی بدات.</translation>
+    </message>
+    <message>
+        <source>Copy quantity</source>
+        <translation>Copy quantity</translation>
+    </message>
+    <message>
+        <source>Copy amount</source>
+        <translation>Copy amount</translation>
+    </message>
+    <message>
+        <source>Copy fee</source>
+        <translation>Copy fee</translation>
+    </message>
+    <message>
+        <source>Copy after fee</source>
+        <translation>Copy after fee</translation>
+    </message>
+    <message>
+        <source>Copy bytes</source>
+        <translation>Copy bytes</translation>
+    </message>
+    <message>
+        <source>Copy dust</source>
+        <translation>Copy dust</translation>
+    </message>
+    <message>
+        <source>Copy change</source>
+        <translation>Copy change</translation>
     </message>
     <message>
         <source>or</source>
@@ -808,6 +926,26 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>Enter address, transaction id, or label to search</source>
         <translation type="unfinished">ناونیشانێک بنووسە، ناسنامەی مامەڵە، یان ناولێنانێک بۆ گەڕان بنووسە</translation>
+    </message>
+    <message>
+        <source>Copy label</source>
+        <translation>Copy label</translation>
+    </message>
+    <message>
+        <source>Copy amount</source>
+        <translation>Copy amount</translation>
+    </message>
+    <message>
+        <source>Copy transaction ID</source>
+        <translation>Copy transaction ID</translation>
+    </message>
+    <message>
+        <source>Copy raw transaction</source>
+        <translation>Copy raw transaction</translation>
+    </message>
+    <message>
+        <source>Copy full transaction details</source>
+        <translation>Copy full transaction details</translation>
     </message>
     <message>
         <source>Date</source>
