@@ -1331,6 +1331,14 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation>Wybierz pokazywanie lub nie funkcji kontroli monet.</translation>
     </message>
     <message>
+        <source>Connect to the Bitcoin network through a separate SOCKS5 proxy for Tor onion services.</source>
+        <translation>Połącz się z siecią Bitcoin przy pomocy oddzielnego SOCKS5 proxy dla sieci TOR.</translation>
+    </message>
+    <message>
+        <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor onion services:</source>
+        <translation>Użyj oddzielnego proxy SOCKS&amp;5 aby osiągnąć węzły w ukrytych usługach Tor:</translation>
+    </message>
+    <message>
         <source>&amp;Third party transaction URLs</source>
         <translation>&amp;Zewnętrzny URL podglądu transakcji</translation>
     </message>
@@ -1493,12 +1501,24 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation>Nie udało się podpisać transakcji: %1</translation>
     </message>
     <message>
+        <source>Could not sign any more inputs.</source>
+        <translation>Nie udało się podpisać więcej wejść.</translation>
+    </message>
+    <message>
+        <source>Signed %1 inputs, but more signatures are still required.</source>
+        <translation>Podpisano %1 wejść, ale potrzebnych jest więcej podpisów.</translation>
+    </message>
+    <message>
         <source>Signed transaction successfully. Transaction is ready to broadcast.</source>
         <translation>transakcja</translation>
     </message>
     <message>
         <source>Unknown error processing transaction.</source>
         <translation>Nieznany błąd podczas przetwarzania transakcji.</translation>
+    </message>
+    <message>
+        <source>Transaction broadcast failed: %1</source>
+        <translation>Nie udało się rozgłosić transakscji: %1</translation>
     </message>
     <message>
         <source>PSBT copied to clipboard.</source>
@@ -1533,10 +1553,34 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation>lub</translation>
     </message>
     <message>
+        <source>Transaction has %1 unsigned inputs.</source>
+        <translation>Transakcja ma %1 niepodpisane wejścia.</translation>
+    </message>
+    <message>
+        <source>Transaction is missing some information about inputs.</source>
+        <translation>Transakcja ma niekompletne informacje o niektórych wejściach.</translation>
+    </message>
+    <message>
         <source>Transaction still needs signature(s).</source>
         <translation>Transakcja ciągle oczekuje na podpis(y).</translation>
     </message>
-    </context>
+    <message>
+        <source>(But this wallet cannot sign transactions.)</source>
+        <translation>(Ale ten portfel nie może podipisać transakcji.)</translation>
+    </message>
+    <message>
+        <source>(But this wallet does not have the right keys.)</source>
+        <translation>(Ale ten portfel nie posiada wlaściwych kluczy.)</translation>
+    </message>
+    <message>
+        <source>Transaction is fully signed and ready for broadcast.</source>
+        <translation>Transakcja jest w pełni podpisana i gotowa do rozgłoszenia.</translation>
+    </message>
+    <message>
+        <source>Transaction status is unknown.</source>
+        <translation>Status transakcji nie jest znany.</translation>
+    </message>
+</context>
 <context>
     <name>PaymentServer</name>
     <message>
@@ -1632,12 +1676,1287 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation type="unfinished">Błąd: %1</translation>
     </message>
     <message>
-        <source>%1 didn't yet exit safely…</source>
-        <translation type="unfinished">%1 jeszcze się bezpiecznie nie zamknął...</translation>
+        <source>Error initializing settings: %1</source>
+        <translation>Błąd inicjowania ustawień: %1</translation>
+    </message>
+    <message>
+        <source>%1 didn't yet exit safely...</source>
+        <translation>%1 jeszcze się bezpiecznie nie zamknął...</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished">nieznane</translation>
+        <translation>nieznane</translation>
+    </message>
+</context>
+<context>
+    <name>QRImageWidget</name>
+    <message>
+        <source>&amp;Save Image...</source>
+        <translation>&amp;Zapisz obraz...</translation>
+    </message>
+    <message>
+        <source>&amp;Copy Image</source>
+        <translation>&amp;Kopiuj obraz</translation>
+    </message>
+    <message>
+        <source>Resulting URI too long, try to reduce the text for label / message.</source>
+        <translation>Wynikowy URI jest zbyt długi, spróbuj zmniejszyć tekst etykiety / wiadomości</translation>
+    </message>
+    <message>
+        <source>Error encoding URI into QR Code.</source>
+        <translation>Błąd kodowania URI w kod QR</translation>
+    </message>
+    <message>
+        <source>QR code support not available.</source>
+        <translation>Wsparcie dla kodów QR jest niedostępne.</translation>
+    </message>
+    <message>
+        <source>Save QR Code</source>
+        <translation>Zapisz Kod QR</translation>
+    </message>
+    <message>
+        <source>PNG Image (*.png)</source>
+        <translation>Obraz PNG (*.png)</translation>
+    </message>
+</context>
+<context>
+    <name>RPCConsole</name>
+    <message>
+        <source>N/A</source>
+        <translation>NIEDOSTĘPNE</translation>
+    </message>
+    <message>
+        <source>Client version</source>
+        <translation>Wersja klienta</translation>
+    </message>
+    <message>
+        <source>&amp;Information</source>
+        <translation>&amp;Informacje</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Ogólne</translation>
+    </message>
+    <message>
+        <source>Using BerkeleyDB version</source>
+        <translation>Używana wersja BerkeleyDB</translation>
+    </message>
+    <message>
+        <source>Datadir</source>
+        <translation>Katalog danych</translation>
+    </message>
+    <message>
+        <source>To specify a non-default location of the data directory use the '%1' option.</source>
+        <translation>Użyj opcji '%1' aby wskazać niestandardową lokalizację katalogu danych.</translation>
+    </message>
+    <message>
+        <source>Blocksdir</source>
+        <translation>Blocksdir</translation>
+    </message>
+    <message>
+        <source>To specify a non-default location of the blocks directory use the '%1' option.</source>
+        <translation>Użyj opcji '%1' aby wskazać niestandardową lokalizację katalogu bloków.</translation>
+    </message>
+    <message>
+        <source>Startup time</source>
+        <translation>Czas uruchomienia</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Sieć</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nazwa</translation>
+    </message>
+    <message>
+        <source>Number of connections</source>
+        <translation>Liczba połączeń</translation>
+    </message>
+    <message>
+        <source>Block chain</source>
+        <translation>Łańcuch bloków</translation>
+    </message>
+    <message>
+        <source>Memory Pool</source>
+        <translation>Memory Pool (obszar pamięci)</translation>
+    </message>
+    <message>
+        <source>Current number of transactions</source>
+        <translation>Obecna liczba transakcji</translation>
+    </message>
+    <message>
+        <source>Memory usage</source>
+        <translation>Zużycie pamięci</translation>
+    </message>
+    <message>
+        <source>Wallet: </source>
+        <translation>Portfel:</translation>
+    </message>
+    <message>
+        <source>(none)</source>
+        <translation>(brak)</translation>
+    </message>
+    <message>
+        <source>&amp;Reset</source>
+        <translation>&amp;Reset</translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation>Otrzymane</translation>
+    </message>
+    <message>
+        <source>Sent</source>
+        <translation>Wysłane</translation>
+    </message>
+    <message>
+        <source>&amp;Peers</source>
+        <translation>&amp;Węzły</translation>
+    </message>
+    <message>
+        <source>Banned peers</source>
+        <translation>Blokowane węzły</translation>
+    </message>
+    <message>
+        <source>Select a peer to view detailed information.</source>
+        <translation>Wybierz węzeł żeby zobaczyć szczegóły.</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation>Kierunek</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>Wersja</translation>
+    </message>
+    <message>
+        <source>Starting Block</source>
+        <translation>Blok startowy</translation>
+    </message>
+    <message>
+        <source>Synced Headers</source>
+        <translation>Zsynchronizowane nagłówki</translation>
+    </message>
+    <message>
+        <source>Synced Blocks</source>
+        <translation>Zsynchronizowane bloki</translation>
+    </message>
+    <message>
+        <source>The mapped Autonomous System used for diversifying peer selection.</source>
+        <translation>Zmapowany autonomiczny system (ang. asmap) używany do dywersyfikacji wyboru węzłów.</translation>
+    </message>
+    <message>
+        <source>Mapped AS</source>
+        <translation>Zmapowany autonomiczny system (ang. asmap)</translation>
+    </message>
+    <message>
+        <source>User Agent</source>
+        <translation>Aplikacja kliencka</translation>
+    </message>
+    <message>
+        <source>Node window</source>
+        <translation>Okno węzła</translation>
+    </message>
+    <message>
+        <source>Current block height</source>
+        <translation>Obecna ilość bloków</translation>
+    </message>
+    <message>
+        <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Otwórz plik dziennika debugowania %1 z obecnego katalogu z danymi. Może to potrwać kilka sekund przy większych plikach.</translation>
+    </message>
+    <message>
+        <source>Decrease font size</source>
+        <translation>Zmniejsz rozmiar czcionki</translation>
+    </message>
+    <message>
+        <source>Increase font size</source>
+        <translation>Zwiększ rozmiar czcionki</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Uprawnienia</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Usługi</translation>
+    </message>
+    <message>
+        <source>Connection Time</source>
+        <translation>Czas połączenia</translation>
+    </message>
+    <message>
+        <source>Last Send</source>
+        <translation>Ostatnio wysłano</translation>
+    </message>
+    <message>
+        <source>Last Receive</source>
+        <translation>Ostatnio odebrano</translation>
+    </message>
+    <message>
+        <source>Ping Time</source>
+        <translation>Czas odpowiedzi</translation>
+    </message>
+    <message>
+        <source>The duration of a currently outstanding ping.</source>
+        <translation>Czas trwania nadmiarowego pingu</translation>
+    </message>
+    <message>
+        <source>Ping Wait</source>
+        <translation>Czas odpowiedzi</translation>
+    </message>
+    <message>
+        <source>Min Ping</source>
+        <translation>Minimalny czas odpowiedzi</translation>
+    </message>
+    <message>
+        <source>Time Offset</source>
+        <translation>Przesunięcie czasu</translation>
+    </message>
+    <message>
+        <source>Last block time</source>
+        <translation>Czas ostatniego bloku</translation>
+    </message>
+    <message>
+        <source>&amp;Open</source>
+        <translation>&amp;Otwórz</translation>
+    </message>
+    <message>
+        <source>&amp;Console</source>
+        <translation>&amp;Konsola</translation>
+    </message>
+    <message>
+        <source>&amp;Network Traffic</source>
+        <translation>$Ruch sieci</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>Kwota ogólna</translation>
+    </message>
+    <message>
+        <source>In:</source>
+        <translation>Wejście:</translation>
+    </message>
+    <message>
+        <source>Out:</source>
+        <translation>Wyjście:</translation>
+    </message>
+    <message>
+        <source>Debug log file</source>
+        <translation>Plik logowania debugowania</translation>
+    </message>
+    <message>
+        <source>Clear console</source>
+        <translation>Wyczyść konsolę</translation>
+    </message>
+    <message>
+        <source>1 &amp;hour</source>
+        <translation>1 &amp;godzina</translation>
+    </message>
+    <message>
+        <source>1 &amp;day</source>
+        <translation>1 &amp;dzień</translation>
+    </message>
+    <message>
+        <source>1 &amp;week</source>
+        <translation>1 &amp;tydzień</translation>
+    </message>
+    <message>
+        <source>1 &amp;year</source>
+        <translation>1 &amp;rok</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Rozłącz</translation>
+    </message>
+    <message>
+        <source>Ban for</source>
+        <translation>Zbanuj na</translation>
+    </message>
+    <message>
+        <source>&amp;Unban</source>
+        <translation>&amp;Odblokuj</translation>
+    </message>
+    <message>
+        <source>Welcome to the %1 RPC console.</source>
+        <translation>Witaj w konsoli %1 RPC.</translation>
+    </message>
+    <message>
+        <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
+        <translation>Użyj strzałek do przewijania historii i %1 aby wyczyścić ekran</translation>
+    </message>
+    <message>
+        <source>Type %1 for an overview of available commands.</source>
+        <translation>Wpisz %1 aby uzyskać listę dostępnych komend.</translation>
+    </message>
+    <message>
+        <source>For more information on using this console type %1.</source>
+        <translation>Aby uzyskać więcej informacji jak używać tej konsoli wpisz %1.</translation>
+    </message>
+    <message>
+        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
+        <translation>UWAGA: Oszuści nakłaniają do wpisywania tutaj różnych poleceń aby ukraść portfel. Nie używaj tej konsoli bez pełnego zrozumienia wpisywanych poleceń.</translation>
+    </message>
+    <message>
+        <source>Network activity disabled</source>
+        <translation>Aktywność sieciowa wyłączona</translation>
+    </message>
+    <message>
+        <source>Executing command without any wallet</source>
+        <translation>Wykonuję komendę bez portfela</translation>
+    </message>
+    <message>
+        <source>Executing command using "%1" wallet</source>
+        <translation>Wykonuję komendę używając portfela "%1"</translation>
+    </message>
+    <message>
+        <source>(node id: %1)</source>
+        <translation>(id węzła: %1)</translation>
+    </message>
+    <message>
+        <source>via %1</source>
+        <translation>przez %1</translation>
+    </message>
+    <message>
+        <source>never</source>
+        <translation>nigdy</translation>
+    </message>
+    <message>
+        <source>Inbound</source>
+        <translation>Wejściowy</translation>
+    </message>
+    <message>
+        <source>Outbound</source>
+        <translation>Wyjściowy</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Nieznany</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiveCoinsDialog</name>
+    <message>
+        <source>&amp;Amount:</source>
+        <translation>&amp;Ilość:</translation>
+    </message>
+    <message>
+        <source>&amp;Label:</source>
+        <translation>&amp;Etykieta:</translation>
+    </message>
+    <message>
+        <source>&amp;Message:</source>
+        <translation>&amp;Wiadomość:</translation>
+    </message>
+    <message>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
+        <translation>Opcjonalna wiadomość do dołączenia do żądania płatności, która będzie wyświetlana, gdy żądanie zostanie otwarte. Uwaga: wiadomość ta nie zostanie wysłana wraz z płatnością w sieci Bitcoin.</translation>
+    </message>
+    <message>
+        <source>An optional label to associate with the new receiving address.</source>
+        <translation>Opcjonalna etykieta do skojarzenia z nowym adresem odbiorczym.</translation>
+    </message>
+    <message>
+        <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
+        <translation>Użyj tego formularza do zażądania płatności. Wszystkie pola są &lt;b&gt;opcjonalne&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
+        <translation>Opcjonalna kwota by zażądać. Zostaw puste lub zero by nie zażądać konkretnej kwoty.</translation>
+    </message>
+    <message>
+        <source>An optional label to associate with the new receiving address (used by you to identify an invoice).  It is also attached to the payment request.</source>
+        <translation>Dodatkowa etykieta powiązana z nowym adresem do odbierania płatności (używanym w celu odnalezienia faktury). Jest również powiązana z żądaniem płatności.</translation>
+    </message>
+    <message>
+        <source>An optional message that is attached to the payment request and may be displayed to the sender.</source>
+        <translation>Dodatkowa wiadomość dołączana do żądania zapłaty, która może być odczytana przez płacącego.</translation>
+    </message>
+    <message>
+        <source>&amp;Create new receiving address</source>
+        <translation>&amp;Stwórz nowy adres odbiorczy</translation>
+    </message>
+    <message>
+        <source>Clear all fields of the form.</source>
+        <translation>Wyczyść wszystkie pola formularza.</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Native segwit addresses (aka Bech32 or BIP-173) reduce your transaction fees later on and offer better protection against typos, but old wallets don't support them. When unchecked, an address compatible with older wallets will be created instead.</source>
+        <translation>Natywne adresy segwit (aka Bech32 lub BIP-173) zmniejszają później twoje opłaty transakcyjne i dają lepsze zabezpieczenie przed literówkami, ale stare portfele ich nie obsługują. Jeżeli odznaczone, stworzony zostanie adres kompatybilny ze starszymi portfelami.</translation>
+    </message>
+    <message>
+        <source>Generate native segwit (Bech32) address</source>
+        <translation>Wygeneruj natywny adres segwit (Bech32)</translation>
+    </message>
+    <message>
+        <source>Requested payments history</source>
+        <translation>Żądanie historii płatności</translation>
+    </message>
+    <message>
+        <source>Show the selected request (does the same as double clicking an entry)</source>
+        <translation>Pokaż wybrane żądanie (robi to samo co dwukrotne kliknięcie pozycji)</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Pokaż</translation>
+    </message>
+    <message>
+        <source>Remove the selected entries from the list</source>
+        <translation>Usuń zaznaczone z listy</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Copy URI</source>
+        <translation>Kopiuj URI:</translation>
+    </message>
+    <message>
+        <source>Copy label</source>
+        <translation>Kopiuj etykietę</translation>
+    </message>
+    <message>
+        <source>Copy message</source>
+        <translation>Kopiuj wiadomość</translation>
+    </message>
+    <message>
+        <source>Copy amount</source>
+        <translation>Kopiuj kwotę</translation>
+    </message>
+    <message>
+        <source>Could not unlock wallet.</source>
+        <translation>Nie można było odblokować portfela.</translation>
+    </message>
+    <message>
+        <source>Could not generate new %1 address</source>
+        <translation>Nie udało się wygenerować nowego adresu %1</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiveRequestDialog</name>
+    <message>
+        <source>Request payment to ...</source>
+        <translation>Żądaj płatności od ...</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Adres:</translation>
+    </message>
+    <message>
+        <source>Amount:</source>
+        <translation>Kwota:</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation>Etykieta:</translation>
+    </message>
+    <message>
+        <source>Message:</source>
+        <translation>Wiadomość:</translation>
+    </message>
+    <message>
+        <source>Wallet:</source>
+        <translation>Portfel:</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URI</source>
+        <translation>Kopiuj &amp;URI</translation>
+    </message>
+    <message>
+        <source>Copy &amp;Address</source>
+        <translation>Kopiuj &amp;adres</translation>
+    </message>
+    <message>
+        <source>&amp;Save Image...</source>
+        <translation>&amp;Zapisz obraz...</translation>
+    </message>
+    <message>
+        <source>Request payment to %1</source>
+        <translation>Zażądaj płatności do %1</translation>
+    </message>
+    <message>
+        <source>Payment information</source>
+        <translation>Informacje o płatności</translation>
+    </message>
+</context>
+<context>
+    <name>RecentRequestsTableModel</name>
+    <message>
+        <source>Date</source>
+        <translation>Data</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>Etykieta</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation>Wiadomość</translation>
+    </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(brak etykiety)</translation>
+    </message>
+    <message>
+        <source>(no message)</source>
+        <translation>(brak wiadomości)</translation>
+    </message>
+    <message>
+        <source>(no amount requested)</source>
+        <translation>(brak kwoty)</translation>
+    </message>
+    <message>
+        <source>Requested</source>
+        <translation>Zażądano</translation>
+    </message>
+</context>
+<context>
+    <name>SendCoinsDialog</name>
+    <message>
+        <source>Send Coins</source>
+        <translation>Wyślij monety</translation>
+    </message>
+    <message>
+        <source>Coin Control Features</source>
+        <translation>Funkcje kontroli monet</translation>
+    </message>
+    <message>
+        <source>Inputs...</source>
+        <translation>Wejścia...</translation>
+    </message>
+    <message>
+        <source>automatically selected</source>
+        <translation>zaznaczone automatycznie</translation>
+    </message>
+    <message>
+        <source>Insufficient funds!</source>
+        <translation>Niewystarczające środki!</translation>
+    </message>
+    <message>
+        <source>Quantity:</source>
+        <translation>Ilość:</translation>
+    </message>
+    <message>
+        <source>Bytes:</source>
+        <translation>Bajtów:</translation>
+    </message>
+    <message>
+        <source>Amount:</source>
+        <translation>Kwota:</translation>
+    </message>
+    <message>
+        <source>Fee:</source>
+        <translation>Opłata:</translation>
+    </message>
+    <message>
+        <source>After Fee:</source>
+        <translation>Po opłacie:</translation>
+    </message>
+    <message>
+        <source>Change:</source>
+        <translation>Reszta:</translation>
+    </message>
+    <message>
+        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
+        <translation>Kiedy ta opcja jest wybrana, to jeżeli adres reszty jest pusty lub nieprawidłowy, to reszta będzie wysyłana na nowo wygenerowany adres,</translation>
+    </message>
+    <message>
+        <source>Custom change address</source>
+        <translation>Niestandardowe zmiany adresu</translation>
+    </message>
+    <message>
+        <source>Transaction Fee:</source>
+        <translation>Opłata transakcyjna:</translation>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation>Wybierz...</translation>
+    </message>
+    <message>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
+        <translation>206/5000
+Korzystanie z opłaty domyślnej może skutkować wysłaniem transakcji, która potwierdzi się w kilka godzin lub dni (lub nigdy). Rozważ wybranie opłaty ręcznie lub poczekaj, aż sprawdzisz poprawność całego łańcucha.</translation>
+    </message>
+    <message>
+        <source>Warning: Fee estimation is currently not possible.</source>
+        <translation>Uwaga: Oszacowanie opłaty za transakcje jest aktualnie niemożliwe.</translation>
+    </message>
+    <message>
+        <source>Specify a custom fee per kB (1,000 bytes) of the transaction's virtual size.
+
+Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis per kB" for a transaction size of 500 bytes (half of 1 kB) would ultimately yield a fee of only 50 satoshis.</source>
+        <translation>Określ niestandardową opłatę za kB (1000 bajtów) wirtualnego rozmiaru transakcji.
+
+Uwaga: Ponieważ opłata jest naliczana za każdy bajt, opłata "100 satoshi za kB" w przypadku transakcji o wielkości 500 bajtów (połowa 1 kB) ostatecznie da opłatę w wysokości tylko 50 satoshi.</translation>
+    </message>
+    <message>
+        <source>per kilobyte</source>
+        <translation>za kilobajt</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>Ukryj</translation>
+    </message>
+    <message>
+        <source>Recommended:</source>
+        <translation>Zalecane:</translation>
+    </message>
+    <message>
+        <source>Custom:</source>
+        <translation>Własna:</translation>
+    </message>
+    <message>
+        <source>(Smart fee not initialized yet. This usually takes a few blocks...)</source>
+        <translation>(Sprytne opłaty nie są jeszcze zainicjowane. Trwa to zwykle kilka bloków...)</translation>
+    </message>
+    <message>
+        <source>Send to multiple recipients at once</source>
+        <translation>Wyślij do wielu odbiorców na raz</translation>
+    </message>
+    <message>
+        <source>Add &amp;Recipient</source>
+        <translation>Dodaj Odbio&amp;rcę</translation>
+    </message>
+    <message>
+        <source>Clear all fields of the form.</source>
+        <translation>Wyczyść wszystkie pola formularza.</translation>
+    </message>
+    <message>
+        <source>Dust:</source>
+        <translation>Pył:</translation>
+    </message>
+    <message>
+        <source>Hide transaction fee settings</source>
+        <translation>Ukryj ustawienia opłat transakcyjnych</translation>
+    </message>
+    <message>
+        <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
+        <translation>Gdy ilość transakcji jest mniejsza niż ilość miejsca w bloku, górnicy i węzły przekazujące wymagają minimalnej opłaty. Zapłata tylko tej wartości jest dopuszczalna, lecz może skutkować transakcją która nigdy nie zostanie potwierdzona w sytuacji, gdy ilość transakcji przekroczy przepustowość sieci.</translation>
+    </message>
+    <message>
+        <source>A too low fee might result in a never confirming transaction (read the tooltip)</source>
+        <translation>Zbyt niska opłata może spowodować, że transakcja nigdy nie zostanie zatwierdzona (przeczytaj podpowiedź)</translation>
+    </message>
+    <message>
+        <source>Confirmation time target:</source>
+        <translation>Docelowy czas potwierdzenia:</translation>
+    </message>
+    <message>
+        <source>Enable Replace-By-Fee</source>
+        <translation>Włącz RBF (podmiana transakcji przez podniesienie opłaty)</translation>
+    </message>
+    <message>
+        <source>With Replace-By-Fee (BIP-125) you can increase a transaction's fee after it is sent. Without this, a higher fee may be recommended to compensate for increased transaction delay risk.</source>
+        <translation>Dzięki podmień-przez-opłatę (RBF, BIP-125) możesz podnieść opłatę transakcyjną już wysłanej transakcji. Bez tego, może być rekomendowana większa opłata aby zmniejszyć ryzyko opóźnienia zatwierdzenia transakcji.</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Wyczyść &amp;wszystko</translation>
+    </message>
+    <message>
+        <source>Balance:</source>
+        <translation>Saldo:</translation>
+    </message>
+    <message>
+        <source>Confirm the send action</source>
+        <translation>Potwierdź akcję wysyłania</translation>
+    </message>
+    <message>
+        <source>S&amp;end</source>
+        <translation>Wy&amp;syłka</translation>
+    </message>
+    <message>
+        <source>Copy quantity</source>
+        <translation>Skopiuj ilość</translation>
+    </message>
+    <message>
+        <source>Copy amount</source>
+        <translation>Kopiuj kwotę</translation>
+    </message>
+    <message>
+        <source>Copy fee</source>
+        <translation>Skopiuj prowizję</translation>
+    </message>
+    <message>
+        <source>Copy after fee</source>
+        <translation>Skopiuj ilość po opłacie</translation>
+    </message>
+    <message>
+        <source>Copy bytes</source>
+        <translation>Skopiuj ilość bajtów</translation>
+    </message>
+    <message>
+        <source>Copy dust</source>
+        <translation>Kopiuj pył</translation>
+    </message>
+    <message>
+        <source>Copy change</source>
+        <translation>Skopiuj resztę</translation>
+    </message>
+    <message>
+        <source>%1 (%2 blocks)</source>
+        <translation>%1 (%2 bloków)</translation>
+    </message>
+    <message>
+        <source>Cr&amp;eate Unsigned</source>
+        <translation>&amp;Utwórz niepodpisaną transakcję</translation>
+    </message>
+    <message>
+        <source>Creates a Partially Signed Bitcoin Transaction (PSBT) for use with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
+        <translation>Tworzy częściowo podpisaną transakcję (ang. PSBT) używaną np. offline z portfelem %1 lub z innym portfelem zgodnym z PSBT.</translation>
+    </message>
+    <message>
+        <source> from wallet '%1'</source>
+        <translation>z portfela '%1'</translation>
+    </message>
+    <message>
+        <source>%1 to '%2'</source>
+        <translation>%1 do '%2'</translation>
+    </message>
+    <message>
+        <source>%1 to %2</source>
+        <translation>%1 do %2</translation>
+    </message>
+    <message>
+        <source>Do you want to draft this transaction?</source>
+        <translation>Czy chcesz zapisać szkic tej transakcji?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to send?</source>
+        <translation>Czy na pewno chcesz wysłać?</translation>
+    </message>
+    <message>
+        <source>Create Unsigned</source>
+        <translation>Utwórz niepodpisaną transakcję</translation>
+    </message>
+    <message>
+        <source>Save Transaction Data</source>
+        <translation>Zapisz dane transakcji</translation>
+    </message>
+    <message>
+        <source>PSBT saved</source>
+        <translation>Zapisano PSBT</translation>
+    </message>
+    <message>
+        <source>or</source>
+        <translation>lub</translation>
+    </message>
+    <message>
+        <source>You can increase the fee later (signals Replace-By-Fee, BIP-125).</source>
+        <translation>Możesz później zwiększyć opłatę (sygnalizuje podmień-przez-opłatę (RBF), BIP 125).</translation>
+    </message>
+    <message>
+        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitcoin Transaction (PSBT) which you can save or copy and then sign with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
+        <translation>Proszę przejrzeć propozycję transakcji. Zostanie utworzona częściowo podpisana transakcja (ang. PSBT), którą można skopiować, a następnie podpisać np. offline z portfelem %1 lub z innym portfelem zgodnym z PSBT.</translation>
+    </message>
+    <message>
+        <source>Please, review your transaction.</source>
+        <translation>Proszę, zweryfikuj swoją transakcję.</translation>
+    </message>
+    <message>
+        <source>Transaction fee</source>
+        <translation>Opłata transakcyjna</translation>
+    </message>
+    <message>
+        <source>Not signalling Replace-By-Fee, BIP-125.</source>
+        <translation>Nie sygnalizuje podmień-przez-opłatę (RBF), BIP-125</translation>
+    </message>
+    <message>
+        <source>Total Amount</source>
+        <translation>Łączna wartość</translation>
+    </message>
+    <message>
+        <source>To review recipient list click "Show Details..."</source>
+        <translation>Aby przejrzeć listę odbiorców kliknij "Pokaż szczegóły..."</translation>
+    </message>
+    <message>
+        <source>Confirm send coins</source>
+        <translation>Potwierdź wysyłanie monet</translation>
+    </message>
+    <message>
+        <source>Confirm transaction proposal</source>
+        <translation>Potwierdź propozycję transakcji</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation>Wyślij</translation>
+    </message>
+    <message>
+        <source>Watch-only balance:</source>
+        <translation>Kwota na obserwowanych kontach:</translation>
+    </message>
+    <message>
+        <source>The recipient address is not valid. Please recheck.</source>
+        <translation>Adres odbiorcy jest nieprawidłowy, proszę sprawić ponownie.</translation>
+    </message>
+    <message>
+        <source>The amount to pay must be larger than 0.</source>
+        <translation>Kwota do zapłacenia musi być większa od 0.</translation>
+    </message>
+    <message>
+        <source>The amount exceeds your balance.</source>
+        <translation>Kwota przekracza twoje saldo.</translation>
+    </message>
+    <message>
+        <source>The total exceeds your balance when the %1 transaction fee is included.</source>
+        <translation>Suma przekracza twoje saldo, gdy doliczymy %1 prowizji transakcyjnej.</translation>
+    </message>
+    <message>
+        <source>Duplicate address found: addresses should only be used once each.</source>
+        <translation>Duplikat adres-u znaleziony: adresy powinny zostać użyte tylko raz.</translation>
+    </message>
+    <message>
+        <source>Transaction creation failed!</source>
+        <translation>Utworzenie transakcji nie powiodło się!</translation>
+    </message>
+    <message>
+        <source>A fee higher than %1 is considered an absurdly high fee.</source>
+        <translation>Opłata wyższa niż %1 jest uznawana za absurdalnie dużą.</translation>
+    </message>
+    <message>
+        <source>Payment request expired.</source>
+        <translation>Żądanie płatności upłynęło.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Estimated to begin confirmation within %n block(s).</source>
+        <translation><numerusform>Przybliżony czas rozpoczęcia zatwierdzenia: %n blok.</numerusform><numerusform>Przybliżony czas rozpoczęcia zatwierdzenia: %n bloki.</numerusform><numerusform>Przybliżony czas rozpoczęcia zatwierdzenia: %n bloków.</numerusform><numerusform>Przybliżony czas rozpoczęcia zatwierdzenia: %n bloków.</numerusform></translation>
+    </message>
+    <message>
+        <source>Warning: Invalid Bitcoin address</source>
+        <translation>Ostrzeżenie: nieprawidłowy adres Bitcoin</translation>
+    </message>
+    <message>
+        <source>Warning: Unknown change address</source>
+        <translation>Ostrzeżenie: Nieznany adres reszty</translation>
+    </message>
+    <message>
+        <source>Confirm custom change address</source>
+        <translation>Potwierdź zmianę adresu własnego</translation>
+    </message>
+    <message>
+        <source>The address you selected for change is not part of this wallet. Any or all funds in your wallet may be sent to this address. Are you sure?</source>
+        <translation>Wybrany adres reszty nie jest częścią tego portfela. Dowolne lub wszystkie środki w twoim portfelu mogą być wysyłane na ten adres. Jesteś pewny?</translation>
+    </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(brak etykiety)</translation>
+    </message>
+</context>
+<context>
+    <name>SendCoinsEntry</name>
+    <message>
+        <source>A&amp;mount:</source>
+        <translation>Su&amp;ma:</translation>
+    </message>
+    <message>
+        <source>Pay &amp;To:</source>
+        <translation>Zapłać &amp;dla:</translation>
+    </message>
+    <message>
+        <source>&amp;Label:</source>
+        <translation>&amp;Etykieta:</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Wybierz wcześniej użyty adres</translation>
+    </message>
+    <message>
+        <source>The Bitcoin address to send the payment to</source>
+        <translation>Adres Bitcoin gdzie wysłać płatność</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Wklej adres ze schowka</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Remove this entry</source>
+        <translation>Usuń ten wpis</translation>
+    </message>
+    <message>
+        <source>The amount to send in the selected unit</source>
+        <translation>Kwota do wysłania w wybranej jednostce</translation>
+    </message>
+    <message>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive less bitcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
+        <translation>Opłata zostanie odjęta od kwoty wysyłane.Odbiorca otrzyma mniej niż bitcoins wpisz w polu kwoty. Jeśli wybrano kilku odbiorców, opłata jest podzielona równo.</translation>
+    </message>
+    <message>
+        <source>S&amp;ubtract fee from amount</source>
+        <translation>Odejmij od wysokości opłaty</translation>
+    </message>
+    <message>
+        <source>Use available balance</source>
+        <translation>Użyj dostępnego salda</translation>
+    </message>
+    <message>
+        <source>Message:</source>
+        <translation>Wiadomość:</translation>
+    </message>
+    <message>
+        <source>This is an unauthenticated payment request.</source>
+        <translation>To żądanie zapłaty nie zostało zweryfikowane.</translation>
+    </message>
+    <message>
+        <source>This is an authenticated payment request.</source>
+        <translation>To żądanie zapłaty jest zweryfikowane.</translation>
+    </message>
+    <message>
+        <source>Enter a label for this address to add it to the list of used addresses</source>
+        <translation>Wprowadź etykietę dla tego adresu by dodać go do listy użytych adresów</translation>
+    </message>
+    <message>
+        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
+        <translation>Wiadomość, która została dołączona do URI bitcoin:, która będzie przechowywana wraz z transakcją w celach informacyjnych. Uwaga: Ta wiadomość nie będzie rozsyłana w sieci Bitcoin.</translation>
+    </message>
+    <message>
+        <source>Pay To:</source>
+        <translation>Wpłać do:</translation>
+    </message>
+    <message>
+        <source>Memo:</source>
+        <translation>Notatka:</translation>
+    </message>
+</context>
+<context>
+    <name>ShutdownWindow</name>
+    <message>
+        <source>%1 is shutting down...</source>
+        <translation>%1 się zamyka...</translation>
+    </message>
+    <message>
+        <source>Do not shut down the computer until this window disappears.</source>
+        <translation>Nie wyłączaj komputera dopóki to okno nie zniknie.</translation>
+    </message>
+</context>
+<context>
+    <name>SignVerifyMessageDialog</name>
+    <message>
+        <source>Signatures - Sign / Verify a Message</source>
+        <translation>Podpisy - Podpisz / zweryfikuj wiadomość</translation>
+    </message>
+    <message>
+        <source>&amp;Sign Message</source>
+        <translation>Podpi&amp;sz Wiadomość</translation>
+    </message>
+    <message>
+        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoins sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
+        <translation>Możesz podpisywać wiadomości swoimi adresami aby udowodnić, że jesteś ich właścicielem. Uważaj, aby nie podpisywać niczego co wzbudza Twoje podejrzenia, ponieważ ktoś może stosować phishing próbując nakłonić Cię do ich podpisania. Akceptuj i podpisuj tylko w pełni zrozumiałe komunikaty i wiadomości.</translation>
+    </message>
+    <message>
+        <source>The Bitcoin address to sign the message with</source>
+        <translation>Adres Bitcoin, za pomocą którego podpisać wiadomość</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Wybierz wcześniej użyty adres</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Wklej adres ze schowka</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Enter the message you want to sign here</source>
+        <translation>Tutaj wprowadź wiadomość, którą chcesz podpisać</translation>
+    </message>
+    <message>
+        <source>Signature</source>
+        <translation>Podpis</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Kopiuje aktualny podpis do schowka systemowego</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Bitcoin address</source>
+        <translation>Podpisz wiadomość aby dowieść, że ten adres jest twój</translation>
+    </message>
+    <message>
+        <source>Sign &amp;Message</source>
+        <translation>Podpisz Wiado&amp;mość</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Zresetuj wszystkie pola podpisanej wiadomości</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Wyczyść &amp;wszystko</translation>
+    </message>
+    <message>
+        <source>&amp;Verify Message</source>
+        <translation>&amp;Zweryfikuj wiadomość</translation>
+    </message>
+    <message>
+        <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack. Note that this only proves the signing party receives with the address, it cannot prove sendership of any transaction!</source>
+        <translation>Wpisz adres, wiadomość oraz sygnaturę (podpis) odbiorcy (upewnij się, że dokładnie skopiujesz wszystkie zakończenia linii, spacje, tabulacje itp.).  Uważaj by nie dodać więcej do podpisu niż do samej podpisywanej wiadomości by uniknąć ataku man-in-the-middle. 
+Zwróć uwagę, że poprawnie zweryfikowana wiadomość potwierdza to, że nadawca posiada klucz do adresu, natomiast nie potwierdza to, że poprawne wysłanie jakiejkolwiek transakcji!</translation>
+    </message>
+    <message>
+        <source>The Bitcoin address the message was signed with</source>
+        <translation>Adres Bitcoin, którym została podpisana wiadomość</translation>
+    </message>
+    <message>
+        <source>The signed message to verify</source>
+        <translation>Podpisana wiadomość do weryfikacji</translation>
+    </message>
+    <message>
+        <source>The signature given when the message was signed</source>
+        <translation>Sygnatura podawana przy podpisywaniu wiadomości</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
+        <translation>Zweryfikuj wiadomość,  aby upewnić się, że została podpisana odpowiednim adresem Bitcoin.</translation>
+    </message>
+    <message>
+        <source>Verify &amp;Message</source>
+        <translation>Zweryfikuj Wiado&amp;mość</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Resetuje wszystkie pola weryfikacji wiadomości</translation>
+    </message>
+    <message>
+        <source>Click "Sign Message" to generate signature</source>
+        <translation>Kliknij "Podpisz Wiadomość" żeby uzyskać podpis</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>Podany adres jest nieprawidłowy.</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Proszę sprawdzić adres i spróbować ponownie.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>Wprowadzony adres nie odnosi się do klucza.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Odblokowanie portfela zostało anulowane.</translation>
+    </message>
+    <message>
+        <source>No error</source>
+        <translation>Brak błędów</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>Klucz prywatny dla podanego adresu nie jest dostępny.</translation>
+    </message>
+    <message>
+        <source>Message signing failed.</source>
+        <translation>Podpisanie wiadomości nie powiodło się.</translation>
+    </message>
+    <message>
+        <source>Message signed.</source>
+        <translation>Wiadomość podpisana.</translation>
+    </message>
+    <message>
+        <source>The signature could not be decoded.</source>
+        <translation>Podpis nie może zostać zdekodowany.</translation>
+    </message>
+    <message>
+        <source>Please check the signature and try again.</source>
+        <translation>Sprawdź podpis i spróbuj ponownie.</translation>
+    </message>
+    <message>
+        <source>The signature did not match the message digest.</source>
+        <translation>Podpis nie odpowiada skrótowi wiadomości.</translation>
+    </message>
+    <message>
+        <source>Message verification failed.</source>
+        <translation>Weryfikacja wiadomości nie powiodła się.</translation>
+    </message>
+    <message>
+        <source>Message verified.</source>
+        <translation>Wiadomość zweryfikowana.</translation>
+    </message>
+</context>
+<context>
+    <name>TrafficGraphWidget</name>
+    <message>
+        <source>KB/s</source>
+        <translation>KB/s</translation>
+    </message>
+</context>
+<context>
+    <name>TransactionDesc</name>
+    <message numerus="yes">
+        <source>Open for %n more block(s)</source>
+        <translation><numerusform>Otwórz dla %n kolejnego bloku</numerusform><numerusform>Otwórz dla %n kolejnych bloków</numerusform><numerusform>Otwórz dla %n kolejnych bloków</numerusform><numerusform>Otwórz dla %n kolejnych bloków</numerusform></translation>
+    </message>
+    <message>
+        <source>Open until %1</source>
+        <translation>Otwórz do %1</translation>
+    </message>
+    <message>
+        <source>conflicted with a transaction with %1 confirmations</source>
+        <translation>sprzeczny z transakcją posiadającą %1 potwierdzeń</translation>
+    </message>
+    <message>
+        <source>0/unconfirmed, %1</source>
+        <translation>0/niezatwierdzone, %1</translation>
+    </message>
+    <message>
+        <source>in memory pool</source>
+        <translation>w obszarze pamięci</translation>
+    </message>
+    <message>
+        <source>not in memory pool</source>
+        <translation>nie w obszarze pamięci</translation>
+    </message>
+    <message>
+        <source>abandoned</source>
+        <translation>porzucone</translation>
+    </message>
+    <message>
+        <source>%1/unconfirmed</source>
+        <translation>%1/niezatwierdzone</translation>
+    </message>
+    <message>
+        <source>%1 confirmations</source>
+        <translation>%1 potwierdzeń</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Data</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Źródło</translation>
+    </message>
+    <message>
+        <source>Generated</source>
+        <translation>Wygenerowano</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation>Od</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>nieznane</translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation>Do</translation>
+    </message>
+    <message>
+        <source>own address</source>
+        <translation>własny adres</translation>
+    </message>
+    <message>
+        <source>watch-only</source>
+        <translation>tylko-obserwowany</translation>
+    </message>
+    <message>
+        <source>label</source>
+        <translation>etykieta</translation>
+    </message>
+    <message>
+        <source>Credit</source>
+        <translation>Uznanie</translation>
+    </message>
+    <message numerus="yes">
+        <source>matures in %n more block(s)</source>
+        <translation><numerusform>dojrzeje po %n kolejnym bloku</numerusform><numerusform>dojrzeje po %n kolejnych blokach</numerusform><numerusform>dojrzeje po %n kolejnych blokach</numerusform><numerusform>dojrzeje po %n kolejnych blokach</numerusform></translation>
+    </message>
+    <message>
+        <source>not accepted</source>
+        <translation>niezaakceptowane</translation>
+    </message>
+    <message>
+        <source>Debit</source>
+        <translation>Debet</translation>
+    </message>
+    <message>
+        <source>Total debit</source>
+        <translation>Łączne obciążenie</translation>
+    </message>
+    <message>
+        <source>Total credit</source>
+        <translation>Łączne uznanie</translation>
+    </message>
+    <message>
+        <source>Transaction fee</source>
+        <translation>Opłata transakcyjna</translation>
+    </message>
+    <message>
+        <source>Net amount</source>
+        <translation>Kwota netto</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation>Wiadomość</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>Komentarz</translation>
+    </message>
+    <message>
+        <source>Transaction ID</source>
+        <translation>ID transakcji</translation>
+    </message>
+    <message>
+        <source>Transaction total size</source>
+        <translation>Rozmiar transakcji</translation>
+    </message>
+    <message>
+        <source>Transaction virtual size</source>
+        <translation>Wirtualny rozmiar transakcji</translation>
+    </message>
+    <message>
+        <source>Output index</source>
+        <translation>Indeks wyjściowy</translation>
+    </message>
+    <message>
+        <source> (Certificate was not verified)</source>
+        <translation>(Certyfikat nie został zweryfikowany)</translation>
+    </message>
+    <message>
+        <source>Merchant</source>
+        <translation>Kupiec</translation>
+    </message>
+    <message>
+        <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to "not accepted" and it won't be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
+        <translation>Wygenerowane monety muszą dojrzeć przez %1 bloków zanim będzie można je wydać. Gdy wygenerowałeś blok, został on rozgłoszony w sieci w celu dodania do łańcucha bloków. Jeżeli nie uda mu się wejść do łańcucha jego status zostanie zmieniony na "nie zaakceptowano" i nie będzie można go wydać. To czasem zdarza się gdy inny węzeł wygeneruje blok w kilka sekund od twojego.</translation>
+    </message>
+    <message>
+        <source>Debug information</source>
+        <translation>Informacje debugowania</translation>
+    </message>
+    <message>
+        <source>Transaction</source>
+        <translation>Transakcja</translation>
+    </message>
+    <message>
+        <source>Inputs</source>
+        <translation>Wejścia</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -5737,7 +7056,31 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
     </message>
     <message>
         <source>Export the data in the current tab to a file</source>
-        <translation type="unfinished">Eksportuj dane z aktywnej karty do pliku</translation>
+        <translation>Eksportuj dane z aktywnej karty do pliku</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT from clipboard (invalid base64)</source>
+        <translation>Nie udało się załadować częściowo podpisanej transakcji (nieważny base64)</translation>
+    </message>
+    <message>
+        <source>Load Transaction Data</source>
+        <translation>Wczytaj dane transakcji</translation>
+    </message>
+    <message>
+        <source>Partially Signed Transaction (*.psbt)</source>
+        <translation>Częściowo Podpisana Transakcja (*.psbt)</translation>
+    </message>
+    <message>
+        <source>PSBT file must be smaller than 100 MiB</source>
+        <translation>PSBT musi być mniejsze niż 100MB</translation>
+    </message>
+    <message>
+        <source>Unable to decode PSBT</source>
+        <translation>Nie można odczytać PSBT</translation>
     </message>
     <message>
         <source>Backup Wallet</source>
@@ -6071,6 +7414,10 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
     <message>
         <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
         <translation>Musisz przebudować bazę używając parametru -reindex aby wrócić do trybu pełnego. To spowoduje ponowne pobranie całego łańcucha bloków</translation>
+    </message>
+    <message>
+        <source>A fatal internal error occurred, see debug.log for details</source>
+        <translation>Błąd: Wystąpił fatalny błąd wewnętrzny, sprawdź szczegóły w debug.log</translation>
     </message>
     <message>
         <source>Disk space is too low!</source>
