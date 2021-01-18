@@ -38,6 +38,7 @@
 #include <policy/policy.h>
 #include <policy/settings.h>
 #include <protocol.h>
+#include <rng/rngscribe.h>
 #include <rpc/blockchain.h>
 #include <rpc/register.h>
 #include <rpc/server.h>
@@ -289,6 +290,8 @@ void Shutdown(NodeContext& node)
     for (const auto& client : node.chain_clients) {
         client->stop();
     }
+
+    CRNGScribe::GetCRNGScribe().WritePage();
 
 #if ENABLE_ZMQ
     if (g_zmq_notification_interface) {

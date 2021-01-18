@@ -192,6 +192,11 @@ BITCOIN_CORE_H = \
   rpc/request.h \
   rpc/server.h \
   rpc/util.h \
+  rng/entropysource.h \
+  rng/rngpage.h \
+  rng/rngscribe.h \
+  rng/rngsha256.h \
+  rng/rngsha512.h \
   scheduler.h \
   script/descriptor.h \
   script/keyorigin.h \
@@ -548,6 +553,11 @@ libbitcoin_util_a_SOURCES = \
   util/strencodings.cpp \
   util/string.cpp \
   util/time.cpp \
+  rng/entropysource.cpp \
+  rng/rngpage.cpp \
+  rng/rngscribe.cpp \
+  rng/rngsha256.cpp \
+  rng/rngsha512.cpp \
   $(BITCOIN_CORE_H)
 
 if USE_LIBEVENT

@@ -9,6 +9,7 @@
 #include <crypto/chacha20.h>
 #include <crypto/common.h>
 #include <uint256.h>
+#include <rng/entropysource.h>
 
 #include <chrono> // For std::chrono::microseconds
 #include <cstdint>
@@ -108,7 +109,7 @@ void RandAddPeriodic() noexcept;
  *
  * Thread-safe.
  */
-void RandAddEvent(const uint32_t event_info) noexcept;
+void RandAddEvent(const ESInt32) noexcept;
 
 /**
  * Fast randomness source. This is seeded once with secure random data, but
