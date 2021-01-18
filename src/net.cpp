@@ -26,6 +26,7 @@
 #include <node/interface_ui.h>
 #include <protocol.h>
 #include <random.h>
+#include <rng/entropysource.h>
 #include <scheduler.h>
 #include <util/sock.h>
 #include <util/strencodings.h>
@@ -577,7 +578,7 @@ CNode* CConnman::ConnectNode(CAddress addrConnect, const char *pszDest, bool fCo
     pnode->AddRef();
 
     // We're making a new connection, harvest entropy from the time (and our peer count)
-    RandAddEvent((uint32_t)id);
+    RandAddEvent(ESInt32((uint32_t)id, "NewOutgoingConnection.id"));
 
     return pnode;
 }
@@ -793,7 +794,7 @@ CNetMessage V1TransportDeserializer::GetMessage(const std::chrono::microseconds 
     uint256 hash = GetMessageHash();
 
     // We just received a message off the wire, harvest entropy from the time (and the message checksum)
-    RandAddEvent(ReadLE32(hash.begin()));
+    RandAddEvent(ESInt32(ReadLE32(hash.begin()), "MessageChecksum:"+msg->m_command));
 
     // Check checksum and header message type string
     if (memcmp(hash.begin(), hdr.pchChecksum, CMessageHeader::CHECKSUM_SIZE) != 0) {
@@ -1065,7 +1066,8 @@ void CConnman::CreateNodeFromAcceptedSocket(std::unique_ptr<Sock>&& sock,
     }
 
     // We received a new connection, harvest entropy from the time (and our peer count)
-    RandAddEvent((uint32_t)id);
+    RandAddEvent(ESInt32((uint32_t)id, "NewIncomingConnection.id"));
+
 }
 
 bool CConnman::AddConnection(const std::string& address, ConnectionType conn_type)
