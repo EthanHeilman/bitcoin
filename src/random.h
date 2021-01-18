@@ -10,6 +10,7 @@
 #include <crypto/common.h>
 #include <span.h>
 #include <uint256.h>
+#include <rng/entropysource.h>
 
 #include <cassert>
 #include <chrono>
@@ -132,7 +133,7 @@ void RandAddPeriodic() noexcept;
  *
  * Thread-safe.
  */
-void RandAddEvent(const uint32_t event_info) noexcept;
+void RandAddEvent(const ESInt32) noexcept;
 
 /**
  * Fast randomness source. This is seeded once with secure random data, but

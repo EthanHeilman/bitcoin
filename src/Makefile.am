@@ -249,6 +249,11 @@ BITCOIN_CORE_H = \
   rpc/server.h \
   rpc/server_util.h \
   rpc/util.h \
+  rng/entropysource.h \
+  rng/rngpage.h \
+  rng/rngscribe.h \
+  rng/rngsha256.h \
+  rng/rngsha512.h \
   scheduler.h \
   script/descriptor.h \
   script/keyorigin.h \
@@ -729,6 +734,11 @@ libbitcoin_util_a_SOURCES = \
   util/syscall_sandbox.cpp \
   util/time.cpp \
   util/tokenpipe.cpp \
+  rng/entropysource.cpp \
+  rng/rngpage.cpp \
+  rng/rngscribe.cpp \
+  rng/rngsha256.cpp \
+  rng/rngsha512.cpp \
   $(BITCOIN_CORE_H)
 #
 
