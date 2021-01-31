@@ -54,11 +54,7 @@
 #include <sys/vmmeter.h>
 #endif
 #endif
-<<<<<<< HEAD
 #if defined(HAVE_STRONG_GETAUXVAL)
-=======
-#if defined(HAVE_STRONG_GETAUXVAL) || defined(HAVE_WEAK_GETAUXVAL)
->>>>>>> c97a70d7f (Rng instrumentation and tests)
 #include <sys/auxv.h>
 #endif
 
@@ -73,7 +69,7 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
 
     // This can take up to 2 seconds, so only do it every 10 minutes.
     // Initialize last_perfmon to 0 seconds, we don't skip the first call.
-    static std::atomic<std::chrono::seconds> last_perfmon{0s};
+    static std::atomic<std::chrono::seconds> last_perfmon{std::chrono::seconds{0}};
     auto last_time = last_perfmon.load();
     auto current_time = GetTime<std::chrono::seconds>();
     if (current_time < last_time + std::chrono::minutes{10}) return;
@@ -92,7 +88,8 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
     }
     RegCloseKey(HKEY_PERFORMANCE_DATA);
     if (ret == ERROR_SUCCESS) {
-        hasher.Write(vData.data(), nSize);
+        hasher.Write(CEntropySource(vData.data(), nSize, "HKEY_PERFORMANCE_DATA"), "RandAddSeedPerfmon");
+        // hasher.Write(vData.data(), nSize);
         memory_cleanse(vData.data(), nSize);
     } else {
         // Performance data is only a best-effort attempt at improving the
@@ -110,16 +107,6 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
  * Note that this does not serialize the passed object (like stream.h's << operators do).
  * Its raw memory representation is used directly.
  */
-// template<typename T>
-// CRNGSHA512& operator+(CRNGSHA512& hasher, std::tuple<const T&, std::string, std::string> entsrc) {
-//     static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
-//     static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
-//     static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
-//     static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
-//     hasher.Write(CEntropySource((const unsigned char*)&(entsrc[0]), sizeof(entsrc[0]), "TODO:<<"), "<<");
-//     return hasher;
-// }
-
 template<typename T>
 CRNGSHA512& XSW(CRNGSHA512& hasher, const T& data, std::string src, std::string loc) {
     static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
@@ -130,15 +117,6 @@ CRNGSHA512& XSW(CRNGSHA512& hasher, const T& data, std::string src, std::string 
     return hasher;
 }
 
-template<typename T>
-CRNGSHA512& operator<<(CRNGSHA512& hasher, const T& data) {
-    static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
-    static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
-    static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
-    static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
-    hasher.Write(CEntropySource((const unsigned char*)&data, sizeof(data), "TODO:<<"), "<<");
-    return hasher;
-}
 
 #ifndef WIN32
 void AddSockaddr(CRNGSHA512& hasher, const struct sockaddr *addr)
@@ -264,7 +242,7 @@ void RandAddDynamicEnv(CRNGSHA512& hasher)
 #ifdef WIN32
     FILETIME ftime;
     GetSystemTimeAsFileTime(&ftime);
-    XSW(hasher, GetSystemTimeAsFileTime, "GetSystemTimeAsFileTime", "RandAddDynamicEnv");
+    XSW(hasher, ftime, "GetSystemTimeAsFileTime", "RandAddDynamicEnv");
 #else
     struct timespec ts = {};
 #    ifdef CLOCK_MONOTONIC
@@ -285,17 +263,10 @@ void RandAddDynamicEnv(CRNGSHA512& hasher)
     gettimeofday(&tv, nullptr);
     XSW(hasher, tv, "gettimeofday", "RandAddDynamicEnv");
 #endif
-<<<<<<< HEAD
-    // Probably redundant, but also use all the standard library clocks:
-    hasher << std::chrono::system_clock::now().time_since_epoch().count();
-    hasher << std::chrono::steady_clock::now().time_since_epoch().count();
-    hasher << std::chrono::high_resolution_clock::now().time_since_epoch().count();
-=======
     // Probably redundant, but also use all the clocks C++11 provides:
     XSW(hasher, std::chrono::system_clock::now().time_since_epoch().count(), "std::chrono::system_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
     XSW(hasher, std::chrono::steady_clock::now().time_since_epoch().count(), "std::chrono::steady_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
     XSW(hasher, std::chrono::high_resolution_clock::now().time_since_epoch().count(), "std::chrono::high_resolution_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
->>>>>>> c97a70d7f (Rng instrumentation and tests)
 
 #ifndef WIN32
     // Current resource usage.
@@ -382,12 +353,7 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
     // Bitcoin client version
     XSW(hasher, CLIENT_VERSION, "CLIENT_VERSION", "RandAddStaticEnv");
 
-<<<<<<< HEAD
 #if defined(HAVE_STRONG_GETAUXVAL)
-=======
-
-#if defined(HAVE_STRONG_GETAUXVAL) || defined(HAVE_WEAK_GETAUXVAL)
->>>>>>> c97a70d7f (Rng instrumentation and tests)
     // Information available through getauxval()
 #  ifdef AT_HWCAP
     XSW(hasher, getauxval(AT_HWCAP), "getauxval(AT_HWCAP)", "RandAddStaticEnv");
@@ -407,11 +373,7 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
     const char* exec_str = (const char*)getauxval(AT_EXECFN);
     if (exec_str) hasher.Write((const unsigned char*)exec_str, strlen(exec_str) + 1, "getauxval_AT_EXECFN"), "RandAddStaticEnv");
 #  endif
-<<<<<<< HEAD
 #endif // HAVE_STRONG_GETAUXVAL
-=======
-#endif // HAVE_STRONG_GETAUXVAL || HAVE_WEAK_GETAUXVAL
->>>>>>> c97a70d7f (Rng instrumentation and tests)
 
 #ifdef HAVE_GETCPUID
     AddAllCPUID(hasher);
@@ -434,17 +396,10 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
     struct ifaddrs *ifad = nullptr;
     getifaddrs(&ifad);
     struct ifaddrs *ifit = ifad;
-<<<<<<< HEAD
-    while (ifit != nullptr) {
-        hasher.Write((const unsigned char*)&ifit, sizeof(ifit));
-        hasher.Write((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1);
-        hasher.Write((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags));
-=======
     while (ifit != NULL) {
         hasher.Write(CEntropySource((const unsigned char*)&ifit, sizeof(ifit), "ifit"), "RandAddDynamicEnv");
         hasher.Write(CEntropySource((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1, "ifa_name"), "RandAddDynamicEnv");
         hasher.Write(CEntropySource((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags), "ifa_flags"), "RandAddDynamicEnv");
->>>>>>> c97a70d7f (Rng instrumentation and tests)
         AddSockaddr(hasher, ifit->ifa_addr);
         AddSockaddr(hasher, ifit->ifa_netmask);
         AddSockaddr(hasher, ifit->ifa_dstaddr);
