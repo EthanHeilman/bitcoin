@@ -54,7 +54,7 @@
 #include <sys/vmmeter.h>
 #endif
 #endif
-#if defined(HAVE_STRONG_GETAUXVAL) || defined(HAVE_WEAK_GETAUXVAL)
+#ifdef __linux__
 #include <sys/auxv.h>
 #endif
 
@@ -70,7 +70,7 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
 
     // This can take up to 2 seconds, so only do it every 10 minutes.
     // Initialize last_perfmon to 0 seconds, we don't skip the first call.
-    static std::atomic<std::chrono::seconds> last_perfmon{0s};
+    static std::atomic<std::chrono::seconds> last_perfmon{std::chrono::seconds{0}};
     auto last_time = last_perfmon.load();
     auto current_time = GetTime<std::chrono::seconds>();
     if (current_time < last_time + std::chrono::minutes{10}) return;
@@ -89,7 +89,8 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
     }
     RegCloseKey(HKEY_PERFORMANCE_DATA);
     if (ret == ERROR_SUCCESS) {
-        hasher.Write(vData.data(), nSize);
+        hasher.Write(CEntropySource(vData.data(), nSize, "HKEY_PERFORMANCE_DATA"), "RandAddSeedPerfmon");
+        // hasher.Write(vData.data(), nSize);
         memory_cleanse(vData.data(), nSize);
     } else {
         // Performance data is only a best-effort attempt at improving the
@@ -107,16 +108,6 @@ void RandAddSeedPerfmon(CRNGSHA512& hasher)
  * Note that this does not serialize the passed object (like stream.h's << operators do).
  * Its raw memory representation is used directly.
  */
-// template<typename T>
-// CRNGSHA512& operator+(CRNGSHA512& hasher, std::tuple<const T&, std::string, std::string> entsrc) {
-//     static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
-//     static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
-//     static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
-//     static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
-//     hasher.Write(CEntropySource((const unsigned char*)&(entsrc[0]), sizeof(entsrc[0]), "TODO:<<"), "<<");
-//     return hasher;
-// }
-
 template<typename T>
 CRNGSHA512& XSW(CRNGSHA512& hasher, const T& data, std::string src, std::string loc) {
     static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
@@ -127,15 +118,6 @@ CRNGSHA512& XSW(CRNGSHA512& hasher, const T& data, std::string src, std::string 
     return hasher;
 }
 
-template<typename T>
-CRNGSHA512& operator<<(CRNGSHA512& hasher, const T& data) {
-    static_assert(!std::is_same<typename std::decay<T>::type, char*>::value, "Calling operator<<(CSHA512, char*) is probably not what you want");
-    static_assert(!std::is_same<typename std::decay<T>::type, unsigned char*>::value, "Calling operator<<(CSHA512, unsigned char*) is probably not what you want");
-    static_assert(!std::is_same<typename std::decay<T>::type, const char*>::value, "Calling operator<<(CSHA512, const char*) is probably not what you want");
-    static_assert(!std::is_same<typename std::decay<T>::type, const unsigned char*>::value, "Calling operator<<(CSHA512, const unsigned char*) is probably not what you want");
-    hasher.Write(CEntropySource((const unsigned char*)&data, sizeof(data), "TODO:<<"), "<<");
-    return hasher;
-}
 
 #ifndef WIN32
 void AddSockaddr(CRNGSHA512& hasher, const struct sockaddr *addr)
@@ -261,7 +243,7 @@ void RandAddDynamicEnv(CRNGSHA512& hasher)
 #ifdef WIN32
     FILETIME ftime;
     GetSystemTimeAsFileTime(&ftime);
-    XSW(hasher, GetSystemTimeAsFileTime, "GetSystemTimeAsFileTime", "RandAddDynamicEnv");
+    XSW(hasher, ftime, "GetSystemTimeAsFileTime", "RandAddDynamicEnv");
 #else
     struct timespec ts = {};
 #    ifdef CLOCK_MONOTONIC
