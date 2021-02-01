@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string>
 #include <crypto/sha512.h>
+#include <climits>
 
 #include <rng/entropysource.h>
 
