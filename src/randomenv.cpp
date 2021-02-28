@@ -399,9 +399,9 @@ void RandAddStaticEnv(CRNGSHA512& hasher)
     getifaddrs(&ifad);
     struct ifaddrs *ifit = ifad;
     while (ifit != NULL) {
-        hasher.Write(CEntropySource((const unsigned char*)&ifit, sizeof(ifit), "ifit"), "RandAddDynamicEnv");
-        hasher.Write(CEntropySource((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1, "ifa_name"), "RandAddDynamicEnv");
-        hasher.Write(CEntropySource((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags), "ifa_flags"), "RandAddDynamicEnv");
+        hasher.Write(CEntropySource((const unsigned char*)&ifit, sizeof(ifit), "ifit"), "RandAddStaticEnv");
+        hasher.Write(CEntropySource((const unsigned char*)ifit->ifa_name, strlen(ifit->ifa_name) + 1, "ifa_name"), "RandAddStaticEnv");
+        hasher.Write(CEntropySource((const unsigned char*)&ifit->ifa_flags, sizeof(ifit->ifa_flags), "ifa_flags"), "RandAddStaticEnv");
         AddSockaddr(hasher, ifit->ifa_addr);
         AddSockaddr(hasher, ifit->ifa_netmask);
         AddSockaddr(hasher, ifit->ifa_dstaddr);
