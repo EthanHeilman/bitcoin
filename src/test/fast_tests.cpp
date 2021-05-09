@@ -641,4 +641,4 @@ BOOST_AUTO_TEST_CASE(timestamp_test)
     cout <<  "bits of guess entropy: " <<  log2(expGuess) << endl;
 }
 
-}
+BOOST_AUTO_TEST_SUITE_END()
