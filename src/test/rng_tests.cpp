@@ -14,6 +14,18 @@
 #include <util/time.h>
 #include <crypto/sha512.h>
 
+#include <iomanip> // For std::setprecision s
+
+#ifdef WIN32
+#include <sys/types.h> // must go before a number of other headers
+#include <windows.h>
+#endif
+
+
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 using namespace std;
 
 BOOST_FIXTURE_TEST_SUITE(rng_tests, BasicTestingSetup)
@@ -410,8 +422,11 @@ BOOST_AUTO_TEST_CASE(clock_benchmark_test)
         {     
             GetSystemTimeAsFileTime(&ftime1);
             GetSystemTimeAsFileTime(&ftime2);
-
-            ftimemap[ftime2-ftime1] += 1;
+            unsigned long long ullftime1 = (((unsigned long long) ftime1.dwHighDateTime) << 32) + ftime1.dwLowDateTime;
+            unsigned long long ullftime2 = (((unsigned long long) ftime2.dwHighDateTime) << 32) + ftime2.dwLowDateTime;
+            int64_t ftimediff = ullftime2 - ullftime1;
+            // ftimemap[ftime2-ftime1] += 1;
+            ftimemap[ftimediff] += 1;
         }
     }
     s = GuessEnt(ftimemap);
