@@ -312,5 +312,57 @@ BOOST_AUTO_TEST_CASE(clock_diff_test)
 
 }
 
+BOOST_AUTO_TEST_CASE(clock_benchmark_test)
+{
+    cout << "Clock benchmark test" << endl;
+
+    unsigned long long nSample = 1000*1000;
+
+#ifdef WIN32
+    unordered_map<int64_t, unsigned long long> ftimemap;
+    FILETIME ftime1;
+    FILETIME ftime2;
+
+    for (unsigned long long i=0; i< nSample; i++)
+    {
+        GetSystemTimeAsFileTime(&ftime1);
+        GetSystemTimeAsFileTime(&ftime2);
+
+        hrcmap[ftime2-ftime1] += 1;
+    }
+#else
+    cout << "gr0000ssssse" << endl;
+#endif
+
+//     struct timespec ts = {};
+// #    ifdef CLOCK_MONOTONIC
+//     clock_gettime(CLOCK_MONOTONIC, &ts);
+//     XSW(hasher, ts, "clock_gettime CLOCK_MONOTONIC", "RandAddDynamicEnv");
+// #    endif
+// #    ifdef CLOCK_REALTIME
+//     clock_gettime(CLOCK_REALTIME, &ts);
+//     XSW(hasher, ts, "clock_gettime CLOCK_REALTIME", "RandAddDynamicEnv");
+
+// #    endif
+// #    ifdef CLOCK_BOOTTIME
+//     clock_gettime(CLOCK_BOOTTIME, &ts);
+//     XSW(hasher, ts, "clock_gettime CLOCK_BOOTTIME", "RandAddDynamicEnv");
+// #    endif
+//     // gettimeofday is available on all UNIX systems, but only has microsecond precision.
+//     struct timeval tv = {};
+//     gettimeofday(&tv, nullptr);
+//     XSW(hasher, tv, "gettimeofday", "RandAddDynamicEnv");
+// #endif
+//     // Probably redundant, but also use all the clocks C++11 provides:
+//     XSW(hasher, std::chrono::system_clock::now().time_since_epoch().count(), "std::chrono::system_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
+//     XSW(hasher, std::chrono::steady_clock::now().time_since_epoch().count(), "std::chrono::steady_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
+//     XSW(hasher, std::chrono::high_resolution_clock::now().time_since_epoch().count(), "std::chrono::high_resolution_clock::now().time_since_epoch().count()", "RandAddDynamicEnv");
+
+// #ifndef WIN32
+//     // Current resource usage.
+//     struct rusage usage = {};
+//     if (getrusage(RUSAGE_SELF, &usage) == 0) XSW(hasher, usage, "usage", "RandAddDynamicEnv");
+// #endif
+}
 
 BOOST_AUTO_TEST_SUITE_END()
