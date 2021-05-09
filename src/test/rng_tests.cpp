@@ -1,7 +1,3 @@
-#include <random.h>
-#include <random.cpp>
-#include <math.h>
-
 #include <test/util/setup_common.h>
 
 #include <boost/test/unit_test.hpp>
@@ -9,44 +5,571 @@
 #include <algorithm>
 #include <random>
 
+#include <chrono>
+#include <thread>
+
 #include <iostream>
+#include <math.h> 
+
+#include <util/time.h>
+#include <crypto/sha512.h>
+
 using namespace std;
 
 BOOST_FIXTURE_TEST_SUITE(rng_tests, BasicTestingSetup)
 
-void pHex(unsigned char* bytes, int size)
+
+bool cmp(pair<int64_t, unsigned long long>& a, pair<int64_t, unsigned long long>& b)
 {
-    char const hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',   'B','C','D','E','F'};
-    std::string str;
-    for (int i = 0; i < size; ++i) {
-        const char ch = bytes[i];
-        str.append(&hex[(ch  & 0xF0) >> 4], 1);
-        str.append(&hex[ch & 0xF], 1);
-    }
-    cout << str <<endl;
+    return a.second > b.second;
 }
 
-bool PrintDiffOn = true;
+double Cnt(vector<pair<int64_t, unsigned long long>>* lst)
+{
+    unsigned long long cnt = 0;
+    for (auto& it : *lst) {
+        cnt += it.second;
+    }
+    return cnt;
+}
 
-enum PERFINSTR { sysdefault, hrc, i386, x64 };
+double Sum(vector<pair<int64_t, unsigned long long>>* lst)
+{
+    unsigned long long sum = 0;
+    for (auto& it : *lst) {
+        sum += it.first*it.second;
+    }
+    return sum;
+}
+
+double Avg(vector<pair<int64_t, unsigned long long>>* lst)
+{
+    unsigned long long cnt = Cnt(lst);
+    unsigned long long sum = Sum(lst);
+    return double(sum)/double(cnt);
+}
+
+double Var(vector<pair<int64_t, unsigned long long>>* lst)
+{
+    double div = 0.0;
+    double avg = Avg(lst);
+    unsigned long long cnt = 0;
+
+    for (auto& it : *lst) {
+        div += pow(it.first-avg, 2)*it.second;
+    }
+    return div/(cnt-1); // Use Bessel's correction since we unlikely to have the whole pop
+}
+
+double StdDiv(vector<pair<int64_t, unsigned long long>>* lst)
+{
+    double var = Var(lst);
+    return sqrt(var);
+}
+
+struct Stats
+{
+  double guessEnt;
+  double stdDiv;
+  double shanEnt;
+  double avg;
+  int64_t min;
+  int64_t max;
+  int64_t span;
+  int uniqs;
+  unsigned long long cnt;
+};
+
+
+void PrintStats(Stats s)
+{
+    cout << "GE: " << s.guessEnt << ", stdDiv: " << s.stdDiv <<  ", shanEnt: " << s.shanEnt << ", avg: " << s.avg 
+    << ", min:" << s.min << ", max " << s.max << ", span: " << s.span << ", uniqs: " << s.uniqs << endl;
+}
+
+void OneSecLatexHeader()
+{
+    cout << "\\begin{table}[ht] % Latex" << endl;
+    cout << "\\small % Latex" << endl;
+    cout << "\\begin{center} % Latex" << endl;
+    cout << "\\begin{tabular}{|l|r|r|r|r|r|r|} % Latex" << endl;
+    cout<< "\\hline % Latex" << endl;
+    cout << std::setprecision(2);
+
+    cout << "clock type" << " & " << "per ms (avg)" << " & " << "avg" << " & " << "sleep time" << " & "
+    << "span" << " & " <<  "uniqs \\\\ \\hline % Latex" << endl;
+}
+
+void OneSecLatexRow(string name, Stats s, int sleepTime)
+{
+    cout << name << " & " << double(s.avg)/double(sleepTime) << " & " << s.avg << " & " << sleepTime << " & " << s.span
+     << " & " << s.uniqs << " \\\\ \\hline % Latex" << endl;
+}
+
+
+void LatexHeader()
+{
+    cout << "\\begin{table}[ht] % Latex" << endl;
+    cout << "\\small % Latex" << endl;
+    cout << "\\begin{center} % Latex" << endl;
+    cout << "\\begin{tabular}{|l|r|r|r|r|r|r|r|r|} % Latex" << endl;
+    cout<< "\\hline % Latex" << endl;
+    cout << std::setprecision(2);
+
+    cout << "clock type" << " & " << "g ent" << " & " << "stdDiv" << " & " << "s ent" << " & "
+    << "avg." << " & " <<  "min" << " & " << "max" << " & " << "span" << " & " <<  "uniqs" << " \\\\ \\hline % Latex" << endl;
+}
+void LatexRow(string name, Stats s)
+{
+    cout << name << " & " << s.guessEnt << " & " << s.stdDiv <<  " & " << s.shanEnt << " & " << s.avg 
+    << " & " << s.min << " & " << s.max << " & " << s.span << " & " << s.uniqs << " \\\\ \\hline % Latex" << endl;
+}
+
+void LatexFooter(string label, string caption)
+{
+    cout << "\\end{tabular} % Latex" << endl;
+    cout << "\\label{tbl:"<<label<<"} % Latex" << endl;
+    cout << "\\caption{"<<caption<<"} % Latex" << endl;
+    cout << "\\end{center} % Latex" << endl;
+    cout << "\\end{table} % Latex" << endl << endl;
+}
+
+double ComputeShannonEntropy(double stdDiv)
+{
+    // 1/2 log2(2 pi stdDiv^2) + 1/2
+    return 0.5*log2(2.0 * M_PI * pow(stdDiv, 2)) + 0.5;
+}
+
+Stats GuessEnt(unordered_map<int64_t, unsigned long long> map)
+{
+    unordered_map<int64_t, unsigned long long>::iterator it;
+
+    vector<pair<int64_t, unsigned long long> > lst;
+
+    for (auto& it : map) {
+        lst.push_back(it);
+    }
+
+    sort(lst.begin(), lst.end(), cmp);
+
+    unsigned long long cnt = Cnt(&lst);
+    double avg = Avg(&lst);
+    double stdDiv = StdDiv(&lst);
+
+    int64_t min = lst[0].first;
+    int64_t max = lst[0].first;
+
+    double gent = 0.0;
+    int64_t i = 0;
+    for (auto& it : lst)
+    {
+        if (it.first < min) min = it.first;
+        if (it.first > max) max = it.first;
+
+        gent += i*(double(it.second)/double(cnt));
+        i++;
+
+    }
+
+    Stats s;
+    s.guessEnt = gent;
+    s.stdDiv = stdDiv;
+    s.shanEnt = ComputeShannonEntropy(stdDiv);
+    s.avg = avg;
+    s.min = min;
+    s.max = max;
+    s.span = max - min;
+    s.uniqs = map.size();
+    s.cnt = cnt;
+
+    return s;
+}
+
+void PrintMap(unordered_map<int64_t, unsigned long long> map, string name)
+{
+    vector<pair<int64_t, unsigned long long> > lst;
+
+    for (auto& it : map) {
+        lst.push_back(it);
+    }
+
+    sort(lst.begin(), lst.end(), cmp);
+
+    int rowLen = 12;
+    int pos = 0;
+
+    cout << name << " = [";
+    // for (auto& it : lst)
+    for (unsigned long i = 0; i < lst.size(); i++)
+    {
+        cout << lst[i].first << ":" << lst[i].second;
+
+        if (i != (lst.size()-1)) cout<<", ";
+        if (pos > 0  && pos % rowLen == 0) cout << endl;
+
+        pos++;
+    }
+    cout << "]" << endl << endl;
+}
+
+BOOST_AUTO_TEST_CASE(time_perfcounter_benchmark_test)
+{
+    unsigned long long n1 = 60;
+    unsigned long long n2 = 1;
+
+    Stats s;
+
+    cout << "1 Second GetPerformanceCounter Clocks" << endl;
+    cout << "====" << endl;
+
+    OneSecLatexHeader();
+
+    for(int ms = 500; ms <= 2000; ms+=500)
+        {
+        unordered_map<int64_t, unsigned long long> pcmap;
+        string clockUsed = "None";
+
+    #if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+        clockUsed = "rdtscMSC";
+        int64_t t1 = 0;
+        int64_t t2 = 0;
+        for (unsigned long long i=0; i< n1; i++)
+        {
+            for (unsigned long long j=0; j< n2; j++)
+            {     
+                t1 = __rdtsc();
+                std::this_thread::sleep_for(std::chrono::milliseconds(ms)); // sleep for 1 second
+                t2 = __rdtsc();
+                pcmap[t2-t1] += 1;
+            }
+        }
+    #elif !defined(_MSC_VER) && defined(__i386__)
+        clockUsed = "rdtsci386";
+
+        uint64_t t1 = 0;
+        uint64_t t2 = 0;
+        for (unsigned long long i=0; i< n1; i++)
+        {
+            for (unsigned long long j=0; j< n2; j++)
+            {     
+                __asm__ volatile ("rdtsc" : "=A"(t1));
+                std::this_thread::sleep_for(std::chrono::milliseconds(ms)); // sleep for 1 second
+                __asm__ volatile ("rdtsc" : "=A"(t2));
+                pcmap[t2-t1] += 1;
+            }
+        }
+    #elif !defined(_MSC_VER) && (defined(__x86_64__) || defined(__amd64__))
+        clockUsed = "rdtsc64";
+
+        int64_t t1 = 0;
+        uint64_t t1a = 0,t1b = 0;
+        int64_t t2 = 0;
+        uint64_t t2a = 0,t2b = 0;
+        for (unsigned long long i=0; i< n1; i++)
+        {
+            for (unsigned long long j=0; j< n2; j++)
+            {  
+                __asm__ volatile ("rdtsc" : "=a"(t1a), "=d"(t1b)); // Constrain r1 to rax and r2 to rdx.
+                std::this_thread::sleep_for(std::chrono::milliseconds(ms)); // sleep for 1 second
+                __asm__ volatile ("rdtsc" : "=a"(t2a), "=d"(t2b)); // Constrain r1 to rax and r2 to rdx.
+
+                t1 =  (t1b << 32) | t1a;
+                t2 =  (t2b << 32) | t2a;
+                pcmap[t2-t1] += 1;
+            }
+        }
+    #else
+        clockUsed = "std::chrono::HRC";
+
+        int64_t t1 = 0;
+        int64_t t2 = 0;
+        for (unsigned long long i=0; i< n1; i++)
+        {
+            for (unsigned long long j=0; j< n2; j++)
+            {  
+                t1  = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+                std::this_thread::sleep_for(std::chrono::milliseconds(ms)); // sleep for 1 second
+                t2 = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+                pcmap[t2-t1] += 1;
+            }
+        }
+    #endif
+        s = GuessEnt(pcmap);
+        OneSecLatexRow(clockUsed + "for" + std::to_string(ms)+"ms", s, ms);
+        PrintMap(pcmap, clockUsed + "for" + std::to_string(ms)+"ms");
+    }
+    LatexFooter("1secperfclockbenchmark", "This measures how much the perf counter moves in 1 second.");
+}
+
+BOOST_AUTO_TEST_CASE(perfcounter_benchmark_test)
+{
+    unsigned long long n1 = 1000*1000;
+    unsigned long long n2 = 10;
+    // unsigned long long n1 = 5;
+    // unsigned long long n2 = 1;
+    Stats s;
+
+    cout << "GetPerformanceCounter Clocks" << endl;
+    cout << "====" << endl;
+
+    LatexHeader();
+
+    unordered_map<int64_t, unsigned long long> pcmap;
+    string clockUsed = "None";
+
+#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+    clockUsed = "rdtsc MSC";
+    int64_t t1 = 0;
+    int64_t t2 = 0;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        {     
+            t1 = __rdtsc();
+            t2 = __rdtsc();
+            pcmap[t2-t1] += 1;
+        }
+    }
+#elif !defined(_MSC_VER) && defined(__i386__)
+    clockUsed = "rdtsc i386";
+
+    uint64_t t1 = 0;
+    uint64_t t2 = 0;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        {     
+            __asm__ volatile ("rdtsc" : "=A"(t1));
+            __asm__ volatile ("rdtsc" : "=A"(t2));
+            pcmap[t2-t1] += 1;
+        }
+    }
+#elif !defined(_MSC_VER) && (defined(__x86_64__) || defined(__amd64__))
+    clockUsed = "rdtsc64";
+
+    int64_t t1 = 0;
+    uint64_t t1a = 0,t1b = 0;
+    int64_t t2 = 0;
+    uint64_t t2a = 0,t2b = 0;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        {  
+            __asm__ volatile ("rdtsc" : "=a"(t1a), "=d"(t1b)); // Constrain r1 to rax and r2 to rdx.
+            __asm__ volatile ("rdtsc" : "=a"(t2a), "=d"(t2b)); // Constrain r1 to rax and r2 to rdx.
+
+            t1 =  (t1b << 32) | t1a;
+            t2 =  (t2b << 32) | t2a;
+            pcmap[t2-t1] += 1;
+        }
+    }
+#else
+    clockUsed = "HRC";
+
+    int64_t t1 = 0;
+    int64_t t2 = 0;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        {  
+            t1  = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+            t2 = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+            pcmap[t2-t1] += 1;
+        }
+    }
+#endif
+    s = GuessEnt(pcmap);
+    // cout << clockUsed << ", ";
+    // PrintStats(s);
+    PrintMap(pcmap, "perfcounter"+clockUsed);
+    LatexRow(clockUsed, s);
+    LatexFooter("perfclockbenchmark", "This is a benchmark of the performance counter");
+}
+
+BOOST_AUTO_TEST_CASE(clock_benchmark_test)
+{
+    cout << "Dyn Env Clocks" << endl;
+    cout << "====" << endl;
+
+    unsigned long long n1 = 1000*1000;
+    unsigned long long n2 = 10;
+    // unsigned long long n1 = 5;
+    // unsigned long long n2 = 1;
+
+    Stats s;
+
+    LatexHeader();
+#ifdef WIN32
+    unordered_map<int64_t, unsigned long long> ftimemap;
+    FILETIME ftime1;
+    FILETIME ftime2;
+
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        {     
+            GetSystemTimeAsFileTime(&ftime1);
+            GetSystemTimeAsFileTime(&ftime2);
+
+            ftimemap[ftime2-ftime1] += 1;
+        }
+    }
+    s = GuessEnt(ftimemap);
+    // cout << "GetSystemTimeAsFileTime: ";
+    // PrintStats(s);
+    PrintMap(ftimemap, "GetSystemTimeAsFileTime");
+    LatexRow("GetSystemTimeAsFileTime", s);
+
+
+#else
+
+    struct timespec ts1 = {};
+    struct timespec ts2 = {};
+
+#    ifdef CLOCK_MONOTONIC
+    unordered_map<int64_t, unsigned long long> tsmonomap;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        {     
+            clock_gettime(CLOCK_MONOTONIC, &ts1);
+            clock_gettime(CLOCK_MONOTONIC, &ts2);
+
+            unsigned long long diff = (ts2.tv_sec-ts1.tv_sec)*1000*1000*1000 + (ts2.tv_nsec-ts1.tv_nsec);
+            tsmonomap[diff] += 1;
+        }
+    }
+    s = GuessEnt(tsmonomap);
+    PrintMap(tsmonomap, "CLOCK\\_MONOTONIC");
+    LatexRow("CLOCK\\_MONOTONIC", s);
+
+
+#    endif
+#    ifdef CLOCK_REALTIME
+    unordered_map<int64_t, unsigned long long> tsrealmap;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        { 
+            clock_gettime(CLOCK_REALTIME, &ts1);
+            clock_gettime(CLOCK_REALTIME, &ts2);
+
+            unsigned long long diff = (ts2.tv_sec-ts1.tv_sec)*1000*1000*1000 + (ts2.tv_nsec-ts1.tv_nsec);
+            tsrealmap[diff] += 1;
+        }
+    }
+    s = GuessEnt(tsrealmap);
+    PrintMap(tsrealmap, "CLOCK\\_REALTIME");
+    LatexRow("CLOCK\\_REALTIME", s);
+
+#    endif
+#    ifdef CLOCK_BOOTTIME
+    unordered_map<int64_t, unsigned long long> tsbootmap;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        { 
+            clock_gettime(CLOCK_BOOTTIME, &ts1);
+            clock_gettime(CLOCK_BOOTTIME, &ts2);
+
+            unsigned long long diff = (ts2.tv_sec-ts1.tv_sec)*1000*1000*1000 + (ts2.tv_nsec-ts1.tv_nsec);
+            tsbootmap[diff] += 1;
+        }
+    }
+    s = GuessEnt(tsbootmap);
+    PrintMap(tsbootmap, "CLOCK\\_BOOTTIME");
+    LatexRow("CLOCK\\_BOOTTIME", s);
+
+#    endif
+    // gettimeofday is available on all UNIX systems, but only has microsecond precision.
+    struct timeval tv1 = {};
+    struct timeval tv2 = {};
+    unordered_map<int64_t, unsigned long long> gettodmap;
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        { 
+            gettimeofday(&tv1, nullptr);
+            gettimeofday(&tv2, nullptr);
+
+            // tv_sec
+            unsigned long long diff = (tv2.tv_sec-tv1.tv_sec)*1000*1000 + (tv2.tv_usec-tv1.tv_usec);
+            gettodmap[diff] += 1;
+        }
+    }
+    s = GuessEnt(gettodmap);
+    PrintMap(gettodmap, "gettimeofday");
+    LatexRow("gettimeofday", s);
+
+
+
+#endif
+
+    unsigned long long sysepoch1;
+    unsigned long long sysepoch2;
+    unordered_map<int64_t, unsigned long long> sysepochmap;
+
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        { 
+            sysepoch1 = std::chrono::system_clock::now().time_since_epoch().count();
+            sysepoch2 = std::chrono::system_clock::now().time_since_epoch().count();
+
+            sysepochmap[sysepoch2-sysepoch1] += 1;
+        }
+    }
+    s = GuessEnt(sysepochmap);
+    PrintMap(sysepochmap, "system_clock");
+    LatexRow("std::chrono::system\\_clock", s);
+
+
+    unsigned long long steadyepoch1;
+    unsigned long long steadyepoch2;
+    unordered_map<int64_t, unsigned long long> steadymap;
+
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        {
+            steadyepoch1 = std::chrono::steady_clock::now().time_since_epoch().count();
+            steadyepoch2 = std::chrono::steady_clock::now().time_since_epoch().count();
+
+            steadymap[steadyepoch2-steadyepoch1] += 1;
+        }
+    }
+    s = GuessEnt(steadymap);
+    PrintMap(steadymap, "steady_clock");
+    LatexRow("std::chrono::steady\\_clock", s);
+
+
+    unsigned long long hrcepoch1;
+    unsigned long long hrcepoch2;
+    unordered_map<int64_t, unsigned long long> hrcepochmap;
+
+    for (unsigned long long i=0; i< n1; i++)
+    {
+        for (unsigned long long j=0; j< n2; j++)
+        { 
+            hrcepoch1 = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+            hrcepoch2 = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+            hrcepochmap[hrcepoch2-hrcepoch1] += 1;
+        }
+    }
+    s = GuessEnt(hrcepochmap);
+    PrintMap(hrcepochmap, "HRC");
+    LatexRow("HRC", s);
+    LatexFooter("dynenvclocks", "Clocks used in dyn evn");
+
+
+}
+
+enum PERFINSTR { sysdefault, hrc };
 
 static inline int64_t GetPerformanceCounterHRC() noexcept
 {
     return std::chrono::high_resolution_clock::now().time_since_epoch().count();
-}
-
-static inline int64_t GetPerformanceCounteri386() noexcept
-{
-    uint64_t r = 0;
-    __asm__ volatile ("rdtsc" : "=A"(r)); // Constrain the r variable to the eax:edx pair.
-    return r;
-}
-
-static inline int64_t GetPerformanceCounterx64() noexcept
-{
-    uint64_t r1 = 0, r2 = 0;
-    __asm__ volatile ("rdtsc" : "=a"(r1), "=d"(r2)); // Constrain r1 to rax and r2 to rdx.
-    return (r2 << 32) | r1;
 }
 
 static inline int64_t GetPerformanceCounterSysdefault() noexcept
@@ -107,6 +630,7 @@ vector<int64_t>& vperf, int& cycle
     memory_cleanse(buffer, sizeof(buffer));
 }
 
+
 static void StrengthenInstHRC(const unsigned char (&seed)[32], int microseconds, CSHA512& hasher,
 vector<int64_t>& vperf, int& cycle
 ) noexcept
@@ -142,77 +666,6 @@ vector<int64_t>& vperf, int& cycle
     memory_cleanse(buffer, sizeof(buffer));
 }
 
-static void StrengthenInsti386(const unsigned char (&seed)[32], int microseconds, CSHA512& hasher,
-vector<int64_t>& vperf, int& cycle
-) noexcept
-{
-    cycle = 0;
-    CSHA512 inner_hasher;
-    inner_hasher.Write(seed, sizeof(seed));
-
-    // Hash loop
-    unsigned char buffer[64];
-    int64_t stop = GetTimeMicros() + microseconds;
-    vperf.push_back(GetPerformanceCounteri386());
-    do {
-        for (int i = 0; i < 1000; ++i) {
-            inner_hasher.Finalize(buffer);
-            inner_hasher.Reset();
-            inner_hasher.Write(buffer, sizeof(buffer));
-        }
-        // Benchmark operation and feed it into outer hasher.
-        int64_t perf = GetPerformanceCounteri386();
-        //ERH -- Added code
-        vperf.push_back(perf);
-        cycle++;
-        // -- 
-        hasher.Write((const unsigned char*)&perf, sizeof(perf));
-    } while (GetTimeMicros() < stop);
-
-    // Produce output from inner state and feed it to outer hasher.
-    inner_hasher.Finalize(buffer);
-    hasher.Write(buffer, sizeof(buffer));
-    // Try to clean up.
-    inner_hasher.Reset();
-    memory_cleanse(buffer, sizeof(buffer));
-}
-
-
-static void StrengthenInstx64(const unsigned char (&seed)[32], int microseconds, CSHA512& hasher,
-vector<int64_t>& vperf, int& cycle
-) noexcept
-{
-    cycle = 0;
-    CSHA512 inner_hasher;
-    inner_hasher.Write(seed, sizeof(seed));
-
-    // Hash loop
-    unsigned char buffer[64];
-    int64_t stop = GetTimeMicros() + microseconds;
-    vperf.push_back(GetPerformanceCounterx64());
-    do {
-        for (int i = 0; i < 1000; ++i) {
-            inner_hasher.Finalize(buffer);
-            inner_hasher.Reset();
-            inner_hasher.Write(buffer, sizeof(buffer));
-        }
-        // Benchmark operation and feed it into outer hasher.
-        int64_t perf = GetPerformanceCounterx64();
-        //ERH -- Added code
-        vperf.push_back(perf);
-        cycle++;
-        // -- 
-        hasher.Write((const unsigned char*)&perf, sizeof(perf));
-    } while (GetTimeMicros() < stop);
-
-    // Produce output from inner state and feed it to outer hasher.
-    inner_hasher.Finalize(buffer);
-    hasher.Write(buffer, sizeof(buffer));
-    // Try to clean up.
-    inner_hasher.Reset();
-    memory_cleanse(buffer, sizeof(buffer));
-}
-
 
 static void RunStrengthenInst(int microseconds, vector<int64_t>& perfarray, int& cycle, PERFINSTR instr)
 {
@@ -232,34 +685,69 @@ static void RunStrengthenInst(int microseconds, vector<int64_t>& perfarray, int&
             StrengthenInstHRC(seed, microseconds, hasher, perfarray, cycle);
             break;
         }
-        case PERFINSTR::i386:
-        {
-            StrengthenInsti386(seed, microseconds, hasher, perfarray, cycle);
-            break;
-        }
-        case PERFINSTR::x64:
-        {
-            StrengthenInstx64(seed, microseconds, hasher, perfarray, cycle);
-            break;
-        }
         default:
         {
             assert(0);
         }
     };
-
 }
 
 
+string GetSystemParams()
+{
+    #if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+        return "rdtscMSC";
+    #elif !defined(_MSC_VER) && defined(__i386__)
+        return  "rdtsci386";
+    #elif !defined(_MSC_VER) && (defined(__x86_64__) || defined(__amd64__))
+        return "rdtsc64";
+    #else
+        return "None";
+    #endif
+}
+
+
+
+void StrengthenLatexHeader()
+{
+    cout << "\\begin{table}[ht] % Latex" << endl;
+    cout << "\\small % Latex" << endl;
+    cout << "\\begin{center} % Latex" << endl;
+    cout << "\\begin{tabular}{|l|r|r|r|r|r|r|r|r|} % Latex" << endl;
+    cout<< "\\hline % Latex" << endl;
+    cout << std::setprecision(2);
+
+    cout << "clock type" << " & " << "g ent" << " & " << "cycles (min,max,avg)" << " & " << "stdDiv" << " & " 
+    << "avg." << " & " <<  "min" << " & " << "max" << " & " << "span" << " & " <<  "uniqs" << " \\\\ \\hline % Latex" << endl;
+}
+void StrengthenLatexRow(string name, Stats s, int cyclesMin, int cyclesMax, int cyclesAvg)
+{
+    cout << name << " & " << s.guessEnt << " & " <<  std::to_string(cyclesMin) + "-" + std::to_string(cyclesMax) + "-" + std::to_string(cyclesAvg) << " & " << s.stdDiv  << " & " << s.avg 
+    << " & " << s.min << " & " << s.max << " & " << s.span << " & " << s.uniqs << " \\\\ \\hline % Latex" << endl;
+}
+
+void StrengthenLatexFooter(string label, string caption)
+{
+    cout << "\\end{tabular} % Latex" << endl;
+    cout << "\\label{tbl:"<<label<<"} % Latex" << endl;
+    cout << "\\caption{"<<caption<<"} % Latex" << endl;
+    cout << "\\end{center} % Latex" << endl;
+    cout << "\\end{table} % Latex" << endl << endl;
+}
+
 static void GuessEntropyStrengthen(int microseconds, int nSamples, PERFINSTR instr)
 {
-    std::unordered_map<int64_t, int> perfsMap;
     int count = 0;
     int minCycles = -1;
     int maxCycles = 0;
+    double avgCycles = 0;
+    //TODO: add average cycles
+
+    std::unordered_map<int64_t, unsigned long long> perfsMap;
 
     for (int i = 0; i < nSamples; i++)
     {
+        // contains all the performance counter values
         vector<int64_t> perfarray;
         int cycle = 0;
 
@@ -274,513 +762,58 @@ static void GuessEntropyStrengthen(int microseconds, int nSamples, PERFINSTR ins
 
         if (minCycles == -1 || minCycles > cycle) minCycles = cycle;
         if (maxCycles < cycle) maxCycles = cycle;
+
+        avgCycles += cycle;
     }
+    avgCycles = avgCycles/nSamples;
 
-    vector<pair<int64_t, int>> elems(perfsMap.begin(), perfsMap.end());
-    struct {
-        bool operator()(std::pair<int64_t, int> a, std::pair<int64_t, int> b) const
-        {   
-            return a.second > b.second;
-        }
-    } comp;
-    std::sort(elems.begin(), elems.end(), comp);
-
-    int k = 0;
-    double expGuess = 0;
-    for(pair<int64_t, int> i: elems)
-    {
-        double prob = (double)i.second/count;
-        expGuess += k*prob;
-        k+=1;
-    }
-    cout << "min cycles: " << minCycles << " max cycles: " << maxCycles << " nSamples: " << nSamples << endl; 
-    cout <<  "exp guesses: " << expGuess << endl;
-    cout <<  "guess entropy (per cycles): " <<  log2(expGuess) << endl;
-    cout <<  "guess entropy (total): " <<  log2(expGuess)*minCycles << endl;
-}
-
-void PrintSystemParams()
-{
-    cout << "Defined:";
-    #if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
-        cout << "#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))" << endl;
-    #elif !defined(_MSC_VER) && defined(__i386__)
-        cout << "#elif !defined(_MSC_VER) && defined(__i386__)" << endl;
-    #elif !defined(_MSC_VER) && (defined(__x86_64__) || defined(__amd64__))
-        cout << "#elif !defined(_MSC_VER) && (defined(__x86_64__) || defined(__amd64__))" << endl;
-    #else
-        cout << "#else" << endl;
-    #endif
-}
-
-static void PrintDiffs(vector<pair<int64_t, int>> elemsIn)
-{
-    if (!PrintDiffOn) return;
-    // sort the input map by the first value not the second
-    vector<pair<int64_t, int>> elems(elemsIn.begin(), elemsIn.end());
-    struct {
-        bool operator()(std::pair<int64_t, int> a, std::pair<int64_t, int> b) const
-        {   
-            return a.first < b.first;
-        }   
-    } comp;
-    std::sort(elems.begin(), elems.end(), comp);
-
-    cout << "Diffs: " << endl;
-
-    std::vector<double> buckets;
-    for(pair<int64_t, int> elem :elems)
-    {
-        cout<<"diff:"<<elem.first<<","<<elem.second<<endl;
-    }
-}
-
-static void ComputeGeEnt(vector<int64_t>& vperf)
-{
-    std::unordered_map<int64_t, int> perfsMap;
-    for (uint64_t j = 1; j < vperf.size(); j++)
-    {
-        int64_t timediff = vperf[j]-vperf[j-1];
-        perfsMap[timediff] += 1;
-    }
-
-    vector<pair<int64_t, int>> elems(perfsMap.begin(), perfsMap.end());
-    struct {
-        bool operator()(std::pair<int64_t, int> a, std::pair<int64_t, int> b) const
-        {   
-            return a.second > b.second;
-        }   
-    } comp;
-    std::sort(elems.begin(), elems.end(), comp);
-
-    int k = 0;
-    double expGuess = 0;
-    for(pair<int64_t, int> i: elems)
-    {
-        double prob = (double)i.second/vperf.size();
-        expGuess += k*prob;
-        k+=1;
-        // if (prob >0.01) cout << i.first << " " << prob << endl;
-    }
-    cout << "exp guesses (guessing entropy): " << expGuess << endl;
-    cout << "bits of guess entropy: " <<  log2(expGuess) << endl;
-    cout << "vperf.size(): " <<  vperf.size() << endl;
-    PrintDiffs(elems);
-}
-
-static void ComputeGeEntPair(vector<int64_t>& vperf)
-{
-    std::unordered_map<int64_t, int> perfsMap;
-    for (unsigned long j = 1; j < vperf.size()-1; j+=2)
-    {
-        int64_t timediff = vperf[j]-vperf[j-1];
-        perfsMap[timediff] += 1;
-    }
-    vector<pair<int64_t, int>> elems(perfsMap.begin(), perfsMap.end());
-    struct {
-        bool operator()(std::pair<int64_t, int> a, std::pair<int64_t, int> b) const
-        {   
-            return a.second > b.second;
-        }   
-    } comp;
-
-    std::sort(elems.begin(), elems.end(), comp);
-
-    int k = 0;
-    double expGuess = 0;
-    for(pair<int64_t, int> i: elems)
-    {
-        double prob = 2*(double)i.second/elems.size();
-        expGuess += k*prob;
-        k+=1;
-        if (prob >0.01) cout << i.first << " " << prob << endl;
-    }
-    cout << "Within a call to SLOW" << endl;
-    cout << "exp guesses (guessing entropy): " << expGuess << endl;
-    cout << "bits of guess entropy: " <<  log2(expGuess) << endl;
-    cout << "vperf.size(): " <<  vperf.size() << endl;
-    PrintDiffs(elems);
-}
-
-static void ComputeGeEntPairMinusOne(vector<int64_t>& vperf)
-{
-    std::unordered_map<int64_t, int> perfsMap;
-    for (uint64_t j = 2; j < vperf.size()-1; j+=2)
-    {
-        int64_t timediff = vperf[j]-vperf[j-1];
-        perfsMap[timediff] += 1;
-    }
-    vector<pair<int64_t, int>> elems(perfsMap.begin(), perfsMap.end());
-    struct {
-        bool operator()(std::pair<int64_t, int> a, std::pair<int64_t, int> b) const
-        {   
-            return a.second > b.second;
-        }   
-    } comp;
-
-    std::sort(elems.begin(), elems.end(), comp);
-
-    int k = 0;
-    double expGuess = 0;
-    for(pair<int64_t, int> i: elems)
-    {
-        double prob = 2*(double)i.second/(elems.size()-1);
-        expGuess += k*prob;
-        k+=1;
-        if (prob >0.01) cout << i.first << " " << prob << endl;
-    }
-    cout << "Between calls to SLOW" << endl;
-    cout << "exp guesses (guessing entropy): " << expGuess << endl;
-    cout << "bits of guess entropy: " <<  log2(expGuess) << endl;
-    cout << "vperf.size(): " <<  vperf.size() << endl;
-    PrintDiffs(elems);
-}
-
-static void GuessEntropyVectorAdd(int nSample)
-{
-    std::unordered_map<int64_t, int> perfsMap;
-    vector<int64_t> vperf;
-    int cycle = 0;
-
-    for (int i = 0; i < nSample; ++i) {
-        // Benchmark operation and feed it into outer hasher.
-        int64_t perf = GetPerformanceCounterSysdefault();
-        //ERH -- Added code
-        vperf.push_back(perf);
-        cycle++;
-    }
-    ComputeGeEnt(vperf);
-}
-
-/*
-BOOST_AUTO_TEST_CASE(guessing_ent_10ms_test)
-{
-    int microseconds = 10*1000;
-    int nSample = 5000;
-    
-    cout << "Strenthen System Parameters" << endl;
-    cout << "========" << endl;
-    PrintSystemParams();
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "System Default" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::sysdefault);
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "HRC" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::hrc);
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "i386" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::i386);
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "x64" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::x64);
-    cout << endl;
-
-    cout << "Measuring vector add" << endl;
-    cout << "========" << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyVectorAdd(nSample);
-}
-
-BOOST_AUTO_TEST_CASE(guessing_ent_100ms_test)
-{
-    int microseconds = 100*1000;
-    int nSample = 5000;
-
-    cout << "Strenthen System Parameters" << endl;
-    cout << "========" << endl;
-    PrintSystemParams();
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "System Default" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::sysdefault);
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "HRC" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::hrc);
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "i386" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::i386);
-    cout << endl;
-
-    cout << "Measuring Strengthen: " << "x64" << endl;
-    cout << "========" << endl;
-    cout << "microseconds: " << microseconds << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::x64);
-    cout << endl;
-
-    cout << "Measuring vector add" << endl;
-    cout << "========" << endl;
-    cout << "num samples: " << nSample << endl;
-    GuessEntropyVectorAdd(nSample);
-}
-
-
-static void countSamples(vector<int> vSample)
-{
-    std::unordered_map<int, int> sampleMap;
-
-    for (int sample: vSample){
-        // cout << "SAAAMPLE " << sample << endl;
-        sampleMap[sample] += 1;
-    }
-    vector<pair<int, int>> counts(sampleMap.begin(), sampleMap.end());
-    struct {
-        bool operator()(std::pair<int64_t, int> a, std::pair<int64_t, int> b) const
-        {   
-            return a.second > b.second;
-        }
-    } comp;
-    std::sort(counts.begin(), counts.end(), comp);
- 
-    pair<int, int> front = counts.front();
-    cout << "count " << front.first << " " << front.second << " exp " << vSample.size()/counts.size() << " diff " << front.second - vSample.size()/counts.size() << endl;
-    pair<int, int> back = counts.back();
-    cout << "count " << back.first << " " << back.second << " exp " << vSample.size()/counts.size() << " diff " <<  vSample.size()/counts.size() - back.second << endl;
-}
-*/
-
-// BOOST_AUTO_TEST_CASE(randrange_test)
-// {
-//     FastRandomContext insecure_rand;
-//     int nSamples = 500000000;
-
-//     int runs = 10;
-//     for (int r = 0; r < runs; r++)
-//     {
-//         for (int r = 3; r < 4; r++)
-//         {
-//             vector<int> vSamples;
-//             for (int i = 0; i < nSamples; i++)
-//             {
-//                 int sample = insecure_rand.randrange(r);
-//                 vSamples.push_back(sample);
-//             }
-//             cout << "r= " << r << endl;
-//             countSamples(vSamples);
-//         }
-//     }
-// }
-
-static int64_t SeedTimestampTest(CSHA512& hasher, PERFINSTR instr) noexcept
-{
-
+    Stats s = GuessEnt(perfsMap);
+    string name;
     switch (instr)
     {
         case PERFINSTR::sysdefault:
         {
-            int64_t perfcounter = GetPerformanceCounterSysdefault();
-            hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter));
-            return perfcounter;
+            name = GetSystemParams()+"for"+std::to_string(microseconds/1000)+"ms";
+            break;
         }
         case PERFINSTR::hrc:
         {
-            int64_t perfcounter = GetPerformanceCounterHRC();
-            hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter));
-            return perfcounter;
-        }
-        case PERFINSTR::i386:
-        {
-            int64_t perfcounter = GetPerformanceCounteri386();
-            hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter));
-            return perfcounter;
-        }
-        case PERFINSTR::x64:
-        {
-            int64_t perfcounter = GetPerformanceCounterx64();
-            hasher.Write((const unsigned char*)&perfcounter, sizeof(perfcounter));
-            return perfcounter;
+            name = GetSystemParams()+"for"+std::to_string(microseconds/1000)+"ms";
+            break;
         }
         default:
         {
             assert(0);
         }
     };
+
+    PrintMap(perfsMap, name);
+    StrengthenLatexRow(name, s, minCycles, maxCycles, avgCycles);
 }
 
-// static void SeedFastTest(CSHA512& hasher, vector<int64_t>& vperf, PERFINSTR instr) noexcept
-// {
-//     unsigned char buffer[32];
 
-//     // Stack pointer to indirectly commit to thread/callstack
-//     const unsigned char* ptr = buffer;
-//     hasher.Write((const unsigned char*)&ptr, sizeof(ptr));
+BOOST_AUTO_TEST_CASE(strengthen_benchmark_test)
+{
+    cout << "Strengthen Benchmark" << endl;
+    cout << "====" << endl;
 
-//     // Hardware randomness is very fast when available; use it always.
-//     SeedHardwareFast(hasher);
-
-//     // High-precision timestamp
-//     int64_t perfcounter = SeedTimestampTest(hasher, instr);
-//     vperf.push_back(perfcounter);
-// }
-
-// static void SeedSlowTest(CSHA512& hasher, RNGState& rng, vector<int64_t>& vperf, PERFINSTR instr) noexcept
-// {
-//     unsigned char buffer[32];
-
-//     // Everything that the 'fast' seeder includes
-//     SeedFastTest(hasher, vperf, instr);
-
-//     // OS randomness
-//     GetOSRand(buffer);
-//     hasher.Write(buffer, sizeof(buffer));
-
-//     // Add the events hasher into the mix
-//     rng.SeedEvents(hasher);
-
-//     // High-precision timestamp.
-//     //
-//     // Note that we also commit to a timestamp in the Fast seeder, so we indirectly commit to a
-//     // benchmark of all the entropy gathering sources in this function).
-//     int64_t perfcounter = SeedTimestampTest(hasher, instr);
-//     vperf.push_back(perfcounter);
-// }
-
-// static void ProcRandTest(unsigned char* out, int num, RNGLevel level, vector<int64_t>& vperf, PERFINSTR instr) noexcept
-// {
-//     // Make sure the RNG is initialized first (as all Seed* function possibly need hwrand to be available).
-//     RNGState& rng = GetRNGState();
-
-//     assert(num <= 32);
-
-//     CSHA512 hasher;
-//     switch (level) {
-//     case RNGLevel::FAST:
-//         SeedFastTest(hasher, vperf, instr);
-//         break;
-//     case RNGLevel::SLOW:
-//         SeedSlowTest(hasher, rng, vperf, instr);
-//         break;
-//     case RNGLevel::PERIODIC:
-//         SeedPeriodic(hasher, rng);
-//         break;
-//     }
-
-//     // Combine with and update state
-//     if (!rng.MixExtract(out, num, std::move(hasher), false)) {
-//         assert(0); // Fail if we end up in this path
-//         // On the first invocation, also seed with SeedStartup().
-//         CSHA512 startup_hasher;
-//         SeedStartup(startup_hasher, rng);
-//         rng.MixExtract(out, num, std::move(startup_hasher), true);
-//     }
-// }
-
-// static void RunProcRandTest(int nSample, RNGLevel level, PERFINSTR instr)
-// {
-//     RandomInit();
-
-//     unsigned char buf[32];
-//     int num = 32;
-//     vector<int64_t> vperf;
-
-//     for (int i = 0; i < nSample; i++)
-//     {
-//         ProcRandTest(buf, num, level, vperf, instr);
-//     }
-//     switch (level) {
-//     case RNGLevel::FAST:
-//         ComputeGeEnt(vperf);
-//         break;
-//     case RNGLevel::SLOW:
-//         ComputeGeEntPair(vperf);
-//         cout << endl;
-//         ComputeGeEntPairMinusOne(vperf);
-//         break;
-//     default:
-//         assert(0);
-//     }
-// }
-
-// BOOST_AUTO_TEST_CASE(guessing_ent_proc_rand_test)
-// {
-//     int nSample = 50000;
+    int microseconds = 10*1000;
+    int seconds_to_run = 60*5;
+    int nSample = 100*seconds_to_run;
     
-//     cout << "ProcRand System Parameters" << endl;
-//     cout << "========" << endl;
-//     PrintSystemParams();
-//     cout << endl;
-    
-//     cout << "Measuring ProcRand Fast: " << "System Default" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::FAST, PERFINSTR::sysdefault);
-//     cout << endl;
+    StrengthenLatexHeader();
 
-//     cout << "Measuring ProcRand Fast: " << "HRC" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::FAST, PERFINSTR::hrc);
-//     cout << endl;
-    
-//     cout << "Measuring ProcRand Fast: " << "i386" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::FAST, PERFINSTR::i386);
-//     cout << endl;
+    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::sysdefault);
+    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::hrc);
 
-//     cout << "Measuring ProcRand Fast: " << "x64" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::FAST, PERFINSTR::x64);
-//     cout << endl;
+    microseconds = 100*1000;
+    nSample = 10*seconds_to_run;
 
-//     cout << "Measuring ProcRand Slow: " << "System Default" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::SLOW, PERFINSTR::sysdefault);
-//     cout << endl;
+    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::sysdefault);
+    GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::hrc);
 
-//     cout << "Measuring ProcRand Slow: " << "HRC" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::SLOW, PERFINSTR::hrc);
-//     cout << endl;
-
-//     cout << "Measuring ProcRand Slow: " << "i386" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::SLOW, PERFINSTR::i386);
-//     cout << endl;
-
-//     cout << "Measuring ProcRand Slow: " << "x64" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     RunProcRandTest(nSample, RNGLevel::SLOW, PERFINSTR::x64);
-//     cout << endl;
-
-//     cout << "Measuring vector add" << endl;
-//     cout << "========" << endl;
-//     cout << "num samples: " << nSample << endl;
-//     GuessEntropyVectorAdd(nSample);
-// }
-
-
+    StrengthenLatexFooter("strengthen", "Measurements of strengthen");
 
 }
+
+BOOST_AUTO_TEST_SUITE_END()
