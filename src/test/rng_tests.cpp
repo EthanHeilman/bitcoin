@@ -2,6 +2,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <boost/functional/hash.hpp>
+
 #include <algorithm>
 #include <random>
 
@@ -197,6 +199,46 @@ Stats GuessEnt(unordered_map<int64_t, unsigned long long> map)
     return s;
 }
 
+template <typename Container> // we can make this generic for any container [1]
+struct container_hash {
+    std::size_t operator()(Container const& c) const {
+        return boost::hash_range(c.begin(), c.end());
+    }
+};
+
+bool vcmp(pair<vector<int64_t>, unsigned long long>& a, pair<vector<int64_t>, unsigned long long>& b)
+{
+    return a.second > b.second;
+}
+
+void PrintVMap(unordered_map<vector<int64_t>, unsigned long long, container_hash<vector<int64_t>>> map, string name)
+{
+    vector<pair<vector<int64_t>, unsigned long long> > lst;
+
+    for (auto& it : map) {
+        lst.push_back(it);
+    }
+
+    sort(lst.begin(), lst.end(), vcmp);
+
+    cout << name << " = [";
+    for (unsigned long i = 0; i < lst.size(); i++)
+    {
+        vector <int64_t> key_vector = lst[i].first;
+        for(size_t j=0; j < key_vector.size(); j++)
+        {
+            cout << key_vector[j];
+            if (j < key_vector.size()-1)
+                cout << "-";
+        }
+
+        cout << " : " << lst[i].second << endl;
+
+    }
+
+}
+
+
 void PrintMap(unordered_map<int64_t, unsigned long long> map, string name)
 {
     vector<pair<int64_t, unsigned long long> > lst;
@@ -306,7 +348,7 @@ BOOST_AUTO_TEST_CASE(time_perfcounter_benchmark_test)
             }
         }
     #endif
-        s = GuessEnt(pcmap);
+        // s = GuessEnt(pcmap);
         OneSecLatexRow(clockUsed + "for" + std::to_string(ms)+"ms", s, ms);
         PrintMap(pcmap, clockUsed + "for" + std::to_string(ms)+"ms");
     }
@@ -316,7 +358,7 @@ BOOST_AUTO_TEST_CASE(time_perfcounter_benchmark_test)
 BOOST_AUTO_TEST_CASE(perfcounter_benchmark_test)
 {
     unsigned long long n1 = 1000*1000;
-    unsigned long long n2 = 10;
+    unsigned long long n2 = 1000;
     // unsigned long long n1 = 5;
     // unsigned long long n2 = 1;
     Stats s;
@@ -390,7 +432,7 @@ BOOST_AUTO_TEST_CASE(perfcounter_benchmark_test)
         }
     }
 #endif
-    s = GuessEnt(pcmap);
+    // s = GuessEnt(pcmap);
     // cout << clockUsed << ", ";
     // PrintStats(s);
     PrintMap(pcmap, "perfcounter"+clockUsed);
@@ -404,7 +446,7 @@ BOOST_AUTO_TEST_CASE(clock_benchmark_test)
     cout << "====" << endl;
 
     unsigned long long n1 = 1000*1000;
-    unsigned long long n2 = 10;
+    unsigned long long n2 = 1000;
     // unsigned long long n1 = 5;
     // unsigned long long n2 = 1;
 
@@ -750,28 +792,40 @@ void StrengthenLatexFooter(string label, string caption)
     cout << "\\end{table} % Latex" << endl << endl;
 }
 
+
 static void GuessEntropyStrengthen(int microseconds, int nSamples, PERFINSTR instr)
 {
     int count = 0;
     int minCycles = -1;
     int maxCycles = 0;
     double avgCycles = 0;
+
     //TODO: add average cycles
 
     std::unordered_map<int64_t, unsigned long long> perfsMap;
+    vector<int> cycles;
+
+    std::unordered_map<int64_t, unsigned long long> cycleMap;
+
+    std::unordered_map<vector<int64_t>,  unsigned long long, container_hash<vector<int64_t>>> betterMap;
+
 
     for (int i = 0; i < nSamples; i++)
     {
         // contains all the performance counter values
         vector<int64_t> perfarray;
+        vector<int64_t> betterarray;
+
         int cycle = 0;
 
         RunStrengthenInst(microseconds, perfarray, cycle, instr);
-
+        cycles.push_back(cycle);
+        cycleMap[cycle] += 1;
         for (int64_t j = 1; j < cycle+1; j++)
         {
             int64_t timediff = perfarray[j]-perfarray[j-1];
             perfsMap[timediff] += 1;
+            betterarray.push_back(timediff);
             count+=1;
         }
 
@@ -779,10 +833,12 @@ static void GuessEntropyStrengthen(int microseconds, int nSamples, PERFINSTR ins
         if (maxCycles < cycle) maxCycles = cycle;
 
         avgCycles += cycle;
+
+        betterMap[betterarray] += 1;
     }
     avgCycles = avgCycles/nSamples;
 
-    Stats s = GuessEnt(perfsMap);
+    // Stats s = GuessEnt(perfsMap);
     string name;
     switch (instr)
     {
@@ -793,7 +849,7 @@ static void GuessEntropyStrengthen(int microseconds, int nSamples, PERFINSTR ins
         }
         case PERFINSTR::hrc:
         {
-            name = GetSystemParams()+"for"+std::to_string(microseconds/1000)+"ms";
+            name = "HRClockfor"+std::to_string(microseconds/1000)+"ms";
             break;
         }
         default:
@@ -803,7 +859,21 @@ static void GuessEntropyStrengthen(int microseconds, int nSamples, PERFINSTR ins
     };
 
     PrintMap(perfsMap, name);
-    StrengthenLatexRow(name, s, minCycles, maxCycles, avgCycles);
+    PrintVMap(betterMap, name);
+    PrintMap(cycleMap, name+"_cyclemap");
+
+    size_t rowLen = 10;
+    cout << "cycles = [";
+    for( size_t i=0; i<cycles.size(); ++i)
+    {
+        std::cout << cycles[i];
+        if (i != (cycles.size()-1)) cout<<", ";
+        if (i > 0  && i % rowLen == 0) cout << endl;
+    }
+    cout << "]" << endl << endl;
+
+
+    // StrengthenLatexRow(name, s, minCycles, maxCycles, avgCycles);
 }
 
 
@@ -813,10 +883,10 @@ BOOST_AUTO_TEST_CASE(strengthen_benchmark_test)
     cout << "====" << endl;
 
     int microseconds = 10*1000;
-    int seconds_to_run = 60*5;
+    int seconds_to_run = 60*60;
     int nSample = 100*seconds_to_run;
     
-    StrengthenLatexHeader();
+    // StrengthenLatexHeader();
 
     GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::sysdefault);
     GuessEntropyStrengthen(microseconds, nSample, PERFINSTR::hrc);
