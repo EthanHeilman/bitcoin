@@ -147,7 +147,7 @@ void AddFile(CRNGSHA512& hasher, const char *path)
         if (fstat(f, &sb) == 0) XSW(hasher, sb, "fstat:", "AddFile");
         do {
             n = read(f, fbuf, sizeof(fbuf));
-            if (n > 0) hasher.Write(CEntropySource(fbuf, sizeof(fbuf), "fbuf"), "AddFile");
+            if (n > 0) hasher.Write(CEntropySource(fbuf, n, "fbuf"), "AddFile");
             total += n;
             /* not bothering with EINTR handling. */
         } while (n == sizeof(fbuf) && total < 1048576); // Read only the first 1 Mbyte
