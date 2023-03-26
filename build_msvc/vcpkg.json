@@ -13,5 +13,12 @@
       "features": ["thread"]
     },
     "zeromq"
+  ],
+  "builtin-baseline": "b86c0c35b88e2bf3557ff49dc831689c2f085090",
+  "overrides": [
+    {
+      "name": "libevent",
+      "version": "2.1.12+20230128"
+    }
   ]
 }
