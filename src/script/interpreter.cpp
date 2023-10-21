@@ -535,8 +535,13 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
 
                 case OP_CAT:
                 {
+                    // OP_CAT is only available in Tapscript
+                    if (sigversion == SigVersion::BASE || sigversion == SigVersion::WITNESS_V0)
+                        return set_error(serror, SCRIPT_ERR_BAD_OPCODE);
+
                     if (stack.size() < 2)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
+                        
                     valtype vch1 = stacktop(-2);
                     valtype vch2 = stacktop(-1);
 
