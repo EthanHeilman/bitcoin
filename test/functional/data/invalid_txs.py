@@ -37,7 +37,6 @@ from test_framework.script import (
     OP_2DIV,
     OP_2MUL,
     OP_AND,
-    OP_CAT,
     OP_CHECKSIG,
     OP_DIV,
     OP_INVERT,
@@ -265,7 +264,6 @@ def getDisabledOpcodeTemplate(opcode):
 
 # Disabled opcode tx templates (CVE-2010-5137)
 DisabledOpcodeTemplates = [getDisabledOpcodeTemplate(opcode) for opcode in [
-    OP_CAT,
     OP_SUBSTR,
     OP_LEFT,
     OP_RIGHT,
