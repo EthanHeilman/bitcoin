@@ -1976,8 +1976,10 @@ static bool ExecuteWitnessScript(const Span<const valtype>& stack_span, const CS
                 // Note how this condition would not be reached if an unknown OP_SUCCESSx was found
                 return set_error(serror, SCRIPT_ERR_BAD_OPCODE);
             }
+
+            const bool op_cat_is_op_success = !(flags & SCRIPT_VERIFY_TAPSCRIPT_OP_CAT);
             // New opcodes will be listed here. May use a different sigversion to modify existing opcodes.
-            if (IsOpSuccess(opcode)) {
+            if (IsOpSuccess(opcode) || (op_cat_is_op_success && opcode == OP_CAT)) {
                 if (flags & SCRIPT_VERIFY_DISCOURAGE_OP_SUCCESS) {
                     return set_error(serror, SCRIPT_ERR_DISCOURAGE_OP_SUCCESS);
                 }
