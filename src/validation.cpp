@@ -2016,6 +2016,11 @@ unsigned int GetBlockScriptFlags(const CBlockIndex& block_index, const Chainstat
     if ((flags & SCRIPT_VERIFY_TAPROOT) && DeploymentActiveAt(block_index, chainman, Consensus::DEPLOYMENT_ANYPREVOUT)) {
         flags |= SCRIPT_VERIFY_ANYPREVOUT;
     }
+    
+    // Enforce OP_CAT
+    if (DeploymentActiveAt(block_index, chainman, Consensus::DEPLOYMENT_OP_CAT)) {
+        flags |= SCRIPT_VERIFY_OP_CAT;
+    }
 
     return flags;
 }

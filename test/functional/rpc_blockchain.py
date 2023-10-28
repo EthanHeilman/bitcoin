@@ -248,6 +248,20 @@ class BlockchainTest(BitcoinTestFramework):
                 'active': True,
                 'height': 0,
             },
+            'opcat': {
+                'type': 'heretical',
+                'heretical': {
+                    'binana-id': "BIN-2024-0001-000",
+                    'start_time': -1,
+                    'timeout': 9223372036854775807,
+                    'period': 144,
+                    'status': 'active',
+                    'since': 0,
+                    'status_next': 'active'
+                },
+                'height': 0,
+                'active': True,
+            },
           }
         })
 
