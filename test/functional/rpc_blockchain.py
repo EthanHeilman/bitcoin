@@ -250,6 +250,21 @@ class BlockchainTest(BitcoinTestFramework):
                 'active': True,
                 'height': 0,
             },
+            'opcat': {
+                'type': 'heretical',
+                'heretical': {
+                    'bip': 0,
+                    'bip_version': 0,
+                    'start_time': -1,
+                    'timeout': 9223372036854775807,
+                    'period': 144,
+                    'status': 'active',
+                    'since': 0,
+                    'status_next': 'active'
+                },
+                'height': 0,
+                'active': True,
+            },
           }
         })
 
