@@ -129,6 +129,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY] = SetupDeployment{.activate = 0x30000000, .abandon = 0, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_CHECKTEMPLATEVERIFY] = SetupDeployment{.bip = 119, .bip_version = 0, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_ANYPREVOUT] = SetupDeployment{.bip = 118, .bip_version = 0, .never = true};
+        // TODO (arminsdev) update bipnumber for op_cat
+        consensus.vDeployments[Consensus::DEPLOYMENT_OPCAT] = SetupDeployment{.bip = 0, .bip_version = 255, .never = true};
 
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000044a50fe819c39ad624021859");
         consensus.defaultAssumeValid = uint256S("0x000000000000000000035c3f0d31e71a5ee24c5aaf3354689f65bd7b07dee632"); // 784000
@@ -243,6 +245,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY] = SetupDeployment{.activate = 0x30000000, .abandon = 0, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_CHECKTEMPLATEVERIFY] = SetupDeployment{.bip = 119, .bip_version = 0, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_ANYPREVOUT] = SetupDeployment{.bip = 118, .bip_version = 0, .never = true};
+        // TODO (arminsdev) update bipnumber for op_cat
+        consensus.vDeployments[Consensus::DEPLOYMENT_OPCAT] = SetupDeployment{.bip = 0, .bip_version = 255, .never = true};
 
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000977edb0244170858d07");
         consensus.defaultAssumeValid = uint256S("0x0000000000000021bc50a89cde4870d4a81ffe0153b3c8de77b435a2fd3f6761"); // 2429000
@@ -391,6 +395,8 @@ public:
             .start = 1625875200, // 2021-07-10
             .timeout = 1941408000, // 2031-07-10
         };
+        // TODO (arminsdev) update bipnumber for op_cat
+        consensus.vDeployments[Consensus::DEPLOYMENT_OPCAT] = SetupDeployment{.bip = 0, .bip_version = 255, .never = true};
 
         RenounceDeployments(options.renounce, consensus.vDeployments);
 
