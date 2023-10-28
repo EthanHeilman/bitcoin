@@ -132,6 +132,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY] = SetupDeployment{.activate = 0x30000000, .abandon = 0, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_CHECKTEMPLATEVERIFY] = SetupDeployment{.activate = 0x60007700, .abandon = 0x40007700, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_ANYPREVOUT] = SetupDeployment{.activate = 0x60007600, .abandon = 0x40007600, .never = true};
+        consensus.vDeployments[Consensus::DEPLOYMENT_OPCAT] = SetupDeployment{.activate = 0x62000100, .abandon = 0x42000100, .never = true};
 
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000044a50fe819c39ad624021859");
         consensus.defaultAssumeValid = uint256S("0x000000000000000000035c3f0d31e71a5ee24c5aaf3354689f65bd7b07dee632"); // 784000
@@ -246,6 +247,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY] = SetupDeployment{.activate = 0x30000000, .abandon = 0, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_CHECKTEMPLATEVERIFY] = SetupDeployment{.activate = 0x60007700, .abandon = 0x40007700, .never = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_ANYPREVOUT] = SetupDeployment{.activate = 0x60007600, .abandon = 0x40007600, .never = true};
+        consensus.vDeployments[Consensus::DEPLOYMENT_OPCAT] = SetupDeployment{.activate = 0x62000100, .abandon = 0x42000100, .never = true};
 
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000977edb0244170858d07");
         consensus.defaultAssumeValid = uint256S("0x0000000000000021bc50a89cde4870d4a81ffe0153b3c8de77b435a2fd3f6761"); // 2429000
@@ -394,6 +396,7 @@ public:
             .activate = 0x60007600,
             .abandon = 0x40007600,
         };
+        consensus.vDeployments[Consensus::DEPLOYMENT_OPCAT] = SetupDeployment{.activate = 0x62000100, .abandon = 0x42000100, .never = true};
 
         RenounceDeployments(options.renounce, consensus.vDeployments);
 
