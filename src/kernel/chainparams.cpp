@@ -464,6 +464,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY] = SetupDeployment{.start = 0, .timeout = Consensus::HereticalDeployment::NO_TIMEOUT, .activate = 0x30000000, .abandon = 0x50000000};
         consensus.vDeployments[Consensus::DEPLOYMENT_CHECKTEMPLATEVERIFY] = SetupDeployment{.bip = 119, .bip_version = 0, .always = true};
         consensus.vDeployments[Consensus::DEPLOYMENT_ANYPREVOUT] = SetupDeployment{.bip = 118, .bip_version = 0, .always = true};
+        consensus.vDeployments[Consensus::DEPLOYMENT_OPCAT] = SetupDeployment{.bip = 0, .bip_version = 0, .always = true};
 
         consensus.nMinimumChainWork = uint256{};
         consensus.defaultAssumeValid = uint256{};
