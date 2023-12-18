@@ -193,11 +193,10 @@ class BlockchainTest(BitcoinTestFramework):
 
     def check_signalling_deploymentinfo_result(self, gdi_result, height, blockhash):
         assert height >= 144 and height <= 287
-
         assert_equal(gdi_result, {
           "hash": blockhash,
           "height": height,
-          "script_flags": "ANYPREVOUT,CHECKLOCKTIMEVERIFY,CHECKSEQUENCEVERIFY,DEFAULT_CHECK_TEMPLATE_VERIFY_HASH,DERSIG,NULLDUMMY,P2SH,TAPROOT,TAPSCRIPT_OP_CAT,WITNESS",
+          "script_flags": "ANYPREVOUT,CHECKLOCKTIMEVERIFY,CHECKSEQUENCEVERIFY,DEFAULT_CHECK_TEMPLATE_VERIFY_HASH,DERSIG,NULLDUMMY,OP_CAT,P2SH,TAPROOT,WITNESS",
           "deployments": {
             'bip34': {'type': 'buried', 'active': True, 'height': 2},
             'bip66': {'type': 'buried', 'active': True, 'height': 3},
@@ -253,8 +252,6 @@ class BlockchainTest(BitcoinTestFramework):
             'opcat': {
                 'type': 'heretical',
                 'heretical': {
-                    'bip': 0,
-                    'bip_version': 0,
                     'start_time': -1,
                     'timeout': 9223372036854775807,
                     'period': 144,
