@@ -274,4 +274,18 @@ BOOST_AUTO_TEST_CASE(script_fuzz)
 }
 
 
+BOOST_AUTO_TEST_CASE(cat_vsimple)
+{
+    std::vector<std::vector<unsigned char>> witData;
+    witData.push_back({ParseHex("aabb")});
+    witData.push_back({0xaa});
+    witData.push_back({0xbb});
+
+    std::vector<unsigned char> witVerifyScript = 
+    {OP_CAT, OP_EQUAL};
+
+    DoTest(witVerifyScript, witData, SCRIPT_ERR_OK, "cat_vsimple");
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()

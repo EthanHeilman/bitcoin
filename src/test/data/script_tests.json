@@ -98,7 +98,7 @@
 [
     [
         "aa", "bb", "cc", "dd", "ee",
-        "7e7e7e7e7e4c06aabbccddeeff87", // CAT CAT CAT CAT CAT PUSH1 5 0xaabbccddee EQUAL
+        "7e7e7e7e7e4c06aabbccddeeff87",
         "c1d6889cb081036e0faefa3a35157ad71086b123b2b144b649798b494c300a961d",       
         0.00000001
     ],
@@ -108,7 +108,21 @@
     "INVALID_STACK_OPERATION",
     "OP_CAT repeated five times but not enough elements on the stack"
 ],
-
+[
+    [
+        "aabb",
+        "aa",
+        "bb",
+        "7e87",
+        "c0d6889cb081036e0faefa3a35157ad71086b123b2b144b649798b494c300a961d",       
+        0.00000001
+    ],
+    "",
+    "0x51 0x20 0x43672b9271abbb327b2c4ef21c15ba06382752e860c4b0a13cfe4579192609f8",
+    "P2SH,WITNESS,TAPROOT",
+    "OK",
+    "OP_CAT (just OP_CAT)"
+],
 
 ["", "EQUAL NOT", "P2SH,STRICTENC", "INVALID_STACK_OPERATION", "EQUAL must error when there are no stack items"],
 ["0", "EQUAL NOT", "P2SH,STRICTENC", "INVALID_STACK_OPERATION", "EQUAL must error when there are not 2 stack items"],
