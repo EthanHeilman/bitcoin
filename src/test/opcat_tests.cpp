@@ -45,7 +45,7 @@ void DoTest(std::vector<unsigned char> witVerifyScript, std::vector<std::vector<
     CAmount nValue = 1;
     const CTransaction txCredit{BuildCreditingTransaction(scriptPubkey, nValue)};
 
-    CScript scriptSig = CScript(); // Script sig is only size 0 and empty in tapscript
+    CScript scriptSig = CScript(); // Script sig is always size 0 and empty in tapscript
     CMutableTransaction txSpend = BuildSpendingTransaction(scriptSig, CScriptWitness(), txCredit);
     CScriptWitness& scriptWitness = txSpend.vin[0].scriptWitness;
 
@@ -58,7 +58,6 @@ void DoTest(std::vector<unsigned char> witVerifyScript, std::vector<std::vector<
     scriptWitness.stack.push_back(witVerifyScript);
     scriptWitness.stack.push_back(controlblock);
 
-    // unsigned int flags = 0;
     unsigned int flags = SCRIPT_VERIFY_P2SH;
     flags += SCRIPT_VERIFY_WITNESS;
     flags += SCRIPT_VERIFY_TAPROOT;
@@ -114,7 +113,7 @@ BOOST_AUTO_TEST_CASE(cat_dup_test)
 {
     // CAT DUP exhaustion attacks using all element sizes from 1 to 522
     // with CAT DUP repetitions up to 10. Ensures the correct error is thrown
-    // or not thrown as appropriate. 
+    // or not thrown, as appropriate. 
     unsigned int maxElementSize = 522;
     unsigned int maxDupsToCheck = 10;
 

@@ -2685,7 +2685,7 @@
     "0x51 0x20 0x15048ed3a65748549c27b671936987093cf73a4c9cb18522a74fb9553060ca99",
     "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
     "OK",
-    "TAPSCRIPT ([aa, bb], CAT, PUSHDATA1 2 aabb, EQUAL) CATs aa and bb together and checks if EQUAL to aabb"
+    "TAPSCRIPT ([aa, bb], CAT, PUSHDATA1 2 aabb, EQUAL) CATs aa and bb together and checks EQUAL to aabb"
 ],
 [
     [
@@ -2700,7 +2700,7 @@
     "0x51 0x20 0x1a671656333e4d55ac202f478bcf50ca883670817849fbdc67b0560dfbd5d8e4",
     "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
     "OK",
-    "TAPSCRIPT ([eeffeeff, aa, bbcc], CAT, CAT, DUP, DROP, PUSHDATA1 6 eeffeeffaabbcc, EQUAL) CATs aa and bbcc and eeffeff together and checks if EQUAL to eeffeeffaabbcc"
+    "TAPSCRIPT ([eeffeeff, aa, bbcc], CAT, CAT, DUP, DROP, PUSHDATA1 6 eeffeeffaabbcc, EQUAL) CATs aa and bbcc and eeffeff together and checks EQUAL to eeffeeffaabbcc"
 ],
 [
     [
@@ -2729,6 +2729,35 @@
     "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
     "OK",
     "TAPSCRIPT ([f821125522f9490bcd108cdd0effbb002d45c6e66e6b48aeb51c865743796b93, f821125522f9490bcd108cdd0effbb002d45c6e66e6b48aeb51c865743796b93], CAT) Tests CAT on two hash outputs"
+],
+[
+    [
+        "51",
+        "bbbb",
+        "01",
+        "637e677568",
+        "c1d6889cb081036e0faefa3a35157ad71086b123b2b144b649798b494c300a961d",
+        0.00000001
+    ],
+    "",
+    "0x51 0x20 0xd4c2a593120ef773a2f17cd310508eb24d044691eff3071036fdac530af8a8b9",
+    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "OK",
+    "TAPSCRIPT ([51, bbbb], IF, CAT, ELSE, DROP, ENDIF) Tests CAT inside of an IF ELSE conditional (true IF)"
+],
+[
+    [
+        "51",
+        "",
+        "637e677568",
+        "c1d6889cb081036e0faefa3a35157ad71086b123b2b144b649798b494c300a961d",
+        0.00000001
+    ],
+    "",
+    "0x51 0x20 0xd4c2a593120ef773a2f17cd310508eb24d044691eff3071036fdac530af8a8b9",
+    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "CLEANSTACK",
+    "TAPSCRIPT ([51, ''], IF, CAT, ELSE, DROP, ENDIF) Tests CAT inside of an IF ELSE conditional (false IF)"
 ],
 [
     [
@@ -2821,7 +2850,7 @@
     "0x51 0x20 0x932a55d505e59555b48961377eb731a1b83efde522f05e493365b9514a43283f",
     "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
     "OK",
-    "TAPSCRIPT ([512 byte element, 09ca7009ca7009ca7009ca7009ca70], CAT)  Tests edge case where concatenated value is exactly max stack element size (520 bytes)"
+    "TAPSCRIPT ([512 byte element, 09ca7009ca7009ca7009ca7009ca70], CAT)  Tests edge case where concatenates value is exactly max stack element size (520 bytes)"
 ],
 [
     [
