@@ -955,7 +955,7 @@ BOOST_AUTO_TEST_CASE(script_json_test)
                     witness.stack.push_back(*(controlblocks.begin()));
                 } else {
                     witness.stack.push_back(ParseHex(element));
-                } 
+                }
             }
             nValue = AmountFromValue(test[pos][i]);
             pos++;
