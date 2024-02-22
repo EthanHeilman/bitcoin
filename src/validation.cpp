@@ -1022,7 +1022,7 @@ bool MemPoolAccept::PolicyScriptChecks(const ATMPArgs& args, Workspace& ws)
         DepDiscourageFlags(m_active_chainstate.m_chain.Tip(), m_active_chainstate.m_chainman, {
              { Consensus::DEPLOYMENT_CHECKTEMPLATEVERIFY, SCRIPT_VERIFY_DISCOURAGE_CHECK_TEMPLATE_VERIFY_HASH },
              { Consensus::DEPLOYMENT_ANYPREVOUT, SCRIPT_VERIFY_DISCOURAGE_ANYPREVOUT },
-             { Consensus::DEPLOYMENT_OP_CAT, SCRIPT_VERIFY_DISCOURAGE_TAPSCRIPT_OP_CAT },
+             { Consensus::DEPLOYMENT_OP_CAT, SCRIPT_VERIFY_DISCOURAGE_OP_CAT },
     });
 
     // Check input scripts and signatures.

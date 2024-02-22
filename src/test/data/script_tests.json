@@ -2538,7 +2538,7 @@
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
     "P2SH,WITNESS,TAPROOT",
     "OK",
-    "TAPSCRIPT (CAT) Test of OP_CAT flag by calling CAT on an empty stack. This does not error because no TAPSCRIPT_OP_CAT flag is set so CAT is OP_SUCCESS"
+    "TAPSCRIPT (CAT) Test of OP_CAT flag by calling CAT on an empty stack. This does not error because no OP_CAT flag is set so CAT is OP_SUCCESS"
 ],
 [
     [
@@ -2548,9 +2548,9 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "INVALID_STACK_OPERATION",
-    "TAPSCRIPT Test of OP_CAT flag by calling CAT on an empty stack. This throws an error because TAPSCRIPT_OP_CAT flag is set so CAT is executed"
+    "TAPSCRIPT Test of OP_CAT flag by calling CAT on an empty stack. This throws an error because OP_CAT flag is set so CAT is executed"
 ],
 [
     [
@@ -2562,9 +2562,9 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
-    "TAPSCRIPT Test of OP_CAT flag by calling CAT on two elements. TAPSCRIPT_OP_CAT flag is set so CAT is executed."
+    "TAPSCRIPT Test of OP_CAT flag by calling CAT on two elements. OP_CAT flag is set so CAT is executed."
 ],
 [
     [
@@ -2577,7 +2577,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT CATs 78a11a1260 and c1101260 together and checks it is EQUAL to stack element 78a11a1260c1101260"
 ],
@@ -2594,7 +2594,7 @@
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
     "P2SH,WITNESS,TAPROOT",
     "OK",
-    "TAPSCRIPT Test of OP_CAT flag, CATs 78a11a1260 and c1101260 together and checks it is EQUAL to stack element 78a11a1260c1101260. No TAPSCRIPT_OP_CAT set so CAT should be OP_SUCCESS."
+    "TAPSCRIPT Test of OP_CAT flag, CATs 78a11a1260 and c1101260 together and checks it is EQUAL to stack element 78a11a1260c1101260. No OP_CAT set so CAT should be OP_SUCCESS."
 ],
 [
     [
@@ -2607,7 +2607,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "EVAL_FALSE",
     "TAPSCRIPT CATs 78a11a1260 and c1101260 together and checks it is EQUAL to the empty stack element"
 ],
@@ -2623,7 +2623,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT CATS 78a11a1260 and c1101260 together and checks it is EQUALVERIFY to stack element 78a11a1260c1101260"
 ],
@@ -2639,7 +2639,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "EQUALVERIFY",
     "TAPSCRIPT CATs 78a11a1260 and c1101260 together and checks it is EQUALVERIFY to stack element c110126078a11a1260"
 ],
@@ -2653,7 +2653,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT CATs aa and bb together and checks EQUAL to aabb"
 ],
@@ -2668,7 +2668,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT CATs aa and bbcc and eeffeff together and checks EQUAL to eeffeeffaabbcc"
 ],
@@ -2682,7 +2682,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT Tests CAT on different sized random stack elements and compares the result."
 ],
@@ -2696,7 +2696,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT Tests CAT on two hash outputs"
 ],
@@ -2711,7 +2711,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT Tests CAT inside of an IF ELSE conditional (true IF)"
 ],
@@ -2725,7 +2725,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "CLEANSTACK",
     "TAPSCRIPT Tests CAT inside of an IF ELSE conditional (false IF)"
 ],
@@ -2738,7 +2738,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT  Runs DUP CAT seven times on 1a1a"
 ],
@@ -2751,7 +2751,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "INVALID_STACK_OPERATION",
     "TAPSCRIPT Runs DUP CAT seven times on 1a1a1a1a1a1a1a triggering a stack size error as the result is larger than max stack element size"
 ],
@@ -2765,7 +2765,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT Tests CAT with a melange of other opcodes including FROMALTSTACK. "
 ],
@@ -2777,7 +2777,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "INVALID_STACK_OPERATION",
     "TAPSCRIPT ([], CAT) Tests CAT fails on empty stack"
 ],
@@ -2790,7 +2790,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "INVALID_STACK_OPERATION",
     "TAPSCRIPT ([09ca7009ca7009ca7009ca7009ca70], CAT) Tests CAT fails on a stack of only one element"
 ],
@@ -2804,7 +2804,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT (['', 09ca7009ca7009ca7009ca7009ca70], CAT) Tests CAT succeeds when one of the two values to concatenate is of size zero"
 ],
@@ -2818,7 +2818,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "OK",
     "TAPSCRIPT ([512 byte element, 09ca7009ca7009ca7009ca7009ca70], CAT)  Tests edge case where concatenated value is exactly max stack element size (520 bytes)"
 ],
@@ -2832,7 +2832,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "INVALID_STACK_OPERATION",
     "TAPSCRIPT ([520 byte element, 01], CAT) Tests edge case where concatenated value is one byte larger than max stack element size (520 bytes)"
 ],
@@ -2846,7 +2846,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "INVALID_STACK_OPERATION",
     "TAPSCRIPT ([520 byte element, 520 byte element], CAT) Tests case where each element to concatenate is exactly max stack element size (520 bytes)"
 ],
@@ -2860,7 +2860,7 @@
     ],
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
-    "P2SH,WITNESS,TAPROOT,TAPSCRIPT_OP_CAT",
+    "P2SH,WITNESS,TAPROOT,OP_CAT",
     "PUSH_SIZE",
     "TAPSCRIPT ([520 byte element, 521 byte element], CAT) Tests edge case where one of the elements to concatenate is one byte larger than max stack element size (520 bytes)"
 ],
