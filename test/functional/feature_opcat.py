@@ -47,7 +47,9 @@ STACK_TOO_SHORT_ERROR = (
 DISABLED_OP_CODE = (
     "non-mandatory-script-verify-flag (Attempted to use a disabled opcode)"
 )
-
+MAX_PUSH_ERROR = (
+    "non-mandatory-script-verify-flag (Push value size limit exceeded)"
+)
 
 def random_bytes(n):
     return bytes(random.getrandbits(8) for i in range(n))
@@ -281,7 +283,7 @@ class CatTest(BitcoinTestFramework):
 
         assert_raises_rpc_error(
             -26,
-            STACK_TOO_SHORT_ERROR,
+            MAX_PUSH_ERROR,
             self.nodes[0].sendrawtransaction,
             taproot_op_cat_stack_limit_spend.serialize().hex(),
         )

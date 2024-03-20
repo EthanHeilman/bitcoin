@@ -1925,9 +1925,7 @@ BOOST_AUTO_TEST_CASE(cat_dup_test)
             witVerifyScript.push_back(OP_CAT);
             int expectedErr = SCRIPT_ERR_OK;
             unsigned int catedStackElementSize = witData.at(0).size()*pow(2, dups);
-            if (catedStackElementSize > MAX_SCRIPT_ELEMENT_SIZE)
-                expectedErr = SCRIPT_ERR_INVALID_STACK_OPERATION;
-            if (elementSize > MAX_SCRIPT_ELEMENT_SIZE)
+            if (catedStackElementSize > MAX_SCRIPT_ELEMENT_SIZE || elementSize > MAX_SCRIPT_ELEMENT_SIZE)
                 expectedErr = SCRIPT_ERR_PUSH_SIZE;
             DoTapscriptTest(witVerifyScript, witData, "CAT DUP test", expectedErr);
         }

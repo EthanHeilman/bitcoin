@@ -546,7 +546,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     valtype& vch1 = stacktop(-2);
                     valtype& vch2 = stacktop(-1);
                     if (vch1.size() + vch2.size() > MAX_SCRIPT_ELEMENT_SIZE)
-                        return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
+                        return set_error(serror, SCRIPT_ERR_PUSH_SIZE);
                     vch1.insert(vch1.end(), vch2.begin(), vch2.end());
                     stack.pop_back();
                 }

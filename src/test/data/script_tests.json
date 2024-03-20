@@ -2752,7 +2752,7 @@
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
     "P2SH,WITNESS,TAPROOT,OP_CAT",
-    "INVALID_STACK_OPERATION",
+    "PUSH_SIZE",
     "TAPSCRIPT Runs DUP CAT seven times on 1a1a1a1a1a1a1a triggering a stack size error as the result is larger than max stack element size"
 ],
 [
@@ -2833,7 +2833,7 @@
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
     "P2SH,WITNESS,TAPROOT,OP_CAT",
-    "INVALID_STACK_OPERATION",
+    "PUSH_SIZE",
     "TAPSCRIPT ([520 byte element, 01], CAT) Tests edge case where concatenated value is one byte larger than max stack element size (520 bytes)"
 ],
 [
@@ -2847,7 +2847,7 @@
     "",
     "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>",
     "P2SH,WITNESS,TAPROOT,OP_CAT",
-    "INVALID_STACK_OPERATION",
+    "PUSH_SIZE",
     "TAPSCRIPT ([520 byte element, 520 byte element], CAT) Tests case where each element to concatenate is exactly max stack element size (520 bytes)"
 ],
 [
