@@ -943,12 +943,13 @@ BOOST_AUTO_TEST_CASE(script_json_test)
             unsigned int i=0;
             for (i = 0; i < test[pos].size()-1; i++) {
                 auto element = test[pos][i].get_str();
-                // Taproot script - third from the last element in witness stack
-                if (test[pos].size() >= 3 && i == test[pos].size()-3 && !IsHex(element)) {
-                    witness.stack.push_back(ToByteVector(ParseScript(element)));
-                // Taproot script control block - second from the last element in witness stack
-                // If <AUTOGEN:CONTROLBLOCK> we auto-generate the control block
+                if (element.size() >= std::string("ParseScript()").size() && element.find("ParseScript(") == 0 && (element.find(")") == element.size()-1)) {
+                    // Taproot script - third from the last element in witness stack
+                    CScript script = ParseScript(element.substr(std::string("ParseScript()").size()-1, element.size()-std::string("ParseScript()").size()));
+                    witness.stack.push_back(ToByteVector(script));
                 } else if (test[pos].size() >= 3 && i == test[pos].size()-2 && strcmp(element.c_str(), "<AUTOGEN:CONTROLBLOCK>") == 0) {
+                    // Taproot script control block - second from the last element in witness stack
+                    // If <AUTOGEN:CONTROLBLOCK> we auto-generate the control block
                     taprootBuilder.Add(/*depth=*/0, witness.stack.back(), TAPROOT_LEAF_TAPSCRIPT, /*track=*/true);
                     taprootBuilder.Finalize(XOnlyPubKey(keys.key0.GetPubKey()));
                     auto controlblocks = taprootBuilder.GetSpendData().scripts[{witness.stack.back(), TAPROOT_LEAF_TAPSCRIPT}];
@@ -1925,8 +1926,10 @@ BOOST_AUTO_TEST_CASE(cat_dup_test)
             witVerifyScript.push_back(OP_CAT);
             int expectedErr = SCRIPT_ERR_OK;
             unsigned int catedStackElementSize = witData.at(0).size()*pow(2, dups);
-            if (catedStackElementSize > MAX_SCRIPT_ELEMENT_SIZE || elementSize > MAX_SCRIPT_ELEMENT_SIZE)
+            if (catedStackElementSize > MAX_SCRIPT_ELEMENT_SIZE || elementSize > MAX_SCRIPT_ELEMENT_SIZE){
                 expectedErr = SCRIPT_ERR_PUSH_SIZE;
+                break;
+            }
             DoTapscriptTest(witVerifyScript, witData, "CAT DUP test", expectedErr);
         }
     }
