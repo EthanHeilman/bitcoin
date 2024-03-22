@@ -943,12 +943,15 @@ BOOST_AUTO_TEST_CASE(script_json_test)
             unsigned int i=0;
             for (i = 0; i < test[pos].size()-1; i++) {
                 auto element = test[pos][i].get_str();
-                // Taproot script - third from the last element in witness stack
-                if (test[pos].size() >= 3 && i == test[pos].size()-3 && !IsHex(element)) {
-                    witness.stack.push_back(ToByteVector(ParseScript(element)));
-                // Taproot script control block - second from the last element in witness stack
-                // If <AUTOGEN:CONTROLBLOCK> we auto-generate the control block
-                } else if (test[pos].size() >= 3 && i == test[pos].size()-2 && strcmp(element.c_str(), "<AUTOGEN:CONTROLBLOCK>") == 0) {
+                // We use #SCRIPT# to flag a non-hex script that we can read using ParseScript
+                // Taproot script must be third from the last element in witness stack
+                std::string scriptFlag = std::string("#SCRIPT#");
+                if (element.find(scriptFlag) == 0) {
+                    CScript script = ParseScript(element.substr(scriptFlag.size()));
+                    witness.stack.push_back(ToByteVector(script));
+                } else if (test[pos].size() >= 3 && i == test[pos].size()-2 && strcmp(element.c_str(), "#CONTROLBLOCK#") == 0) {
+                    // Taproot script control block - second from the last element in witness stack
+                    // If #CONTROLBLOCK# we auto-generate the control block
                     taprootBuilder.Add(/*depth=*/0, witness.stack.back(), TAPROOT_LEAF_TAPSCRIPT, /*track=*/true);
                     taprootBuilder.Finalize(XOnlyPubKey(keys.key0.GetPubKey()));
                     auto controlblocks = taprootBuilder.GetSpendData().scripts[{witness.stack.back(), TAPROOT_LEAF_TAPSCRIPT}];
@@ -972,7 +975,7 @@ BOOST_AUTO_TEST_CASE(script_json_test)
         std::string scriptPubKeyString = test[pos++].get_str();
         CScript scriptPubKey;
         // If requested, auto-generate the taproot output
-        if (strcmp(scriptPubKeyString.c_str(), "0x51 0x20 <AUTOGEN:TAPROOTOUTPUT>")== 0) {
+        if (strcmp(scriptPubKeyString.c_str(), "0x51 0x20 #TAPROOTOUTPUT#")== 0) {
             BOOST_CHECK_MESSAGE(taprootBuilder.IsComplete(), "Failed to autogenerate Tapscript Script PubKey");
             scriptPubKey = CScript() << OP_1 << ToByteVector(taprootBuilder.GetOutput());
         } else {
