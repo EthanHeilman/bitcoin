@@ -943,10 +943,10 @@ BOOST_AUTO_TEST_CASE(script_json_test)
             unsigned int i=0;
             for (i = 0; i < test[pos].size()-1; i++) {
                 auto element = test[pos][i].get_str();
-                // We use #SCRIPT# to flag a non-hex script
+                // We use #SCRIPT# to flag a non-hex script that we can read using ParseScript
+                // Taproot script must be third from the last element in witness stack
                 std::string scriptFlag = std::string("#SCRIPT#");
                 if (element.find(scriptFlag) == 0) {
-                    // Taproot script - third from the last element in witness stack
                     CScript script = ParseScript(element.substr(scriptFlag.size()));
                     witness.stack.push_back(ToByteVector(script));
                 } else if (test[pos].size() >= 3 && i == test[pos].size()-2 && strcmp(element.c_str(), "#CONTROLBLOCK#") == 0) {
@@ -1928,11 +1928,12 @@ BOOST_AUTO_TEST_CASE(cat_dup_test)
             witVerifyScript.push_back(OP_CAT);
             int expectedErr = SCRIPT_ERR_OK;
             unsigned int catedStackElementSize = witData.at(0).size()*pow(2, dups);
-            if (catedStackElementSize > MAX_SCRIPT_ELEMENT_SIZE || elementSize > MAX_SCRIPT_ELEMENT_SIZE){
+            if (catedStackElementSize > MAX_SCRIPT_ELEMENT_SIZE || elementSize > MAX_SCRIPT_ELEMENT_SIZE)
                 expectedErr = SCRIPT_ERR_PUSH_SIZE;
-                break;
-            }
             DoTapscriptTest(witVerifyScript, witData, "CAT DUP test", expectedErr);
+            // Once we hit the stack element size limit, break
+            if (expectedErr == SCRIPT_ERR_OK)
+                break;
         }
     }
 }
