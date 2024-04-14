@@ -949,7 +949,7 @@ BOOST_AUTO_TEST_CASE(script_json_test)
                 if (element.find(scriptFlag) == 0) {
                     CScript script = ParseScript(element.substr(scriptFlag.size()));
                     witness.stack.push_back(ToByteVector(script));
-                } else if (test[pos].size() >= 3 && i == test[pos].size()-2 && strcmp(element.c_str(), "#CONTROLBLOCK#") == 0) {
+                } else if (strcmp(element.c_str(), "#CONTROLBLOCK#") == 0) {
                     // Taproot script control block - second from the last element in witness stack
                     // If #CONTROLBLOCK# we auto-generate the control block
                     taprootBuilder.Add(/*depth=*/0, witness.stack.back(), TAPROOT_LEAF_TAPSCRIPT, /*track=*/true);
